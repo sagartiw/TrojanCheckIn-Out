@@ -11,8 +11,8 @@ import java.util.List;
  * User activity by removing and admitting students as well as updating internal capacity.
  */
 public class Building {
-    private int capacity;
     private String name;
+    private int capacity;
     private List<User> students;
 
     // Have to use an image builder, using String for now
