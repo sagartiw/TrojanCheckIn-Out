@@ -19,18 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76a8e806-10d3-44e2-a8e2-f4a0750f670a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/TrojanCheckIn-Out.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-    </list>
+    <list default="true" id="76a8e806-10d3-44e2-a8e2-f4a0750f670a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -48,7 +43,49 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/TrojanCheckInOut" />
+  </component>
+  <component name="RunManager" selected="Gradle.C:/Users/kssam/AndroidStudioProjects/TrojanCheckIn-Out/TrojanCheckInOut/settings.gradle">
+    <configuration name="C:/Users/kssam/AndroidStudioProjects/TrojanCheckIn-Out/TrojanCheckInOut/build.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TrojanCheckInOut/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="C:/Users/kssam/AndroidStudioProjects/TrojanCheckIn-Out/TrojanCheckInOut/settings.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TrojanCheckInOut/settings.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.C:/Users/kssam/AndroidStudioProjects/TrojanCheckIn-Out/TrojanCheckInOut/settings.gradle" />
+        <item itemvalue="Gradle.C:/Users/kssam/AndroidStudioProjects/TrojanCheckIn-Out/TrojanCheckInOut/build.gradle" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -73,8 +110,31 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="760" y="328" key="FileChooserDialogImpl" timestamp="1614909376866">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state x="760" y="328" key="FileChooserDialogImpl/1982.0.1858.1080/62.0.1858.1080@62.0.1858.1080" timestamp="1614909376866" />
+    <state width="670" height="281" key="GridCell.Tab.0.bottom" timestamp="1614909384310">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state width="670" height="281" key="GridCell.Tab.0.bottom/1982.0.1858.1080/62.0.1858.1080@62.0.1858.1080" timestamp="1614909384310" />
+    <state width="670" height="281" key="GridCell.Tab.0.center" timestamp="1614909384310">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state width="670" height="281" key="GridCell.Tab.0.center/1982.0.1858.1080/62.0.1858.1080@62.0.1858.1080" timestamp="1614909384310" />
+    <state width="670" height="281" key="GridCell.Tab.0.left" timestamp="1614909384310">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state width="670" height="281" key="GridCell.Tab.0.left/1982.0.1858.1080/62.0.1858.1080@62.0.1858.1080" timestamp="1614909384310" />
+    <state width="670" height="281" key="GridCell.Tab.0.right" timestamp="1614909384310">
+      <screen x="62" y="0" width="1858" height="1080" />
+    </state>
+    <state width="670" height="281" key="GridCell.Tab.0.right/1982.0.1858.1080/62.0.1858.1080@62.0.1858.1080" timestamp="1614909384310" />
   </component>
 </project>
