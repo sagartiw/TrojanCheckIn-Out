@@ -44,5 +44,5 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public User searchStudents(String time, Building building, int id, String major) { return new User(); }
+    public List<User> searchStudents(String time, Building building, int id, String major) { return new ArrayList<User>(); }
 }

@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Building {
     private int capacity;
+    private String name;
     private List<User> students;
 
     // Have to use an image builder, using String for now
@@ -28,7 +29,7 @@ public class Building {
      * @param students
      * @param QRCode
      */
-    public Building(int capacity, List<User> students, String QRCode) {
+    public Building(String name, int capacity, List<User> students, String QRCode) {
         this.capacity = capacity;
         this.students = students;
         this.QRCode = QRCode;

@@ -11,13 +11,13 @@ import java.util.List;
  * return a list of available buildings and their accompanying QRCodes.
  */
 public class BuildingManipulator {
-    private List<Building> currentBuildings;
+    private Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
 
     /**
      * @return a list of the currently established buildings.
      */
-    public List<Building> getCurrentBuildings() { return this.currentBuildings; }
+    public Map<String, Building> getCurrentBuildings() { return this.currentBuildings; }
 
     /**
      * @return a list of the currently established QRCodes.
