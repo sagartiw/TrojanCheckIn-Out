@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".Layouts.StudentLanding">
+
+
+    <View
+        android:id="@+id/topRed"
+        android:layout_width="435dp"
+        android:layout_height="164dp"
+        android:background="#990000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Actions"
+        android:textColor="#707070"
+        android:textSize="20"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="374dp" />
+
+    <Button
+        android:id="@+id/signOut"
+        android:layout_width="389dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:stateListAnimator="@null"
+        android:text="@string/sign_out"
+        android:textSize="12sp"
+        app:backgroundTint="#990000"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#FFCC00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="795dp" />
+
+    <View
+        android:id="@+id/Scan"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="416dp"
+        android:background="@drawable/round_rectangle"
+        android:clickable="true"
+        app:cornerRadius="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/checkOut"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="416dp"
+        android:background="@drawable/round_rectangle"
+        android:clickable="true"
+        app:cornerRadius="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="224dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/montserrat"
+        android:text="welcome student"
+        android:textAllCaps="false"
+        android:textColor="#FFFfFf"
+        android:textSize="16"
+        android:typeface="normal"
+        app:layout_constraintTop_toBottomOf="@+id/trojan"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/trojan"
+        android:layout_width="93dp"
+        android:layout_height="41dp"
+        android:alpha="4"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="trojan"
+        android:textColor="#FFFfFf"
+        android:textSize="28"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/check"
+        android:layout_width="224dp"
+        android:layout_height="40dp"
+        android:fontFamily="@font/montserrat"
+        android:text="check in/out"
+        android:textAllCaps="false"
+        android:textColor="#FFFfFf"
+        android:textSize="28"
+        android:typeface="normal"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="17dp" />
+
+    <View
+        android:id="@+id/infoView"
+        android:layout_width="382dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/round_rectangle"
+        app:cornerRadius="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/id2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Kickin Ass and Taking Names"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="224dp" />
+
+    <View
+        android:id="@+id/viewDivider2"
+        android:layout_width="350"
+        android:layout_height="1dp"
+        android:background="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="209dp" />
+
+    <View
+        android:id="@+id/viewDivider1"
+        android:layout_width="350"
+        android:layout_height="1dp"
+        android:background="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="155dp" />
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="350"
+        android:layout_height="1dp"
+        android:background="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="274dp" />
+
+    <TextView
+        android:id="@+id/nameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Name"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="120dp" />
+
+    <TextView
+        android:id="@+id/majorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Major"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="224dp" />
+
+    <TextView
+        android:id="@+id/buildingName"
+        android:layout_width="277dp"
+        android:layout_height="35dp"
+        android:fontFamily="@font/montserrat"
+        android:text="N/A"
+        android:textColor="#000000"
+        android:textSize="25"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="284dp" />
+
+    <TextView
+        android:id="@+id/scanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Scan"
+        android:textColor="#000000"
+        android:textSize="24"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="522dp" />
+
+    <TextView
+        android:id="@+id/checkoutTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Check Out"
+        android:textColor="#000000"
+        android:textSize="24"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="522dp" />
+
+    <TextView
+        android:id="@+id/idTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="ID"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="178dp" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Mname Is Jeff"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="291dp"
+        tools:layout_editor_absoluteY="120dp" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="1234567890"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="304dp"
+        tools:layout_editor_absoluteY="178dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
