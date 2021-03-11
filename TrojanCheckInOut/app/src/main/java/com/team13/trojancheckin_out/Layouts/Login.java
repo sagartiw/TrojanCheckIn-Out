@@ -9,34 +9,35 @@ import android.widget.Button;
 
 import com.team13.trojancheckin_out.R;
 
-public class Register extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
-    private Button Register;
+    private Button Login;
     private Button Back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
-        Register = (Button)findViewById(R.id.register2);
+        Login = (Button)findViewById(R.id.login);
 
-        Register.setOnClickListener(new View.OnClickListener() {
+        Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Register.this, CompleteProfile.class);
+                Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
             }
         });
 
-        Back = (Button)findViewById(R.id.back);
+        Back = (Button)findViewById(R.id.back2);
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Register.this, Startup.class);
+                Intent intent = new Intent(Login.this, Startup.class);
                 startActivity(intent);
             }
         });
+
     }
 }

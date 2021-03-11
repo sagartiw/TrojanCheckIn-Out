@@ -34,6 +34,14 @@ public class Startup extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Startup.this, Login.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

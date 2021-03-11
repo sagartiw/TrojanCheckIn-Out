@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Layouts.CompleteProfile">
+
+    <Button
+        android:id="@+id/back3"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/montserrat"
+        android:text="&lt; back"
+        android:textAllCaps="false"
+        android:textColor="#272727"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register3" />
+
+    <Button
+        android:id="@+id/register3"
+        android:layout_width="268dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="68dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:stateListAnimator="@null"
+        android:text="REGISTER"
+        android:textSize="16sp"
+        app:backgroundTint="#990000"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="113dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="FIRST NAME"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="113dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="LAST NAME"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="113dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="MAJOR"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="113dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="STUDENT ID"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="313dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:text="PROFILE IMAGE"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="432dp"
+        android:layout_height="27dp"
+        android:background="#990000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Complete Your Profile"
+        android:textColor="#990000"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/red"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/red"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName4"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/red"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        style="@android:style/Widget.Spinner.DropDown"
+        android:layout_width="313dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="37dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner"
+        app:layout_constraintTop_toTopOf="@+id/spinner"
+        app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="107dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="5dp"
+        android:background="#00FFFFFF"
+        android:scaleX=".9"
+        android:scaleY=".9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13"
+        app:srcCompat="@drawable/ic_outline_add_photo_alternate_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
