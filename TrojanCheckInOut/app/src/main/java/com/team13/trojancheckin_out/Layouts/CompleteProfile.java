@@ -36,7 +36,7 @@ public class CompleteProfile extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CompleteProfile.this, Register.class);
+                Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }
         });
