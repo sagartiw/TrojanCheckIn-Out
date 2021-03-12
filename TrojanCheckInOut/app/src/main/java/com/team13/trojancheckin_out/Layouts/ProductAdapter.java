@@ -4,6 +4,8 @@ import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -73,7 +75,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.qr_popup, null);
-                // view.setBackgroundColor(A6000000);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -86,13 +87,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
                 // dismiss the popup window when touched
+                /*
                 popupView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         popupWindow.dismiss();
                         return true;
                     }
-                });
+                });*/
             }
         });
     }
