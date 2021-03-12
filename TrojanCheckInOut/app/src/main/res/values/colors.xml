@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#990000</color>
     <color name="gold">#FFCC00</color>
+    <color name="overlay">#A6000000</color>
 </resources>
