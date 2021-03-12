@@ -55,17 +55,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-    <ImageView
-        android:id="@+id/imageView5"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:scaleX=".8"
-        android:scaleY=".8"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        app:backgroundTint="#00FFCC00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_outline_account_circle_24" />
+        app:maxImageSize="62dp"
+        app:srcCompat="@drawable/ic_outline_account_circle_24"
+        app:tint="@null" />
 
     <TextView
         android:id="@+id/textView17"
@@ -91,7 +93,7 @@
         tools:context="net.simplifiedlearning.recyclerviewexample.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -102,6 +104,48 @@
         android:layout_height="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" >
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gold" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#00990000"
+            android:fontFamily="@font/montserrat_semibold"
+            android:letterSpacing="0.02"
+            android:stateListAnimator="@null"
+            android:text="IMPORT CSV"
+            android:textColor="@color/red"
+            android:textSize="13sp"
+            app:cornerRadius="15dp"
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#00990000"
+            android:fontFamily="@font/montserrat_semibold"
+            android:letterSpacing="0.02"
+            android:stateListAnimator="@null"
+            android:text="SEARCH STUDENTS"
+            android:textColor="@color/red"
+            android:textSize="13sp"
+            app:cornerRadius="15dp"
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp" />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
