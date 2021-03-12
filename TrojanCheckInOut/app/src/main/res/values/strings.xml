@@ -2,4 +2,5 @@
     <string name="app_name">Trojan Check In/Out</string>
     <string name="title_activity_login">Login</string>
     <string name="sign_out">SIGN OUT</string>
+    <string name="welcome_mname_is_jeff">welcome Mname Is Jeff</string>
 </resources>
