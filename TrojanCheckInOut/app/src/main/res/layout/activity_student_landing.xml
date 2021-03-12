@@ -25,7 +25,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:text="Actions"
         android:textColor="#707070"
-        android:textSize="20"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="374dp" />
 
@@ -88,7 +88,7 @@
         android:text="welcome student"
         android:textAllCaps="false"
         android:textColor="#FFFfFf"
-        android:textSize="16"
+        android:textSize="16sp"
         android:typeface="normal"
         app:layout_constraintTop_toBottomOf="@+id/trojan"
         tools:layout_editor_absoluteX="16dp" />
@@ -101,7 +101,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:text="trojan"
         android:textColor="#FFFfFf"
-        android:textSize="28"
+        android:textSize="28sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -113,7 +113,7 @@
         android:text="check in/out"
         android:textAllCaps="false"
         android:textColor="#FFFfFf"
-        android:textSize="28"
+        android:textSize="28sp"
         android:typeface="normal"
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="17dp" />
@@ -142,7 +142,7 @@
 
     <View
         android:id="@+id/viewDivider2"
-        android:layout_width="350"
+        android:layout_width="350dp"
         android:layout_height="1dp"
         android:background="#707070"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +151,7 @@
 
     <View
         android:id="@+id/viewDivider1"
-        android:layout_width="350"
+        android:layout_width="350dp"
         android:layout_height="1dp"
         android:background="#707070"
         app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
 
     <View
         android:id="@+id/viewDivider"
-        android:layout_width="350"
+        android:layout_width="350dp"
         android:layout_height="1dp"
         android:background="#707070"
         app:layout_constraintEnd_toEndOf="parent"
@@ -194,7 +194,7 @@
         android:fontFamily="@font/montserrat"
         android:text="N/A"
         android:textColor="#000000"
-        android:textSize="25"
+        android:textSize="25sp"
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="284dp" />
 
@@ -205,7 +205,7 @@
         android:fontFamily="@font/montserrat"
         android:text="Scan"
         android:textColor="#000000"
-        android:textSize="24"
+        android:textSize="24sp"
         tools:layout_editor_absoluteX="87dp"
         tools:layout_editor_absoluteY="522dp" />
 
@@ -216,7 +216,7 @@
         android:fontFamily="@font/montserrat"
         android:text="Check Out"
         android:textColor="#000000"
-        android:textSize="24"
+        android:textSize="24sp"
         tools:layout_editor_absoluteX="254dp"
         tools:layout_editor_absoluteY="522dp" />
 
