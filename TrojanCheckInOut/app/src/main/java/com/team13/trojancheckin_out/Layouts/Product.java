@@ -1,4 +1,4 @@
-package com.team13.trojancheckin_out.UPC;
+package com.team13.trojancheckin_out.Layouts;
 
 public class Product {
     private int id;

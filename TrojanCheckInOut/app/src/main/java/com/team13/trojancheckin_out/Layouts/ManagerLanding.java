@@ -1,15 +1,18 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.R;
-import com.team13.trojancheckin_out.UPC.Product;
-import com.team13.trojancheckin_out.UPC.ProductAdapter;
 
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class ManagerLanding extends AppCompatActivity {
         setContentView(R.layout.activity_manager_landing);
 
         //getting the recyclerview from xml
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -75,5 +78,23 @@ public class ManagerLanding extends AppCompatActivity {
 
         //setting adapter to recyclerview
         recyclerView.setAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final PopupMenu menu = new PopupMenu(this, fab);
+        menu.getMenu().add("Student View");
+        menu.getMenu().add("Sign Out");
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                // insert your code here
+                Log.d("menu title: ", item.getTitle().toString());
+                return true; }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.show();
+            }
+        });
     }
 }

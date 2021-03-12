@@ -12,6 +12,7 @@
         android:layout_height="55dp"
         android:layout_marginBottom="68dp"
         android:fontFamily="@font/montserrat_semibold"
+        android:letterSpacing="0.02"
         android:stateListAnimator="@null"
         android:text="LOGIN"
         android:textSize="16sp"
