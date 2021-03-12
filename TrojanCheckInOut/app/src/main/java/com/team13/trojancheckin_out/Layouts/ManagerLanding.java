@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.team13.trojancheckin_out.Accounts.Manager;
 import com.team13.trojancheckin_out.R;
 
 
@@ -87,6 +89,10 @@ public class ManagerLanding extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
                 Log.d("menu title: ", item.getTitle().toString());
+                if(item.getTitle().toString().equals("Student View")){
+                    Intent intent = new Intent(ManagerLanding.this, StudentLanding.class);
+                    startActivity(intent);
+                }
                 return true; }
         });
 
