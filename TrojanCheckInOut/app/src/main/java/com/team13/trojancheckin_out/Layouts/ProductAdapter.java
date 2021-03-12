@@ -73,6 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.qr_popup, null);
+                // view.setBackgroundColor(A6000000);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
