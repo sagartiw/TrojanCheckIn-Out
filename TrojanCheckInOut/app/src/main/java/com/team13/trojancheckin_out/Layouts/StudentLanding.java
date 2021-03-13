@@ -1,13 +1,17 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 
 import android.content.Intent;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.R;
 
 public class StudentLanding extends AppCompatActivity {
@@ -39,5 +43,26 @@ public class StudentLanding extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final PopupMenu menu = new PopupMenu(this, fab);
+        menu.getMenu().add("edit profile");
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                // insert your code here
+
+                if(item.getTitle().toString().equals("edit profile")){
+                    Intent intent = new Intent(StudentLanding.this, Startup.class);
+                    startActivity(intent);
+                }
+                Log.d("menu title: ", item.getTitle().toString());
+                return true; }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menu.show();
+            }
+        });
     }
 }
