@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Actions"
+        android:id="@+id/TextView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -127,7 +127,7 @@
             android:textSize="13sp"
             app:cornerRadius="15dp"
             app:strokeColor="@color/red"
-            app:strokeWidth="1dp" />
+            android:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/button5"
@@ -145,7 +145,7 @@
             android:textSize="13sp"
             app:cornerRadius="15dp"
             app:strokeColor="@color/red"
-            app:strokeWidth="1dp" />
+            android:strokeWidth="1dp" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
