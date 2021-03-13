@@ -105,6 +105,10 @@ public class ManagerLanding extends AppCompatActivity {
                     Intent intent = new Intent(ManagerLanding.this, StudentLanding.class);
                     startActivity(intent);
                 }
+                if(item.getTitle().toString().equals("Sign Out")){
+                    Intent intent = new Intent(ManagerLanding.this, Startup.class);
+                    startActivity(intent);
+                }
                 return true; }
         });
 
