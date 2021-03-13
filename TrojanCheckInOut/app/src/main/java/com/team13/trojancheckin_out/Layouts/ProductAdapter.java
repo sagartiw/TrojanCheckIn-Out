@@ -26,17 +26,12 @@ import java.util.List;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
-/**
- * Created by Belal on 10/18/2017.
- */
-
-
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-
 
     //this context we will use to inflate the layout
     private Context mCtx;
     private ImageButton qrButton;
+    private Button cap;
 
     //we are storing all the products in a list
     private List<Product> productList;
@@ -68,6 +63,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.progressBar.setProgress((product.getPercent()));
 
         qrButton = holder.imageButton;
+        cap = holder.capacity;
 
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,26 +71,57 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.qr_popup, null);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
 
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
                 // dismiss the popup window when touched
-                /*
-                popupView.setOnTouchListener(new View.OnTouchListener() {
+                closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
+                    public void onClick(View v) {
                         popupWindow.dismiss();
-                        return true;
                     }
-                });*/
+                });
+            }
+        });
+
+        cap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = LayoutInflater.from(mCtx);
+                View popupView = inflater.inflate(R.layout.cap_popup, null);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
             }
         });
     }
@@ -111,6 +138,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView textViewTitle, textViewCurrent, textViewCapacity, textViewPercent;
         ImageButton imageButton;
         ProgressBar progressBar;
+        Button capacity;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -121,6 +149,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             textViewPercent = itemView.findViewById(R.id.textViewPercent);
             progressBar = itemView.findViewById(R.id.progressBar);
             imageButton = itemView.findViewById(R.id.imageButton4);
+            capacity = itemView.findViewById(R.id.button3);
         }
     }
 
