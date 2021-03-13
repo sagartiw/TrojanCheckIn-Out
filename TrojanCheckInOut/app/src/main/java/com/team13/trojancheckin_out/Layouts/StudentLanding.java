@@ -45,6 +45,7 @@ public class StudentLanding extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
         menu.getMenu().add("Edit Profile");
+        menu.getMenu().add("Manager View");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
@@ -53,6 +54,12 @@ public class StudentLanding extends AppCompatActivity {
                     Intent intent = new Intent(StudentLanding.this, EditProfile.class);
                     startActivity(intent);
                 }
+
+                if(item.getTitle().toString().equals("Manager View")){
+                    Intent intent = new Intent(StudentLanding.this, ManagerLanding.class);
+                    startActivity(intent);
+                }
+
                 Log.d("menu title: ", item.getTitle().toString());
                 return true; }
         });
