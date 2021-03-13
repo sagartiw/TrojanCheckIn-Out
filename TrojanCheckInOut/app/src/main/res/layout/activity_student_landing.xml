@@ -115,8 +115,8 @@
 
     <Button
         android:id="@+id/checkOutShadow"
-        android:layout_width="178dp"
-        android:layout_height="183dp"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="28dp"
         android:background="@drawable/round_rectangle"
@@ -143,9 +143,9 @@
         app:layout_constraintTop_toTopOf="@+id/checkOutShadow" />
 
     <ImageView
-        android:id="@+id/imageButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/checkOutIcon"
+        android:layout_width="125dp"
+        android:layout_height="129dp"
         android:background="@drawable/round_qr"
         android:scaleX=".6"
         android:scaleY=".6"
@@ -153,12 +153,13 @@
         app:layout_constraintEnd_toEndOf="@+id/checkOutShadow"
         app:layout_constraintStart_toStartOf="@+id/checkOutShadow"
         app:layout_constraintTop_toTopOf="@+id/checkOutShadow"
-        app:srcCompat="@drawable/ic_baseline_qr_code_24" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_outline_exit_to_app_24" />
 
     <Button
         android:id="@+id/ScanShadow"
-        android:layout_width="178dp"
-        android:layout_height="183dp"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
         android:layout_marginTop="68dp"
         android:background="@drawable/round_rectangle"
         android:clickable="false"
@@ -186,8 +187,8 @@
 
     <ImageView
         android:id="@+id/checkoutImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:background="@drawable/round_qr"
         android:scaleX=".6"
         android:scaleY=".6"
@@ -360,6 +361,16 @@
         app:layout_constraintHorizontal_bias="0.905"
         app:layout_constraintStart_toEndOf="@+id/idTitle"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider1" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="48dp"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="@+id/infoView"
+        app:layout_constraintEnd_toStartOf="@+id/buildingName"
+        app:layout_constraintStart_toStartOf="@+id/infoView"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider"
+        app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

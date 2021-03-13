@@ -8,6 +8,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
 
+
+        <activity android:name=".Layouts.SearchStudent">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Layouts.Startup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

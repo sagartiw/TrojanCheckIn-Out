@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.team13.trojancheckin_out.Accounts.Manager;
 import com.team13.trojancheckin_out.R;
 
 
@@ -28,10 +28,22 @@ public class ManagerLanding extends AppCompatActivity {
     //the recyclerview
     RecyclerView recyclerView;
 
+    private Button Search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_landing);
+
+        Search = (Button)findViewById(R.id.button5);
+
+        Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagerLanding.this, SearchStudent.class);
+                startActivity(intent);
+            }
+        });
 
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);

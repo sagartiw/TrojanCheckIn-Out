@@ -16,18 +16,27 @@ import com.team13.trojancheckin_out.R;
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
-
-    private View Scan;
+    private Button CheckOut;
+    private Button Scan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_landing);
         SignOut = (Button)findViewById(R.id.signOut);
-        Scan = findViewById(R.id.Scan);
+        Scan = (Button)findViewById(R.id.Scan);
+        CheckOut = (Button)findViewById(R.id.checkOut);
 
 
         SignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentLanding.this, Startup.class);
+                startActivity(intent);
+            }
+        });
+
+        CheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
