@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.content.Intent;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -54,13 +53,13 @@ public class StudentLanding extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
-        menu.getMenu().add("edit profile");
+        menu.getMenu().add("Edit Profile");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
 
-                if(item.getTitle().toString().equals("edit profile")){
-                    Intent intent = new Intent(StudentLanding.this, Startup.class);
+                if(item.getTitle().toString().equals("Edit Profile")){
+                    Intent intent = new Intent(StudentLanding.this, EditProfile.class);
                     startActivity(intent);
                 }
                 Log.d("menu title: ", item.getTitle().toString());
