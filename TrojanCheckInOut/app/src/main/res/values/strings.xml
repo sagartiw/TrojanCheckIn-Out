@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">TrojanCheckIn-Out</string>
+    <string name="app_name">Trojan Check In/Out</string>
+    <string name="title_activity_login">Login</string>
+    <string name="sign_out">SIGN OUT</string>
+    <string name="welcome_mname_is_jeff">welcome Mname Is Jeff</string>
+    <string name="title_activity_search_student">SearchStudent</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 </resources>

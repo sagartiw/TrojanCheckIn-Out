@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Layouts.EditProfile">
+
+    <View
+        android:id="@+id/topRed"
+        android:layout_width="435dp"
+        android:layout_height="164dp"
+        android:background="#990000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:src="@drawable/circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="109dp"
+        android:layout_marginTop="112dp"
+        android:src="@drawable/ic_outline_account_circle_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="224dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:autoText="false"
+        android:fontFamily="@font/montserrat"
+        android:text="Mname is Jeff"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFfFf"
+        android:textSize="28sp"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="@+id/topRed"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="@+id/topRed"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageButton
+        android:id="@+id/editPFP"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="196dp"
+        android:background="@drawable/edit_circle"
+        android:bottomRightRadius="8dip"
+        android:bottomLeftRadius="8dip"
+        android:topRightRadius="8dip"
+        android:topLeftRadius="8dip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.618"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageView
+        android:id="@+id/phone_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:src="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="@+id/editPFP"
+        app:layout_constraintEnd_toEndOf="@+id/editPFP"
+        app:layout_constraintStart_toStartOf="@+id/editPFP"
+        app:layout_constraintTop_toTopOf="@+id/editPFP" />
+
+    <Button
+        android:id="@+id/back3"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="164dp"
+        android:fontFamily="@font/montserrat"
+        android:text="&lt; back"
+        android:textAllCaps="false"
+        android:textColor="#272727"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="58dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="248dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="NAME"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="58dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="352dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="ID"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="72dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="460dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="MAJOR"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="324dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="52dp"
+
+        android:layout_marginTop="280dp"
+        android:src="@drawable/red_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="324dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="52dp"
+
+        android:layout_marginTop="388dp"
+        android:src="@drawable/red_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="324dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="52dp"
+
+        android:layout_marginTop="496dp"
+        android:src="@drawable/red_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topRed" />
+
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="161dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Mname Is Jeff"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+    <TextView
+        android:id="@+id/usc_id"
+        android:layout_width="161dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat"
+        android:text="1234567890"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/major"
+        android:layout_width="235dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Computer Science"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+
+    <Button
+        android:id="@+id/changePassword"
+        android:layout_width="268dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="176dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:letterSpacing="0.02"
+        android:stateListAnimator="@null"
+        android:text="Change Password"
+        android:textSize="16sp"
+        app:backgroundTint="#990000"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deleteAccount"
+        android:layout_width="268dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="108dp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:letterSpacing="0.02"
+        android:stateListAnimator="@null"
+        android:text="Delete Account"
+        android:textColor="#990000"
+        android:textSize="16sp"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="#990000"
+        android:strokeWidth="1.5"
+        app:strokeWidth="1.5dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
