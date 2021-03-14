@@ -40,7 +40,7 @@ public class ManagerLanding extends AppCompatActivity {
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManagerLanding.this, SearchStudent.class);
+                Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
                 startActivity(intent);
             }
         });
