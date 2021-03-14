@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.team13.trojancheckin_out">
+    package="com.team13.trojancheckin_out.Accounts">
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
 
@@ -9,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
+
+        <activity android:name="com.team13.trojancheckin_out.Accounts.ScanActivity"></activity>
+        <activity android:name="com.team13.trojancheckin_out.Accounts.QRCodeScanner" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
 
 
         <activity android:name=".Layouts.SearchStudent">
