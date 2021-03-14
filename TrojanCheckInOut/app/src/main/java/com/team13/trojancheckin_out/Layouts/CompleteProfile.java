@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 public class CompleteProfile extends AppCompatActivity {
 

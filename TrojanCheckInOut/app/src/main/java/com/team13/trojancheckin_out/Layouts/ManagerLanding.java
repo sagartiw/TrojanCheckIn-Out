@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 import java.util.ArrayList;
 import java.util.List;
 
