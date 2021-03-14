@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 public class Startup extends AppCompatActivity {
 

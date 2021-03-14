@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 import java.util.List;
 

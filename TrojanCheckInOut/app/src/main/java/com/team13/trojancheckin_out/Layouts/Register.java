@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 public class Register extends AppCompatActivity {
 
