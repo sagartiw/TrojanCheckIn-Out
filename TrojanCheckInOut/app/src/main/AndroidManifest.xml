@@ -3,15 +3,17 @@
     package="com.team13.trojancheckin_out.Accounts">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
-        <activity
-            android:name="com.team13.trojancheckin_out.Layouts.SearchStudent2"/>
+        <activity android:name="com.team13.trojancheckin_out.Layouts.SearchStudent2">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ScanActivity" />
         <activity android:name=".QRCodeScanner" />
@@ -25,7 +27,12 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name="com.team13.trojancheckin_out.Layouts.EditProfile" />
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.EditProfile" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.team13.trojancheckin_out.Layouts.Startup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

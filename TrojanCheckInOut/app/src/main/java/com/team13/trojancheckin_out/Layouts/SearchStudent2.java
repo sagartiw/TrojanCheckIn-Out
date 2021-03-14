@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.team13.trojancheckin_out.Accounts.R;
 
@@ -45,7 +47,7 @@ public class SearchStudent2 extends AppCompatActivity {
             }
         });
 
-        Back = (Button)findViewById(R.id.back3);
+        Back = (Button)findViewById(R.id.backer);
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +126,26 @@ public class SearchStudent2 extends AppCompatActivity {
 
         //setting adapter to recyclerview
         recyclerView.setAdapter(adapter);
+
+        //get the spinner from the xml.
+        Spinner dropdown = findViewById(R.id.spinner);
+        //create a list of items for the spinner.
+        String[] items = new String[]{"1", "2", "three"};
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //set the spinners adapter to the previously created one.
+        dropdown.setAdapter(adapter2);
+
+        //get the spinner from the xml.
+        Spinner dropdown2 = findViewById(R.id.spinner2);
+        //create a list of items for the spinner.
+        String[] items2 = new String[]{"1", "2", "three"};
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items2);
+        //set the spinners adapter to the previously created one.
+        dropdown2.setAdapter(adapter3);
     }
 
 }
