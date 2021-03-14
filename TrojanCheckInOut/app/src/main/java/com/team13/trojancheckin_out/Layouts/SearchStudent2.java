@@ -4,25 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.team13.trojancheckin_out.Accounts.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+
+import com.team13.trojancheckin_out.Accounts.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchStudent extends AppCompatActivity {
-
+public class SearchStudent2 extends AppCompatActivity {
     private Button Search;
     private Button Back;
 
@@ -35,8 +35,7 @@ public class SearchStudent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_student);
-
+        setContentView(R.layout.activity_search_student2);
         Search = (Button)findViewById(R.id.button7);
 
         Search.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +50,7 @@ public class SearchStudent extends AppCompatActivity {
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SearchStudent.this, ManagerLanding.class);
+                Intent intent = new Intent(SearchStudent2.this, ManagerLanding.class);
                 startActivity(intent);
             }
         });
@@ -65,7 +64,7 @@ public class SearchStudent extends AppCompatActivity {
                 // insert your code here
                 Log.d("menu title: ", item.getTitle().toString());
                 if(item.getTitle().toString().equals("Student View")){
-                    Intent intent = new Intent(SearchStudent.this, StudentLanding.class);
+                    Intent intent = new Intent(SearchStudent2.this, StudentLanding.class);
                     startActivity(intent);
                 }
                 return true; }
@@ -126,4 +125,5 @@ public class SearchStudent extends AppCompatActivity {
         //setting adapter to recyclerview
         recyclerView.setAdapter(adapter);
     }
+
 }
