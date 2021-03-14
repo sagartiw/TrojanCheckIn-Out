@@ -126,7 +126,8 @@
             android:textColor="@color/red"
             android:textSize="13sp"
             app:cornerRadius="15dp"
-            app:strokeColor="@color/red" />
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/button5"
@@ -143,7 +144,8 @@
             android:textColor="@color/red"
             android:textSize="13sp"
             app:cornerRadius="15dp"
-            app:strokeColor="@color/red" />
+            app:strokeColor="@color/red"
+            app:strokeWidth="1dp" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

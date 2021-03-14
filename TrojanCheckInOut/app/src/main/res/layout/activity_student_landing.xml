@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9F9F9"
     android:visibility="visible"
     tools:context="com.team13.trojancheckin_out.Layouts.StudentLanding">
 
@@ -15,6 +16,18 @@
         android:background="#990000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/infoView"
+        android:layout_width="382dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/round_rectangle"
+        app:cornerRadius="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,7 +88,7 @@
         android:id="@+id/Actions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Actions"
         android:textColor="#707070"
@@ -88,13 +101,13 @@
     <Button
         android:id="@+id/signOut"
         android:layout_width="389dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="40dp"
         android:fontFamily="@font/montserrat_semibold"
+        android:letterSpacing="0.02"
         android:stateListAnimator="@null"
         android:text="@string/sign_out"
-        android:textSize="12sp"
-        app:backgroundTint="#990000"
+        android:textSize="13sp"
+        app:backgroundTint="@color/red"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,8 +118,8 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="80dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="70dp"
         android:background="#FFCC00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,132 +127,78 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/checkOutShadow"
-        android:layout_width="176dp"
-        android:layout_height="176dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="28dp"
-        android:background="@drawable/round_rectangle"
-        android:clickable="false"
-        android:fontFamily="@font/montserrat_semibold"
-        android:stateListAnimator="@null"
-        android:textSize="12sp"
-        app:backgroundTint="#d8d8d8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoView" />
-
-    <Button
         android:id="@+id/checkOut"
         android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:background="@drawable/round_rectangle"
+        android:layout_height="185dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/montserrat_semibold"
-        android:stateListAnimator="@null"
         android:textSize="12sp"
         app:backgroundTint="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/checkOutShadow"
-        app:layout_constraintEnd_toEndOf="@+id/checkOutShadow"
-        app:layout_constraintStart_toStartOf="@+id/checkOutShadow"
-        app:layout_constraintTop_toTopOf="@+id/checkOutShadow" />
-
-    <ImageView
-        android:id="@+id/checkOutIcon"
-        android:layout_width="125dp"
-        android:layout_height="129dp"
-        android:background="@drawable/round_qr"
-        android:scaleX=".6"
-        android:scaleY=".6"
-        app:layout_constraintBottom_toTopOf="@+id/checkoutTitle"
-        app:layout_constraintEnd_toEndOf="@+id/checkOutShadow"
-        app:layout_constraintStart_toStartOf="@+id/checkOutShadow"
-        app:layout_constraintTop_toTopOf="@+id/checkOutShadow"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_outline_exit_to_app_24" />
-
-    <Button
-        android:id="@+id/ScanShadow"
-        android:layout_width="176dp"
-        android:layout_height="176dp"
-        android:layout_marginTop="68dp"
-        android:background="@drawable/round_rectangle"
-        android:clickable="false"
-        android:fontFamily="@font/montserrat_semibold"
-        android:stateListAnimator="@null"
-        android:textSize="12sp"
-        app:backgroundTint="#d8d8d8"
-        app:layout_constraintEnd_toStartOf="@+id/checkOutShadow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoView" />
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Actions" />
 
     <Button
         android:id="@+id/Scan"
         android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:background="@drawable/round_rectangle"
+        android:layout_height="185dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/montserrat_semibold"
-        android:stateListAnimator="@null"
         android:textSize="12sp"
         app:backgroundTint="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/ScanShadow"
-        app:layout_constraintEnd_toEndOf="@+id/ScanShadow"
-        app:layout_constraintStart_toStartOf="@+id/ScanShadow"
-        app:layout_constraintTop_toTopOf="@+id/ScanShadow" />
+        app:cornerRadius="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Actions" />
+
+    <ImageView
+        android:id="@+id/checkOutIcon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/round_qr"
+        android:elevation="2dp"
+        android:scaleX=".6"
+        android:scaleY=".6"
+        app:layout_constraintEnd_toEndOf="@+id/checkOut"
+        app:layout_constraintStart_toStartOf="@+id/checkOut"
+        app:layout_constraintTop_toTopOf="@+id/checkOut"
+        app:srcCompat="@drawable/ic_outline_exit_to_app_24" />
 
     <ImageView
         android:id="@+id/checkoutImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/round_qr"
+        android:elevation="2dp"
         android:scaleX=".6"
         android:scaleY=".6"
-        app:layout_constraintBottom_toTopOf="@+id/scanTitle"
-        app:layout_constraintEnd_toEndOf="@+id/ScanShadow"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="@+id/ScanShadow"
+        app:layout_constraintEnd_toEndOf="@+id/Scan"
+        app:layout_constraintStart_toStartOf="@+id/Scan"
         app:layout_constraintTop_toTopOf="@+id/Scan"
         app:srcCompat="@drawable/ic_baseline_qr_code_24" />
 
-    <View
-        android:id="@+id/infoView"
-        android:layout_width="382dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="104dp"
-        android:background="@drawable/round_rectangle"
-        app:cornerRadius="500dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/id2"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="Kickin Ass and Taking Names"
+        android:textAlignment="viewEnd"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/infoView"
-        app:layout_constraintHorizontal_bias="0.801"
-        app:layout_constraintStart_toEndOf="@+id/majorTitle"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
-
-    <View
-        android:id="@+id/viewDivider2"
-        android:layout_width="350dp"
-        android:layout_height="1dp"
-        android:background="#707070"
-        app:layout_constraintBottom_toTopOf="@+id/viewDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topRed" />
 
     <View
         android:id="@+id/viewDivider1"
         android:layout_width="350dp"
-        android:layout_height="1dp"
-        android:background="#707070"
-        app:layout_constraintBottom_toTopOf="@+id/viewDivider2"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="50dp"
+        android:background="#4D000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/infoView" />
@@ -247,20 +206,19 @@
     <View
         android:id="@+id/viewDivider"
         android:layout_width="350dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="60dp"
-        android:background="#707070"
-        app:layout_constraintBottom_toBottomOf="@+id/infoView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="0.5dp"
+        android:layout_marginTop="70dp"
+        android:background="#4d000000"
+        app:layout_constraintEnd_toEndOf="@+id/infoView"
+        app:layout_constraintStart_toStartOf="@+id/infoView"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
 
     <TextView
         android:id="@+id/nameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/montserrat"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Name"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/viewDivider1"
@@ -272,9 +230,9 @@
         android:id="@+id/majorTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/montserrat"
+        android:fontFamily="@font/montserrat_medium"
         android:text="Major"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="@+id/infoView"
@@ -284,90 +242,96 @@
         android:id="@+id/buildingName"
         android:layout_width="291dp"
         android:layout_height="37dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/montserrat"
         android:text="N/A"
         android:textColor="#000000"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="@+id/infoView"
-        app:layout_constraintHorizontal_bias="0.747"
-        app:layout_constraintStart_toStartOf="@+id/infoView"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider" />
 
     <TextView
         android:id="@+id/scanTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:elevation="2dp"
         android:fontFamily="@font/montserrat"
         android:text="Scan"
         android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ScanShadow"
-        app:layout_constraintEnd_toEndOf="@+id/ScanShadow"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="@+id/Scan" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/Scan"
+        app:layout_constraintStart_toStartOf="@+id/Scan"
+        app:layout_constraintTop_toBottomOf="@+id/checkoutImage" />
 
     <TextView
         android:id="@+id/checkoutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:elevation="2dp"
         android:fontFamily="@font/montserrat"
         android:text="Check Out"
         android:textColor="#000000"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/checkOut"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/checkOut"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/checkOut" />
-
-    <TextView
-        android:id="@+id/idTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat"
-        android:text="ID"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/viewDivider2"
-        app:layout_constraintStart_toStartOf="@+id/infoView"
-        app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintStart_toStartOf="@+id/checkOut"
+        app:layout_constraintTop_toBottomOf="@+id/checkOutIcon" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="204dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="Mname Is Jeff"
+        android:textAlignment="viewEnd"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/viewDivider1"
-        app:layout_constraintStart_toEndOf="@+id/nameTitle"
+        app:layout_constraintEnd_toEndOf="@+id/infoView"
         app:layout_constraintTop_toTopOf="@+id/infoView"
         app:layout_constraintVertical_bias="0.533" />
 
     <TextView
         android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="91dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/montserrat"
         android:text="1234567890"
+        android:textAlignment="viewEnd"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/viewDivider2"
         app:layout_constraintEnd_toEndOf="@+id/infoView"
-        app:layout_constraintHorizontal_bias="0.905"
-        app:layout_constraintStart_toEndOf="@+id/idTitle"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider1" />
+
+    <View
+        android:id="@+id/viewDivider2"
+        android:layout_width="350dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="50dp"
+        android:background="#4D000000"
+        app:layout_constraintEnd_toEndOf="@+id/infoView"
+        app:layout_constraintStart_toStartOf="@+id/infoView"
+        app:layout_constraintTop_toBottomOf="@id/viewDivider1" />
+
+    <TextView
+        android:id="@+id/idTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="ID"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@id/viewDivider2"
+        app:layout_constraintStart_toStartOf="@+id/infoView"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider1" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="48dp"
-        android:layout_height="49dp"
-        app:layout_constraintBottom_toBottomOf="@+id/infoView"
-        app:layout_constraintEnd_toStartOf="@+id/buildingName"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="@+id/infoView"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider"
         app:srcCompat="@drawable/ic_baseline_location_on_24" />
