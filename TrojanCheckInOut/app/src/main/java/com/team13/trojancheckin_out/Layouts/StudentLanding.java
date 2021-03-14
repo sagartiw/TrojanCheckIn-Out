@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;

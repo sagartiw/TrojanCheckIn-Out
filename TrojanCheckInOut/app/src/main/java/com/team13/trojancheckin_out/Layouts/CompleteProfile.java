@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.team13.trojancheckin_out.R;
+import com.team13.trojancheckin_out.Accounts.R;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -36,6 +36,9 @@ public class CompleteProfile extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //send name and stuff to back
+
+
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }
