@@ -57,6 +57,89 @@ public class User {
     }
 
     /**
+     * Getters and Setters for the User class
+     */
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isInBuilding() {
+        return inBuilding;
+    }
+
+    public void setInBuilding(boolean inBuilding) {
+        this.inBuilding = inBuilding;
+    }
+
+    public Building getCurrentBuilding() {
+        return currentBuilding;
+    }
+
+    public void setCurrentBuilding(Building currentBuilding) {
+        this.currentBuilding = currentBuilding;
+    }
+
+    public List<Building> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<Building> history) {
+        this.history = history;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
+    }
+
+    /**
      * @return the profile of a student. Going to use a String for now, but in the future
      * it will return an image in the GUI.
      */
