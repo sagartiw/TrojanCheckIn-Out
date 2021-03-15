@@ -21,8 +21,9 @@
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="16dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="to"
         android:textSize="12sp"
@@ -47,6 +48,8 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="70dp"
         android:layout_height="37dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="&lt; back"
         android:textAllCaps="false"
@@ -57,8 +60,8 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName5"
-        android:layout_width="169dp"
-        android:layout_height="28dp"
+        android:layout_width="177dp"
+        android:layout_height="39dp"
         android:backgroundTint="@color/red"
         android:ems="10"
         android:inputType="textPersonName"
@@ -71,8 +74,8 @@
 
     <View
         android:id="@+id/view4"
-        android:layout_width="432dp"
-        android:layout_height="97dp"
+        android:layout_width="456dp"
+        android:layout_height="70dp"
         android:background="#990000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="trojan"
         android:textColor="@color/white"
@@ -96,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="check in/out"
         android:textColor="@color/white"
@@ -104,24 +107,11 @@
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/TextView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/montserrat"
-        android:text="welcome mindy diep"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
         app:backgroundTint="#00FFCC00"
@@ -133,8 +123,8 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="394dp"
-        android:layout_height="34dp"
+        android:layout_width="395dp"
+        android:layout_height="41dp"
         android:backgroundTint="@color/red"
         android:ems="10"
         android:inputType="textPersonName"
@@ -142,13 +132,14 @@
         android:textColorLink="@color/red"
         android:textCursorDrawable="@drawable/color_cursor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <EditText
         android:id="@+id/editTextTextPersonName3"
-        android:layout_width="169dp"
-        android:layout_height="28dp"
+        android:layout_width="171dp"
+        android:layout_height="36dp"
         android:backgroundTint="@color/red"
         android:ems="10"
         android:inputType="textPersonName"
@@ -164,7 +155,7 @@
         android:id="@+id/spinner"
         style="@android:style/Widget.Spinner.DropDown"
         android:layout_width="394dp"
-        android:layout_height="34dp"
+        android:layout_height="42dp"
         android:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +165,7 @@
         android:id="@+id/spinner2"
         style="@android:style/Widget.Spinner.DropDown"
         android:layout_width="394dp"
-        android:layout_height="34dp"
+        android:layout_height="39dp"
         android:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -203,7 +194,6 @@
         android:id="@+id/button7"
         android:layout_width="134dp"
         android:layout_height="32dp"
-        android:layout_marginTop="8dp"
         android:backgroundTint="#990000"
         android:fontFamily="@font/montserrat_semibold"
         android:letterSpacing="0.02"
@@ -222,7 +212,6 @@
         android:id="@+id/Results"
         android:layout_width="90dp"
         android:layout_height="23dp"
-        android:layout_marginTop="5dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Results"
         android:textColor="#707070"
@@ -235,7 +224,6 @@
     <RelativeLayout
         android:layout_width="390dp"
         android:layout_height="450dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -253,12 +241,12 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:text="Student ID"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
