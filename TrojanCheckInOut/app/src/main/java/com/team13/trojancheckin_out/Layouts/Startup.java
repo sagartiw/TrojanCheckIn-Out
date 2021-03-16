@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 public class Startup extends AppCompatActivity {
 
     private Button Register;
     private Button Login;
+    public AccountManipulator accountManipulator = new AccountManipulator();
+    public Register register = new Register(accountManipulator);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

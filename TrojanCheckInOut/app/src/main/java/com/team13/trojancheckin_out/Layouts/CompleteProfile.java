@@ -15,6 +15,11 @@ public class CompleteProfile extends AppCompatActivity {
 
     private Button Register;
     private Button Back;
+    private Register register;
+
+    public CompleteProfile(Register register) {
+        this.register = register;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
