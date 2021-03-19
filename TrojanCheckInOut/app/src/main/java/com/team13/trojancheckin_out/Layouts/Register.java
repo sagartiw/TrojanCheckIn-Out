@@ -28,7 +28,6 @@ public class Register extends AppCompatActivity {
     private EditText Email;
     private EditText Password;
     private EditText Confirm;
-    private AccountManipulator accountManipulator;
 
     public Register(AccountManipulator accountManipulator) {
         this.accountManipulator = accountManipulator;
@@ -36,6 +35,8 @@ public class Register extends AppCompatActivity {
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class Register extends AppCompatActivity {
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("Category");
                 reference.setValue("This is my set value");
+
+                accountManipulator.referenceUsers.setValue("Sagar");
 
                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                 startActivity(intent);
