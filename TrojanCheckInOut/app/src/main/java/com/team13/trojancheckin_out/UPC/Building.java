@@ -45,6 +45,8 @@ public class Building {
      */
     public int getCapacity() { return this.capacity; }
 
+    public void setName(String name) { this.name = name; }
+
     /**
      * @return the building's list of admitted students.
      */

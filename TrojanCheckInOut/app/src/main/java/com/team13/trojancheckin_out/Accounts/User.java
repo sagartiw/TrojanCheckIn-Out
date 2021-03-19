@@ -2,13 +2,14 @@ package com.team13.trojancheckin_out.Accounts;
 
 import com.team13.trojancheckin_out.UPC.Building;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * This class contains the objects that define a user's account. Further, it establishes mechanisms
  * for the user to perform alterations to their own profile as well as interactions with buildings.
  */
-public class User {
+public class User implements Serializable {
     private String name;
     private String email;
     private String password;
@@ -16,7 +17,7 @@ public class User {
     // Have to use an image builder, using String for now
     private String photo;
 
-    private int id;
+    private String id;
     private boolean inBuilding;
     private Building currentBuilding;
     private List<Building> history;
@@ -41,7 +42,7 @@ public class User {
      * @param major
      * @param isManager
      */
-    public User (String name, String email, String password, String photo, int id,
+    public User (String name, String email, String password, String photo, String id,
                  boolean inBuilding, Building currentBuilding, List<Building> history,
                  String major, boolean isManager) {
         this.name = name;
@@ -91,11 +92,11 @@ public class User {
         this.photo = photo;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
