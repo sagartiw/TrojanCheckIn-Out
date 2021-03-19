@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 public class Register extends AppCompatActivity {
 
@@ -28,6 +33,9 @@ public class Register extends AppCompatActivity {
     public Register(AccountManipulator accountManipulator) {
         this.accountManipulator = accountManipulator;
     }
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +66,10 @@ public class Register extends AppCompatActivity {
 
                 accountManipulator.createAccount(user);
 
-
-
+                rootNode = FirebaseDatabase.getInstance();
+                reference = rootNode.getReference("Category");
+                reference.setValue("This is my set value");
+                
                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                 startActivity(intent);
             }
