@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F9F9F9"
     android:visibility="visible"
     tools:context="com.team13.trojancheckin_out.Layouts.SearchStudent2">
 
@@ -11,11 +12,11 @@
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Time"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
@@ -23,7 +24,7 @@
         android:id="@+id/textView22"
         android:layout_width="16dp"
         android:layout_height="28dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:text="to"
         android:textSize="12sp"
@@ -35,11 +36,12 @@
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Building"
+        android:textColor="#707070"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
@@ -47,30 +49,16 @@
         android:id="@+id/backer"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="70dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="&lt; back"
         android:textAllCaps="false"
-        android:textColor="#272727"
+        android:textColor="#707070"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="177dp"
-        android:layout_height="39dp"
-        android:backgroundTint="@color/red"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColorHighlight="#80990000"
-        android:textColorLink="@color/red"
-        android:textCursorDrawable="@drawable/color_cursor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView22"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <View
         android:id="@+id/view4"
@@ -86,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="trojan"
         android:textColor="@color/white"
@@ -99,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat"
         android:text="check in/out"
         android:textColor="@color/white"
@@ -124,9 +112,11 @@
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="395dp"
-        android:layout_height="41dp"
-        android:backgroundTint="@color/red"
-        android:ems="10"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/white"
+        android:ems="6"
         android:inputType="textPersonName"
         android:textColorHighlight="#80990000"
         android:textColorLink="@color/red"
@@ -136,26 +126,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="171dp"
-        android:layout_height="36dp"
-        android:backgroundTint="@color/red"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColorHighlight="#80990000"
-        android:textColorLink="@color/red"
-        android:textCursorDrawable="@drawable/color_cursor"
-        app:layout_constraintEnd_toStartOf="@+id/textView22"
-        app:layout_constraintHorizontal_bias="0.463"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
     <Spinner
         android:id="@+id/spinner"
         style="@android:style/Widget.Spinner.DropDown"
-        android:layout_width="394dp"
+        android:layout_width="395dp"
         android:layout_height="42dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -164,8 +140,9 @@
     <Spinner
         android:id="@+id/spinner2"
         style="@android:style/Widget.Spinner.DropDown"
-        android:layout_width="394dp"
-        android:layout_height="39dp"
+        android:layout_width="395dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +152,7 @@
         android:id="@+id/imageView3"
         android:layout_width="29dp"
         android:layout_height="22dp"
-        android:layout_marginTop="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="@+id/spinner"
         app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
@@ -184,55 +161,54 @@
         android:id="@+id/imageView9"
         android:layout_width="29dp"
         android:layout_height="22dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner2"
         app:layout_constraintEnd_toEndOf="@+id/spinner2"
         app:layout_constraintTop_toTopOf="@+id/spinner2"
         app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="134dp"
-        android:layout_height="32dp"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#990000"
         android:fontFamily="@font/montserrat_semibold"
         android:letterSpacing="0.02"
         android:stateListAnimator="@null"
-        android:text="search"
+        android:text="search    "
         android:textColor="@color/white"
         android:textSize="10sp"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:cornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTime3"
         app:strokeColor="@color/red" />
 
     <TextView
         android:id="@+id/Results"
         android:layout_width="90dp"
         android:layout_height="23dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Results"
         android:textColor="#707070"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button7" />
 
     <RelativeLayout
         android:layout_width="390dp"
-        android:layout_height="450dp"
+        android:layout_height="310dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Results"
         tools:context="net.simplifiedlearning.recyclerviewexample.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
-            android:layout_width="match_parent"
+            android:layout_width="390dp"
             android:layout_height="match_parent" />
 
     </RelativeLayout>
@@ -241,12 +217,12 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/montserrat"
         android:text="Student ID"
+        android:textColor="#707070"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -254,11 +230,12 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:text="Major"
+        android:textColor="#707070"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
@@ -266,12 +243,53 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat_bold"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/montserrat_semibold"
         android:text="Search Students"
-        app:layout_constraintEnd_toStartOf="@+id/backer"
-        app:layout_constraintHorizontal_bias="0.078"
+        android:textColor="#707070"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+    <EditText
+        android:id="@+id/editTextTime3"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        android:ems="6"
+        android:inputType="time"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <EditText
+        android:id="@+id/editTextTime4"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="22dp"
+        android:background="#FFFFFF"
+        android:ems="6"
+        android:inputType="time"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="@+id/button7"
+        app:layout_constraintTop_toTopOf="@+id/button7"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
