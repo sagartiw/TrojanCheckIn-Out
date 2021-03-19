@@ -69,7 +69,7 @@ public class Register extends AppCompatActivity {
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("Category");
                 reference.setValue("This is my set value");
-                
+
                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                 startActivity(intent);
             }
