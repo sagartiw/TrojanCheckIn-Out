@@ -21,8 +21,8 @@ import java.util.Map;
 public class AccountManipulator extends User {
 
     // Access the Firebase
-    private static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-    private static final DatabaseReference referenceUsers = rootNode.getReference("Users");
+    public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
+    public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
     private List<User> studentAccounts;
     private List<User> managerAccounts;
