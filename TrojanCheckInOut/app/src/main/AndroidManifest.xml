@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.team13.trojancheckin_out">
+    package="com.team13.trojancheckin_out.Accounts">
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
-
-
-        <activity android:name=".Layouts.SearchStudent">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.SearchStudent2">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Layouts.Startup">
+
+        <activity android:name=".ScanActivity" />
+        <activity android:name=".QRCodeScanner" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.SearchStudent">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.EditProfile" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.team13.trojancheckin_out.Layouts.Startup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Layouts.Register">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.Register">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Layouts.Login">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.Login">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Layouts.CompleteProfile">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.CompleteProfile">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Layouts.ManagerLanding">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.ManagerLanding">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Layouts.StudentLanding">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.StudentLanding">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.CAMERA"> </uses-permission>
+
 </manifest>
