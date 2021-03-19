@@ -17,9 +17,7 @@ public class Register extends AppCompatActivity {
 
     private Button Register;
     private Button Back;
-
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +29,7 @@ public class Register extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rootNode = FirebaseDatabase.getInstance();
-                reference = rootNode.getReference("Category");
-                reference.setValue("This is my set value");
+                accountManipulator.referenceUsers.setValue("Sagar");
                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                 startActivity(intent);
             }
