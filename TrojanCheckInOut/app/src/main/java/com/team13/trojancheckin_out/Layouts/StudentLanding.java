@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 
 public class StudentLanding extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class StudentLanding extends AppCompatActivity {
         Scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
                 startActivity(intent);
             }
         });
