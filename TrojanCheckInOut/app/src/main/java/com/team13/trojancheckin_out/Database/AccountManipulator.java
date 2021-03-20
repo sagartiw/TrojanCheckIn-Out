@@ -17,6 +17,7 @@ import com.team13.trojancheckin_out.Accounts.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class generates and deletes user accounts, facilitates logins and logouts, and provides access
@@ -48,7 +49,7 @@ public class AccountManipulator extends User {
                         i++;
                         User user = ds.getValue(User.class);
                         System.out.println(i + ": Definitely Manager: " + user.isManager());
-                        if (user.isManager().equals("true")) {
+                        if (Objects.equals(user.isManager(), true)) {
                             System.out.println(i + ": " + user.getEmail());
                         }
                     }
@@ -83,7 +84,7 @@ public class AccountManipulator extends User {
     public Boolean createAccount(User user) {
 
         // Take in parameters and create a new user in the DB
-        referenceUsers.child(user.getId()).setValue(user);
+        referenceUsers.child(String.valueOf(user.getId())).setValue(user);
         return true;
     }
 
@@ -94,7 +95,7 @@ public class AccountManipulator extends User {
     public Boolean deleteAccount(User user) {
 
         // Delete the user from the DB
-        referenceUsers.child(user.getId()).removeValue();
+        referenceUsers.child(String.valueOf(user.getId())).removeValue();
         return true;
     }
 

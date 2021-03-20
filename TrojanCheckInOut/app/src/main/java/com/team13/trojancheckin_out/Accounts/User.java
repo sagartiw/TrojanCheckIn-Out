@@ -100,6 +100,8 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public void setStringId(String id) {this.id = Integer.valueOf(id);}
+
     public boolean isInBuilding() {
         return inBuilding;
     }
