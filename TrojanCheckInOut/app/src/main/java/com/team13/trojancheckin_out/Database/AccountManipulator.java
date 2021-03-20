@@ -38,22 +38,21 @@ public class AccountManipulator extends User {
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
     public List<User> getStudentAccounts() {
-
-        // If isManager == false, then that account is a student account
         referenceUsers.addValueEventListener(
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    int i = 0;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        i++;
                         User user = ds.getValue(User.class);
+                        if (user.isManager().equals("False")) {
+                            System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
+                            studentAccounts.add(user);
+                        }
                     }
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
+                public void onCancelled(DatabaseError databaseError) { }
         });
 
         return this.studentAccounts;
@@ -63,6 +62,23 @@ public class AccountManipulator extends User {
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
     public List<User> getManagerAccounts() {
+        referenceUsers.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            User user = ds.getValue(User.class);
+                            if (user.isManager().equals("True")) {
+                                System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
+                                managerAccounts.add(user);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { }
+                });
+
         return this.managerAccounts;
     }
 
@@ -76,9 +92,7 @@ public class AccountManipulator extends User {
      * @return true if the user account has been successfully created.
      */
     public Boolean createAccount(User user) {
-
-        // Take in parameters and create a new user in the DB
-        referenceUsers.child(String.valueOf(user.getId())).setValue(user);
+        referenceUsers.child(user.getId()).setValue(user);
         return true;
     }
 
@@ -87,9 +101,7 @@ public class AccountManipulator extends User {
      * @return true if the user account has been successfully deleted.
      */
     public Boolean deleteAccount(User user) {
-
-        // Delete the user from the DB
-        referenceUsers.child(String.valueOf(user.getId())).removeValue();
+        referenceUsers.child(user.getId()).removeValue();
         return true;
     }
 
