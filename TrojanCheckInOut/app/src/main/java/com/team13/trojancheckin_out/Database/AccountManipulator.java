@@ -1,12 +1,17 @@
 package com.team13.trojancheckin_out.Database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import java.util.HashMap;
@@ -28,20 +33,43 @@ public class AccountManipulator extends User {
     private List<User> managerAccounts;
 
     /**
-     * Accesses the Google Firebase to parse the JSON data into Java "User" objects and into
-     * the studentAccounts and managerAccounts data structures.
+     * @return the current list of registered student accounts. Accesses the Google Firebase to
+     * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
-    public void jsonToJava() { }
+    public List<User> getStudentAccounts() {
+
+        // If isManager == false, then that account is a student account
+        referenceUsers.addValueEventListener(
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int i = 0;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        i++;
+                        User user = ds.getValue(User.class);
+                        System.out.println(i + ": Definitely Manager: " + user.isManager());
+                        if (user.isManager().equals("true")) {
+                            System.out.println(i + ": " + user.getEmail());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // read query is cancelled.
+                }
+        });
+
+        return this.studentAccounts;
+    }
 
     /**
-     * @return the current list of registered student accounts.
+     * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
-    public List<User> getStudentAccounts() { return this.studentAccounts; }
-
-    /**
-     * @return the current list of manager accounts.
-     */
-    public List<User> getManagerAccounts() { return this.managerAccounts; }
+    public List<User> getManagerAccounts() {
+        return this.managerAccounts;
+    }
 
     /**
      * @param email
