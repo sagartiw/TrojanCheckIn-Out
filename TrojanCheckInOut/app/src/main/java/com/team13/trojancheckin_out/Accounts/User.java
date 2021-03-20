@@ -17,12 +17,12 @@ public class User implements Serializable {
     // Have to use an image builder, using String for now
     private String photo;
 
-    private String id;
+    private int id;
     private boolean inBuilding;
     private Building currentBuilding;
     private List<Building> history;
     private String major;
-    private String manager;
+    private boolean isManager;
 
     /**
      * User object via a default constructor.
@@ -40,11 +40,11 @@ public class User implements Serializable {
      * @param currentBuilding
      * @param history
      * @param major
-     * @param manager
+     * @param isManager
      */
-    public User (String name, String email, String password, String photo, String id,
+    public User (String name, String email, String password, String photo, int id,
                  boolean inBuilding, Building currentBuilding, List<Building> history,
-                 String major, String manager) {
+                 String major, boolean isManager) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -54,7 +54,7 @@ public class User implements Serializable {
         this.currentBuilding = currentBuilding;
         this.history = history;
         this.major = major;
-        this.manager = manager;
+        this.isManager = isManager;
     }
 
     /**
@@ -92,13 +92,15 @@ public class User implements Serializable {
         this.photo = photo;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
+
+    public void setStringId(String id) {this.id = Integer.valueOf(id);}
 
     public boolean isInBuilding() {
         return inBuilding;
@@ -132,12 +134,13 @@ public class User implements Serializable {
         this.major = major;
     }
 
-    public String isManager() {
-        return this.manager;
+
+    public boolean isManager() {
+        return this.isManager;
     }
 
-    public void setManager(String manager) {
-        this.manager = this.manager;
+    public void setManager(Boolean isManager) {
+        this.isManager = this.isManager;
     }
 
     /**

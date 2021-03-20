@@ -39,9 +39,9 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<Building> buildingList = new ArrayList<>();
-                String isManager = "true";
+                boolean isManager = true;
                 User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
-                        "Photo", "123", false, null, buildingList,
+                        "Photo", 123, false, null, buildingList,
                         "Business", isManager);
 
                 Intent intent = new Intent(Register.this, CompleteProfile.class);

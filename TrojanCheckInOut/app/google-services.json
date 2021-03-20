@@ -1,6 +1,10 @@
 {
   "project_info": {
     "project_number": "669230689738",
+<<<<<<< HEAD
+    "firebase_url": "https://trojancheckin-out-default-rtdb.firebaseio.com",
+=======
+>>>>>>> e163132bef6241d49896c333afb840e45c086368
     "project_id": "trojancheckin-out",
     "storage_bucket": "trojancheckin-out.appspot.com"
   },

@@ -18,13 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.UPC.Building;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
-    List<Product> productList;
+    List<Building> buildingList;
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -52,44 +54,39 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //initializing the productlist
-        productList = new ArrayList<>();
+        buildingList = new ArrayList<>();
 
 
         //adding some items to our list
-        productList.add(
-                new Product(
-                        1,
+        buildingList.add(
+                new Building(
+                        "Salvatori Computer Science Center",
                         "SAL",
-                        14,
-                        30
+                        100,
+                        null,
+                        null
                 ));
 
-        productList.add(
-                new Product(
-                        1,
-                        "RTH",
-                        47,
-                        150
+        buildingList.add(
+                new Building(
+                        "Salvatori Computer Science Center",
+                        "SAL",
+                        100,
+                        null,
+                        null
                 ));
 
-        productList.add(
-                new Product(
-                        1,
-                        "JFF",
-                        432,
-                        500
-                ));
-
-        productList.add(
-                new Product(
-                        1,
-                        "WPH",
-                        69,
-                        420
+        buildingList.add(
+                new Building(
+                        "Salvatori Computer Science Center",
+                        "SAL",
+                        100,
+                        null,
+                        null
                 ));
 
         //creating recyclerview adapter
-        ProductAdapter adapter = new ProductAdapter(this, productList);
+        BuildingAdapter adapter = new BuildingAdapter(this, buildingList);
 
         //setting adapter to recyclerview
         recyclerView.setAdapter(adapter);
