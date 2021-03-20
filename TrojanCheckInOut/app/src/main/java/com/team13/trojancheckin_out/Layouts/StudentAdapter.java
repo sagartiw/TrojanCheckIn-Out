@@ -1,76 +1,67 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 
 import java.util.List;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
-
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
 
     //this context we will use to inflate the layout
     private Context mCtx;
-    private ImageButton qrButton;
-    private Button cap;
+    private Button profileButton, historyBuilding;
 
     //we are storing all the products in a list
-    private List<Product> productList;
+    private List<User> studentList;
 
     //getting the context and product list with constructor
-    public ProductAdapter(Context mCtx, List<Product> productList) {
+    public StudentAdapter(Context mCtx, List<User> studentList) {
         this.mCtx = mCtx;
-        this.productList = productList;
+        this.studentList = studentList;
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StudentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_products, null);
-        return new ProductViewHolder(view);
+        View view = inflater.inflate(R.layout.layout_students, null);
+        return new StudentViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(StudentViewHolder holder, int position) {
         //getting the product of the specified position
-        Product product = productList.get(position);
+        User student = studentList.get(position);
 
         //binding the data with the viewholder views
-        holder.textViewTitle.setText(product.getTitle());
-        holder.textViewCurrent.setText(String.valueOf(product.getCurrent()));
-        holder.textViewCapacity.setText(String.valueOf(product.getCapacity()));
-        holder.textViewPercent.setText(String.valueOf(product.getPercent()) + "%");
-        holder.progressBar.setProgress((product.getPercent()));
+        holder.fullName.setText(student.getName());
+        holder.studentID.setText(String.valueOf(student.getId()));
+        holder.currentBuilding.setText("Current Building: SAL");
 
-        qrButton = holder.imageButton;
-        cap = holder.capacity;
+        profileButton = holder.profileButton;
+        historyBuilding = holder.historyButton;
 
-        qrButton.setOnClickListener(new View.OnClickListener() {
+        profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
-                View popupView = inflater.inflate(R.layout.qr_popup, null);
+                View popupView = inflater.inflate(R.layout.student_profile_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
@@ -95,12 +86,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
         });
 
-        cap.setOnClickListener(new View.OnClickListener() {
+        historyBuilding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
-                View popupView = inflater.inflate(R.layout.cap_popup, null);
+                View popupView = inflater.inflate(R.layout.student_history_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
@@ -129,27 +120,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return studentList.size();
     }
 
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    class StudentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle, textViewCurrent, textViewCapacity, textViewPercent;
-        ImageButton imageButton;
-        ProgressBar progressBar;
-        Button capacity;
+        TextView fullName, studentID, currentBuilding;
+        Button profileButton, historyButton;
 
-        public ProductViewHolder(View itemView) {
+        public StudentViewHolder(View itemView) {
             super(itemView);
 
-            textViewTitle = itemView.findViewById(R.id.textViewTitle);
-            textViewCurrent = itemView.findViewById(R.id.textViewCurrent);
-            textViewCapacity = itemView.findViewById(R.id.textViewCapacity);
-            textViewPercent = itemView.findViewById(R.id.textViewPercent);
-            progressBar = itemView.findViewById(R.id.progressBar);
-            imageButton = itemView.findViewById(R.id.imageButton4);
-            capacity = itemView.findViewById(R.id.button3);
+            fullName = itemView.findViewById(R.id.fullName);
+            studentID = itemView.findViewById(R.id.studentID);
+            currentBuilding = itemView.findViewById(R.id.currentBuilding);
+            profileButton = itemView.findViewById(R.id.profileButton);
+            historyButton = itemView.findViewById(R.id.historyButton);
         }
     }
 

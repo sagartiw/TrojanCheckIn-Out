@@ -9,12 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
+        <activity android:name="com.team13.trojancheckin_out.Layouts.StudentsList">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.team13.trojancheckin_out.Layouts.SearchStudent2">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ScanActivity" />
         <activity android:name=".QRCodeScanner" />
 
@@ -27,8 +31,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.team13.trojancheckin_out.Layouts.EditProfile" >
+        <activity android:name="com.team13.trojancheckin_out.Layouts.EditProfile">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

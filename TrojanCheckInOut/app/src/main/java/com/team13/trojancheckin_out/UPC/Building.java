@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Building {
     private String name;
+    public String abbreviation;
     private int capacity;
     private List<User> students;
 
@@ -29,10 +30,23 @@ public class Building {
      * @param students
      * @param QRCode
      */
-    public Building(String name, int capacity, List<User> students, String QRCode) {
+    public Building(String name, String abbreviation, int capacity, List<User> students, String QRCode) {
+        this.name = name;
+        this.abbreviation = abbreviation;
         this.capacity = capacity;
         this.students = students;
         this.QRCode = QRCode;
+    }
+
+    public String getName() { return this.name; }
+    public String getAbbreviation() { return this.abbreviation; }
+    public int getCurrentCount() { /*return this.students.size();*/ return 10; }
+    public int getPercent() {
+        double cur = (double) this.getCurrentCount();
+        double cap = (double) this.capacity;
+        double perc = (cur/cap)*100;
+        int percent = (int) perc;
+        return percent;
     }
 
     /**
