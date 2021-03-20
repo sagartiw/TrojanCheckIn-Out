@@ -127,6 +127,7 @@ public class StudentLanding extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.sign_out_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                Button submit = (Button) popupView.findViewById(R.id.button10);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -139,6 +140,14 @@ public class StudentLanding extends AppCompatActivity {
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        v.getContext().startActivity(intent);
+                    }
+                });
 
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
