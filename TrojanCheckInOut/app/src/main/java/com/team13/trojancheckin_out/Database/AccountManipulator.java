@@ -50,15 +50,12 @@ public class AccountManipulator extends User {
     public Boolean verifyEmail(String email) { return true; }
 
     /**
-     * @param email
-     * @param password
-     * @param id
      * @return true if the user account has been successfully created.
      */
     public Boolean createAccount(User user) {
 
         // Take in parameters and create a new user in the DB
-        referenceUsers.child(Integer.toString(user.getId())).setValue(user);
+        referenceUsers.child(user.getId()).setValue(user);
         return true;
     }
 
@@ -69,7 +66,7 @@ public class AccountManipulator extends User {
     public Boolean deleteAccount(User user) {
 
         // Delete the user from the DB
-        referenceUsers.child(Integer.toString(user.getId())).removeValue();
+        referenceUsers.child(user.getId()).removeValue();
         return true;
     }
 
