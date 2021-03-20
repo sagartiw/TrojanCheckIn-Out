@@ -56,12 +56,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -70,12 +70,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -84,12 +84,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -98,12 +98,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -112,12 +112,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -126,12 +126,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -140,12 +140,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -154,12 +154,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -168,12 +168,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -182,12 +182,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -196,12 +196,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -210,12 +210,12 @@ public class StudentsList extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         //creating recyclerview adapter
