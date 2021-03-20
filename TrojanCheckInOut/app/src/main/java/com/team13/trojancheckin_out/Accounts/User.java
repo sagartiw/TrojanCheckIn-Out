@@ -133,11 +133,11 @@ public class User implements Serializable {
     }
 
     public boolean isManager() {
-        return isManager;
+        return this.isManager;
     }
 
     public void setManager(boolean manager) {
-        isManager = manager;
+        this.isManager = isManager;
     }
 
     /**

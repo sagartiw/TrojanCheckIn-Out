@@ -63,6 +63,7 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
                 user.setId(studentID.getText().toString());
+                user.setManager(true);
 
                 Building building = new Building();
                 building.setName("SAL");
@@ -70,7 +71,8 @@ public class CompleteProfile extends AppCompatActivity {
                 user.getHistory().add(building);
 
                 // Push user to DB
-                accountManipulator.referenceUsers.child(user.getId()).setValue(user);
+                accountManipulator.createAccount(user);
+                accountManipulator.getStudentAccounts();
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }
