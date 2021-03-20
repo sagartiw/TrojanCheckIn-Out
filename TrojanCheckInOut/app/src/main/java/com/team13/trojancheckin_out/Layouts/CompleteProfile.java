@@ -58,12 +58,13 @@ public class CompleteProfile extends AppCompatActivity {
                 lName = (EditText) findViewById(R.id.editTextTextPersonName2);
                 major = ((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString();
                 studentID = (EditText) findViewById(R.id.editTextTextPersonName4);
+                String manage = "true";
 
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
                 user.setId(studentID.getText().toString());
-                user.setManager("true");
+                user.setManager(manage);
 
                 Building building = new Building();
                 building.setName("SAL");
