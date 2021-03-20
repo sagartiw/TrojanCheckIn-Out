@@ -22,7 +22,7 @@ public class User implements Serializable {
     private Building currentBuilding;
     private List<Building> history;
     private String major;
-    private String manager;
+    private String isManager;
 
     /**
      * User object via a default constructor.
@@ -40,11 +40,11 @@ public class User implements Serializable {
      * @param currentBuilding
      * @param history
      * @param major
-     * @param manager
+     * @param isManager
      */
     public User (String name, String email, String password, String photo, String id,
                  boolean inBuilding, Building currentBuilding, List<Building> history,
-                 String major, String manager) {
+                 String major, String isManager) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -54,7 +54,7 @@ public class User implements Serializable {
         this.currentBuilding = currentBuilding;
         this.history = history;
         this.major = major;
-        this.manager = manager;
+        this.isManager = isManager;
     }
 
     /**
@@ -135,12 +135,12 @@ public class User implements Serializable {
     }
 
 
-    public String manager() {
-        return this.manager;
+    public String isManager() {
+        return this.isManager;
     }
 
-    public void setManager(String manager) {
-        this.manager = this.manager;
+    public void setManager(String isManager) {
+        this.isManager = isManager;
     }
 
     /**
