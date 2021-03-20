@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
                 List<Building> buildingList = new ArrayList<>();
                 User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                         "Photo", "123", false, null, buildingList,
-                        "Business", true);
+                        "Business", "true");
 
                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                 intent.putExtra("PrevPageData", user);

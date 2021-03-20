@@ -101,7 +101,7 @@ public class SearchStudent2 extends AppCompatActivity {
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -110,12 +110,12 @@ public class SearchStudent2 extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -124,12 +124,12 @@ public class SearchStudent2 extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         studentList.add(
@@ -138,12 +138,12 @@ public class SearchStudent2 extends AppCompatActivity {
                         "mindydie@usc.edu",
                         "hello",
                         "photo",
-                        123456789,
+                        "123456789",
                         true,
                         null,
                         null,
                         "CSBA",
-                        false
+                        "false"
                 ));
 
         //creating recyclerview adapter

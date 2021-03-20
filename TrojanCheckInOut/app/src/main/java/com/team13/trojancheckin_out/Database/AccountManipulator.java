@@ -1,17 +1,23 @@
 package com.team13.trojancheckin_out.Database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class generates and deletes user accounts, facilitates logins and logouts, and provides access
@@ -28,20 +34,37 @@ public class AccountManipulator extends User {
     private List<User> managerAccounts;
 
     /**
-     * Accesses the Google Firebase to parse the JSON data into Java "User" objects and into
-     * the studentAccounts and managerAccounts data structures.
+     * @return the current list of registered student accounts. Accesses the Google Firebase to
+     * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
-    public void jsonToJava() { }
+    public List<User> getStudentAccounts() {
+
+        // If isManager == false, then that account is a student account
+        referenceUsers.addValueEventListener(
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int i = 0;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        i++;
+                        User user = ds.getValue(User.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+        });
+
+        return this.studentAccounts;
+    }
 
     /**
-     * @return the current list of registered student accounts.
+     * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
-    public List<User> getStudentAccounts() { return this.studentAccounts; }
-
-    /**
-     * @return the current list of manager accounts.
-     */
-    public List<User> getManagerAccounts() { return this.managerAccounts; }
+    public List<User> getManagerAccounts() {
+        return this.managerAccounts;
+    }
 
     /**
      * @param email
@@ -55,7 +78,7 @@ public class AccountManipulator extends User {
     public Boolean createAccount(User user) {
 
         // Take in parameters and create a new user in the DB
-        referenceUsers.child(user.getId()).setValue(user);
+        referenceUsers.child(String.valueOf(user.getId())).setValue(user);
         return true;
     }
 
@@ -66,7 +89,7 @@ public class AccountManipulator extends User {
     public Boolean deleteAccount(User user) {
 
         // Delete the user from the DB
-        referenceUsers.child(user.getId()).removeValue();
+        referenceUsers.child(String.valueOf(user.getId())).removeValue();
         return true;
     }
 
