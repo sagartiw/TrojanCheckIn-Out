@@ -45,11 +45,12 @@ public class AccountManipulator extends User {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     int i = 0;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-//                        System.out.println(i + ": " + ds.getValue());
                         i++;
                         User user = ds.getValue(User.class);
-                        System.out.println(i + ": " + user.getName());
+                        System.out.println(i + ": Definitely Manager: " + user.isManager());
+                        if (user.isManager().equals("true")) {
+                            System.out.println(i + ": " + user.getEmail());
+                        }
                     }
 
                 }

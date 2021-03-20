@@ -22,7 +22,7 @@ public class User implements Serializable {
     private Building currentBuilding;
     private List<Building> history;
     private String major;
-    private boolean isManager;
+    private String isManager;
 
     /**
      * User object via a default constructor.
@@ -44,7 +44,7 @@ public class User implements Serializable {
      */
     public User (String name, String email, String password, String photo, String id,
                  boolean inBuilding, Building currentBuilding, List<Building> history,
-                 String major, boolean isManager) {
+                 String major, String isManager) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -132,7 +132,7 @@ public class User implements Serializable {
         this.major = major;
     }
 
-    public boolean isManager() {
+    public String isManager() {
         return this.isManager;
     }
 

@@ -63,7 +63,7 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
                 user.setId(studentID.getText().toString());
-                user.setManager(true);
+                //user.setManager(true);
 
                 Building building = new Building();
                 building.setName("SAL");
