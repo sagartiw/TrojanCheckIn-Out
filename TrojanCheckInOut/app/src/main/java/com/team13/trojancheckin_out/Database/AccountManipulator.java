@@ -48,19 +48,11 @@ public class AccountManipulator extends User {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         i++;
                         User user = ds.getValue(User.class);
-                        System.out.println(i + ": EMAIL " + user.getEmail());
-                        System.out.println(i + "PASSWORD: " + user.getPassword());
-                        System.out.println(i + ": Definitely Manager: " + user.isManager());
-                        if (Objects.equals(user.isManager(), true)) {
-                            System.out.println(i + ": " + user.getEmail());
-                        }
                     }
-
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    // read query is cancelled.
                 }
         });
 
