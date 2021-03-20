@@ -136,7 +136,7 @@ public class User implements Serializable {
         return this.isManager;
     }
 
-    public void setManager(boolean manager) {
+    public void setManager(String manager) {
         this.isManager = isManager;
     }
 
