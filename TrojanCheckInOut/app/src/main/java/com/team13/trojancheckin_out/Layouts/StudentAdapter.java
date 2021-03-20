@@ -61,7 +61,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
-                View popupView = inflater.inflate(R.layout.qr_popup, null);
+                View popupView = inflater.inflate(R.layout.student_profile_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
@@ -91,7 +91,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
-                View popupView = inflater.inflate(R.layout.cap_popup, null);
+                View popupView = inflater.inflate(R.layout.student_history_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window

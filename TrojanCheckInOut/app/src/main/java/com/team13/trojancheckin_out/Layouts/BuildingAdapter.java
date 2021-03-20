@@ -3,6 +3,7 @@ package com.team13.trojancheckin_out.Layouts;
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -18,47 +19,49 @@ import android.widget.TextView;
 
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
 
     //this context we will use to inflate the layout
     private Context mCtx;
     private ImageButton qrButton;
-    private Button cap;
+    private Button cap, studentList;
 
     //we are storing all the products in a list
-    private List<Product> productList;
+    private List<Building> buildingList;
 
     //getting the context and product list with constructor
-    public ProductAdapter(Context mCtx, List<Product> productList) {
+    public BuildingAdapter(Context mCtx, List<Building> buildingList) {
         this.mCtx = mCtx;
-        this.productList = productList;
+        this.buildingList = buildingList;
     }
 
     @Override
-    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BuildingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_products, null);
-        return new ProductViewHolder(view);
+        return new BuildingViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(BuildingViewHolder holder, int position) {
         //getting the product of the specified position
-        Product product = productList.get(position);
+        Building building = buildingList.get(position);
 
         //binding the data with the viewholder views
-        holder.textViewTitle.setText(product.getTitle());
-        holder.textViewCurrent.setText(String.valueOf(product.getCurrent()));
-        holder.textViewCapacity.setText(String.valueOf(product.getCapacity()));
-        holder.textViewPercent.setText(String.valueOf(product.getPercent()) + "%");
-        holder.progressBar.setProgress((product.getPercent()));
+        holder.textViewTitle.setText(building.getAbbreviation());
+        holder.textViewCurrent.setText(String.valueOf(building.getCurrentCount()));
+        holder.textViewCapacity.setText(String.valueOf(building.getCapacity()));
+        holder.textViewPercent.setText(String.valueOf(building.getPercent()) + "%");
+        holder.progressBar.setProgress((building.getPercent()));
 
         qrButton = holder.imageButton;
         cap = holder.capacity;
+        studentList = holder.profile;
 
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,23 +122,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 });
             }
         });
+
+        studentList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), StudentsList.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return buildingList.size();
     }
 
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    class BuildingViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewTitle, textViewCurrent, textViewCapacity, textViewPercent;
         ImageButton imageButton;
         ProgressBar progressBar;
-        Button capacity;
+        Button capacity, profile;
 
-        public ProductViewHolder(View itemView) {
+        public BuildingViewHolder(View itemView) {
             super(itemView);
 
             textViewTitle = itemView.findViewById(R.id.buildName);
@@ -145,6 +156,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             progressBar = itemView.findViewById(R.id.progressBar);
             imageButton = itemView.findViewById(R.id.imageButton4);
             capacity = itemView.findViewById(R.id.capButton);
+            profile = itemView.findViewById(R.id.profileButton);
         }
     }
 
