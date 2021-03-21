@@ -60,6 +60,7 @@ public class BuildingManipulator {
      */
     public Boolean processCSV(File file) {
         try {
+            System.out.println("HERE: " + file);
             this.file = file;
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
@@ -68,13 +69,13 @@ public class BuildingManipulator {
                 // CSV files will put unwanted double quotes around each line of data
                 line = line.replaceAll("\"","");
 
-                // <Abbreviation>|<Full Name>|<Capacity>
+                // <Full Name>|<Abbreviation>|<Capacity>
                 String[] data = line.split("@");
 
                 Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
 
                 // Store in DB
-                referenceBuildings.child(data[0]).setValue(building);
+                referenceBuildings.child(data[1]).setValue(building);
             }
             scan.close();
         } catch (FileNotFoundException e) {
