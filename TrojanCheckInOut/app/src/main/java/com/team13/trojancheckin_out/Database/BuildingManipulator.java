@@ -73,6 +73,7 @@ public class BuildingManipulator {
 
                 Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
 
+
                 // Store in DB
                 referenceBuildings.child(data[0]).setValue(building);
             }

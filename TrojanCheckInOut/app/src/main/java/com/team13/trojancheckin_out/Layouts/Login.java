@@ -1,3 +1,4 @@
+
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Intent;
@@ -71,7 +72,6 @@ public class Login extends AppCompatActivity {
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) { }
                 });
