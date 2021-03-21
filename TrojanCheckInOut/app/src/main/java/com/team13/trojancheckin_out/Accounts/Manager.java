@@ -1,5 +1,9 @@
 package com.team13.trojancheckin_out.Accounts;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -14,8 +18,10 @@ import java.util.List;
 public class Manager extends User {
 
     BuildingManipulator buildingManipulator;
-    public Manager(BuildingManipulator buildingManipulator) {
+    AccountManipulator accountManipulator;
+    public Manager(BuildingManipulator buildingManipulator, AccountManipulator accountManipulator) {
         this.buildingManipulator = buildingManipulator;
+        this.accountManipulator = accountManipulator;
     }
 
     /**
@@ -59,13 +65,24 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(String time, Building building, int id, String major) {
-        // TODO:
+    public List<User> searchStudents(String time, Building building, String id, String major) {
+        // TODO: time
 
-//        // If the only given parameter is the building object
-//        if (building != null && time == null && id == -1 && major == null) {
-//            buildingManipulator.referenceBuildings.child(building.getAbbreviation()).child("students");
-//        }
-        return new ArrayList<User>();
+        List<User> list = new ArrayList<>();
+        if (id != null) {
+            list.add(accountManipulator.getStudentAccounts().get(id));
+            return list;
+        } else if (building != null){
+            return building.getCurrentStudents();
+        } else if (major != null) {
+            for (User user : accountManipulator.getStudentAccounts().values()) {
+                if (user.getMajor().equals(major)) {
+                    list.add(user);
+                }
+            }
+            return list;
+        }
+
+        return list;
     }
 }
