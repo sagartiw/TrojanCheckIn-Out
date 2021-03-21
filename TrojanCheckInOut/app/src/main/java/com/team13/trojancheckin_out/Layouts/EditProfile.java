@@ -15,15 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 
 public class EditProfile extends AppCompatActivity {
 
     private Button Back3; //id back3
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         Back3 = (Button)findViewById(R.id.back3);
 

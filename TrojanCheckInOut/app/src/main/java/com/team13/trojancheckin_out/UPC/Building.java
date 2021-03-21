@@ -2,6 +2,7 @@ package com.team13.trojancheckin_out.UPC;
 
 import com.team13.trojancheckin_out.Accounts.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
@@ -32,11 +33,11 @@ public class Building {
      * @param students
      * @param QRCode
      */
-    public Building(String name, String abbreviation, int capacity, List<User> students, String QRCode) {
+    public Building(String name, String abbreviation, int capacity, String QRCode) {
         this.name = name;
         this.abbreviation = abbreviation;
         this.capacity = capacity;
-        this.students = students;
+        this.students = new ArrayList<User>();
         this.QRCode = QRCode;
     }
 
@@ -94,7 +95,7 @@ public class Building {
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
     /**
