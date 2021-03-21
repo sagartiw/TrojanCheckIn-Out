@@ -47,7 +47,7 @@ public class CompleteProfile extends AppCompatActivity {
 
         Register = (Button)findViewById(R.id.register3);
 
-        // Grab currrent data for the user
+        // Grab current data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         Register.setOnClickListener(new View.OnClickListener() {
