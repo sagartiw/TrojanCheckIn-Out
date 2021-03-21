@@ -48,17 +48,17 @@ public class Register extends AppCompatActivity {
                 //ALERT 1: check if email is usc email and is valid
                 if (!email.getText().toString().contains("@usc.edu") &&
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-
+                    System.out.println("EMAIL ERROR!");
                 }
                 //ALERT 2: check if passwords match
                 else if (!password.getText().toString().equals(completePassword.getText().toString())) {
-
-
+                    System.out.println("PASSWORD ERROR!");
                 }
                 //ALERT 3: account already exists
                 else if (/*INSERT ARI'S ACCOUNT MANIPULATOR CODE WHEN ITS FIXED.
                             Access student accounts and manager accounts similar to login*/
-                            accountManipulator.){
+                            false){
+
 
                 }
                 //REGISTER. We can create a user object and move on to Complete Profile
