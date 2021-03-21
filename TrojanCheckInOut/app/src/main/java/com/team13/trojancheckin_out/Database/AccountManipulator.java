@@ -30,14 +30,14 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
-    private List<User> studentAccounts;
-    private List<User> managerAccounts;
+    private Map<String, User> studentAccounts;
+    private Map<String, User> managerAccounts;
 
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
-    public List<User> getStudentAccounts() {
+    public Map<String, User> getStudentAccounts() {
         referenceUsers.addValueEventListener(
             new ValueEventListener() {
                 @Override
@@ -46,7 +46,7 @@ public class AccountManipulator extends User {
                         User user = ds.getValue(User.class);
                         if (user.isManager().equals("False")) {
                             System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
-                            studentAccounts.add(user);
+                            studentAccounts.put(user.getId(), user);
                         }
                     }
                 }
@@ -61,7 +61,7 @@ public class AccountManipulator extends User {
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
-    public List<User> getManagerAccounts() {
+    public Map<String, User> getManagerAccounts() {
         referenceUsers.addValueEventListener(
                 new ValueEventListener() {
                     @Override
@@ -70,7 +70,7 @@ public class AccountManipulator extends User {
                             User user = ds.getValue(User.class);
                             if (user.isManager().equals("True")) {
                                 System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
-                                managerAccounts.add(user);
+                                managerAccounts.put(user.getId(), user);
                             }
                         }
                     }
