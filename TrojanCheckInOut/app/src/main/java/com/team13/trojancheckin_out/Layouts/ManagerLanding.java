@@ -40,7 +40,7 @@ public class ManagerLanding extends AppCompatActivity {
     RecyclerView recyclerView;
 
     private Button Search;
-    private TextView txt_path;
+    private TextView txt_path, successText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +165,7 @@ public class ManagerLanding extends AppCompatActivity {
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
                 Button uploadFile = (Button) popupView.findViewById(R.id.button8);
                 txt_path = (TextView) popupView.findViewById(R.id.fileName);
+                successText = (TextView) popupView.findViewById(R.id.successText);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -208,8 +209,10 @@ public class ManagerLanding extends AppCompatActivity {
         switch (requestCode) {
             case 10:
                 if (resultCode == RESULT_OK) {
-                    String path = "/storage/emulated/0/Download/buildings.txt";
+                    String dataPath = data.getData().getPath();
+                    String path = dataPath.replace("/document/raw:", "");
                     txt_path.setText(path);
+                    successText.setText("Upload successful!");
                     BuildingManipulator buildingManipulator = new BuildingManipulator();
                     File file = new File(path);
                     buildingManipulator.processCSV(file);
