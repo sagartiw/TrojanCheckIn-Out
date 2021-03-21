@@ -198,7 +198,7 @@ public class CompleteProfile extends AppCompatActivity {
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
-                user.setManager("true");
+                user.setManager("false");
                 user.setId(studentID.getText().toString());
 
                 Building building = new Building();
@@ -208,9 +208,9 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED");
+                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED" + accountManipulator.getStudentAccounts().toString());
                 for (User user : accountManipulator.getStudentAccounts().values()) {
-                    System.out.println(user.getName());
+                    System.out.println("USER: " + user.getName());
                 }
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
