@@ -95,7 +95,7 @@ public class Building {
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
     /**
