@@ -6,4 +6,8 @@
     <string name="title_activity_search_student">SearchStudent</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="emailtitle">E-Mail Error!</string>
+    <string name="emailmsg">Please ensure that you email is valid and under the USC organization (@usc.edu).</string>
+    <string name="pwtitle">Password Error!</string>
+    <string name="pwmsg">Please ensure that your password and confirm password fields match.</string>
 </resources>
