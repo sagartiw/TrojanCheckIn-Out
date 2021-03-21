@@ -188,17 +188,16 @@ public class CompleteProfile extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Grab data from this current page
                 fName = (EditText) findViewById(R.id.editTextTextPersonName);
                 lName = (EditText) findViewById(R.id.editTextTextPersonName2);
                 major = ((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString();
                 studentID = (EditText) findViewById(R.id.editTextTextPersonName4);
-                String manage = "true";
 
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
-//                user.setStringId(studentID.getText().toString());
                 user.setManager("true");
                 user.setId(studentID.getText().toString());
 
@@ -209,7 +208,7 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-                accountManipulator.getStudentAccounts();
+                //accountManipulator.getStudentAccounts();
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }

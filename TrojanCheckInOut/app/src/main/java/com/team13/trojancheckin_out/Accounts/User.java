@@ -100,7 +100,9 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public void setStringId(String id) {this.id = id;}
+    public void setStringId(String id) {
+        this.id = id;
+    }
 
     public boolean isInBuilding() {
         return inBuilding;
@@ -136,7 +138,7 @@ public class User implements Serializable {
 
 
     public String isManager() {
-        return this.isManager;
+        return isManager;
     }
 
     public void setManager(String isManager) {
