@@ -44,6 +44,7 @@ public class AccountManipulator extends User {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         User user = ds.getValue(User.class);
+                        System.out.println("NAME: " + user.getName());
                         if (user.isManager().equalsIgnoreCase("False")) {
                             studentAccounts.put(user.getId(), user);
                         }
