@@ -1,10 +1,16 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,25 +63,40 @@ public class Login extends AppCompatActivity {
                 }
 
                 //reset the page here. user not found!
+                System.out.println("LOGIN ERROR!");
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.login_popup, null);
+                Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                Button registerButton = (Button) popupView.findViewById(R.id.button10);
 
-                /*
-                referenceUsers.addValueEventListener(
-                new ValueEventListener() {
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            User user = ds.getValue(User.class);
-                            if (user.isManager().equals("True")) {
-                                System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
-                                managerAccounts.put(user.getId(), user);
-                            }
-                        }
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
                     }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
                 });
-                * */
+
+                //reroute to register
+                registerButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent = new Intent(Login.this, Register.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
