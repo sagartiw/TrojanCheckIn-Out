@@ -110,6 +110,7 @@ public class AccountManipulator extends User {
      */
     public Boolean login() {
         //gets authorization
+        /*
         @Override
         public void onStart() {
             super.onStart();
@@ -140,6 +141,8 @@ public class AccountManipulator extends User {
                         }
                     }
                 });
+
+         */
         return true;
     }
 

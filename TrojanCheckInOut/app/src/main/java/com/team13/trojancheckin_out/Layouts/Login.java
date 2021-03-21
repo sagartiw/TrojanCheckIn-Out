@@ -13,6 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.team13.trojancheckin_out.Accounts.R;
 
+
+
 public class Login extends AppCompatActivity {
 
     private Button Login;
@@ -25,7 +27,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Login = findViewByID(R.id.login);
-
+/*
         //requests email through google sign in
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -37,15 +39,19 @@ public class Login extends AppCompatActivity {
         if (loginAccount != null){
             Toast.makeText(this, "User is signed in already", Toast.LENGTH_SHORT).show();
         }
+
+ */
         Login.setOnClickListener(new View.onClickListener(){
             @Override
                 public void onClick(View v) {
-                Intent sign = loginClient.getSignInIntent();
-                startActivityForResult(sign, GOOGLE_REQUEST_CODE);
+                //Intent sign = loginClient.getSignInIntent();
+                //startActivityForResult(sign, GOOGLE_REQUEST_CODE);
+                Intent intent = new Intent(Login.this, ManagerLanding.class);
+                startActivity(intent);
             }
         });
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -62,4 +68,6 @@ public class Login extends AppCompatActivity {
 
         }
     }
+
+ */
 }
