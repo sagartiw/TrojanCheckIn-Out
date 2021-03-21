@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="350dp"
-        android:layout_height="300dp"
+        android:layout_height="330dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -24,22 +24,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/button10"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="52dp"
-                android:backgroundTint="@color/red"
-                android:fontFamily="@font/montserrat_semibold"
-                android:letterSpacing="0.02"
-                android:stateListAnimator="@null"
-                android:text="SUBMIT"
-                android:textSize="10sp"
-                app:cornerRadius="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button8" />
 
             <Button
                 android:id="@+id/button8"
@@ -96,6 +80,30 @@
                 app:layout_constraintStart_toStartOf="@+id/button8"
                 app:layout_constraintTop_toTopOf="@+id/button8"
                 app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
+
+            <TextView
+                android:id="@+id/fileName"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="11dp"
+                android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button8" />
+
+            <TextView
+                android:id="@+id/successText"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fileName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
