@@ -52,8 +52,9 @@ public class Building {
 
     /**
      * @return the number of students currently in the building.
+     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
-    public int getCurrentCount() { return this.students.size(); }
+    public int getCurrentCount() { return 10;}
 
     /**
      * @return percentage of building filled up.
