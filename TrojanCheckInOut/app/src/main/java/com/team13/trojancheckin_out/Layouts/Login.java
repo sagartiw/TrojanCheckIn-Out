@@ -8,17 +8,20 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 public class Login extends AppCompatActivity {
 
-    private Button Login;
-    private Button Back;
-
     private AccountManipulator accountManipulator = new AccountManipulator();
     private EditText email, password;
+    private Button Login;
+    private Button Back;
     private User user;
     private Intent intent;
 
@@ -26,14 +29,14 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Login = (Button) findViewById(R.id.login);
+        email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
+        password = (EditText) findViewById(R.id.editTextTextPassword3);
 
-        Login = (Button)findViewById(R.id.login);
-
-        Login.setOnClickListener(new View.OnClickListener() {
+        Login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
-                password = (EditText) findViewById(R.id.editTextTextPassword3);
+
 
                 for (User checkUser : accountManipulator.getStudentAccounts().values()) {
                     if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)){
@@ -78,16 +81,5 @@ public class Login extends AppCompatActivity {
                 * */
             }
         });
-
-        Back = (Button)findViewById(R.id.back2);
-
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Startup.class);
-                startActivity(intent);
-            }
-        });
-
     }
 }
