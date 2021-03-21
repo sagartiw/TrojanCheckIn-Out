@@ -32,6 +32,7 @@ public class ManagerLanding extends AppCompatActivity {
     RecyclerView recyclerView;
 
     private Button Search;
+    private Button Import;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,15 @@ public class ManagerLanding extends AppCompatActivity {
             }
         });
 
+        Import = (Button)findViewById(R.id.button4);
+
+        Import.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
+                startActivity(intent);
+            }
+        });
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);

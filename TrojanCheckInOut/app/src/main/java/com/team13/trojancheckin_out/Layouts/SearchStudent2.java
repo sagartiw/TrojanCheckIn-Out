@@ -32,6 +32,8 @@ public class SearchStudent2 extends AppCompatActivity {
     //a list to store all the products
     List<User> studentList;
 
+    //User user = studentList.currentUser or something like that once we get oath working ; -kabir
+
     //the recyclerview
     RecyclerView recyclerView;
 
@@ -60,7 +62,9 @@ public class SearchStudent2 extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
-        menu.getMenu().add("Student View");
+        //if(user.isManager()) { this links to is manager working for current user - kabir
+            menu.getMenu().add("Student View");
+        //}
         menu.getMenu().add("Sign Out");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
