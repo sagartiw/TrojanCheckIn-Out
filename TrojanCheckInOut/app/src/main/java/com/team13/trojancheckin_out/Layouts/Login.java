@@ -1,3 +1,4 @@
+
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Intent;
@@ -8,10 +9,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
@@ -34,6 +31,7 @@ public class Login extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextTextPassword3);
 
         Login.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
 
@@ -73,12 +71,12 @@ public class Login extends AppCompatActivity {
                             }
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) { }
                 });
                 * */
             }
         });
+
     }
 }
