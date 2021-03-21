@@ -3,8 +3,12 @@ package com.team13.trojancheckin_out.Layouts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -19,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -28,6 +34,7 @@ import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,47 +227,6 @@ public class CompleteProfile extends AppCompatActivity {
             }
         });
 
-        profileImage = (ImageButton)findViewById(R.id.imageButton);
-
-        profileImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                StorageReference storageRef = storage.getReference();
-                //browse image files to find the one they want and take its image path locally
-
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (intent.resolveActivity(getPackageManager()) != null) { startActivityForResult(intent, PICK_PHOTO_CODE);
-
-                String filepath = "";
-                Uri file = Uri.fromFile(new File(filepath));
-                StorageReference selectedFile = storageRef.child("Profile Pictures/"+file.getLastPathSegment());
-                UploadTask uploadTask = selectedFile.putFile(file);
-
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        // ...
-                    }
-                });
-
-
-            }
-
-            public void onPickPhoto(View v) {
-                // Create intent for picking a photo from the gallery
-                 }
-            }
-        });
-
-
-
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,5 +285,74 @@ public class CompleteProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+        profileImage = (ImageButton)findViewById(R.id.imageButton);
+
+        profileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(intent, PICK_PHOTO_CODE);
+                }
+            }
+        });
     }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            String filepath = photoUri.getPath();
+            System.out.println("This is the filepath of the local file: " + filepath);
+
+            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
+            UploadTask uploadTask = selectedFile.putFile(photoUri);
+
+            user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+            user.setPhoto("");
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+
+        }
+    }
+
 }
