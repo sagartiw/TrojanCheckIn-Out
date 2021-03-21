@@ -112,11 +112,13 @@ public class Register extends AppCompatActivity {
                     });
                 }
                 else{
+                    System.out.println("BEFORE THE ACCOUNT SEARCH");
                     for (User checkUser : accountManipulator.getStudentAccounts().values()) {
                         if (checkUser.getEmail().equals(email)){
                             user = checkUser;
                             System.out.println(user.isManager());
                         }
+                        System.out.println("STUDENT ACCOUNT SEARCH INDICATOR");
                     }
 
                     for (User checkUser : accountManipulator.getManagerAccounts().values()) {
@@ -124,8 +126,9 @@ public class Register extends AppCompatActivity {
                             user = checkUser;
                             System.out.println(user.isManager());
                         }
+                        System.out.println("MANAGER ACCOUNT SEARCH INDICATOR");
                     }
-
+                    System.out.println("AFTER THE ACCOUNT SEARCH");
                     //ALERT 3: account already exists
                     if(user != null){
                         System.out.println("DUPLICATE ACCOUNT ERROR!");
@@ -165,6 +168,7 @@ public class Register extends AppCompatActivity {
                     }
                     //REGISTER. We can create a user object and move on to Complete Profile
                     else{
+                        System.out.println("CREATION OF ACCOUNT");
                         List<Building> buildingList = new ArrayList<>();
                         User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                                 "Photo", "123", false, null, buildingList,
