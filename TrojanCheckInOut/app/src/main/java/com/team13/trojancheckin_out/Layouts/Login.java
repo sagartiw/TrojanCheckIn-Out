@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 for (User checkUser : accountManipulator.getStudentAccounts().values()) {
                     if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)){
                         user = checkUser;
