@@ -60,7 +60,6 @@ public class BuildingManipulator {
      */
     public Boolean processCSV(File file) {
         try {
-            System.out.println("HERE: " + file);
             this.file = file;
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
