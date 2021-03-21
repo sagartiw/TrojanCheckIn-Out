@@ -3,6 +3,7 @@ package com.team13.trojancheckin_out.Database;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,30 +31,27 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
-    private Map<String, User> studentAccounts;
-    private Map<String, User> managerAccounts;
+    private Map<String, User> studentAccounts = new HashMap<>();
+    private Map<String, User> managerAccounts = new HashMap<>();
 
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
     public Map<String, User> getStudentAccounts() {
-        System.out.println("I'm in getSTudentAccounts");
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     System.out.println("I'm in onDataChange");
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        User user = ds.getValue(User.class);
 
-//                    System.out.println("FUCK 2");
-//                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                        User user = ds.getValue(User.class);
-//
-//                        System.out.println("MY NAME IS: " + user.getName());
-//                        if (user.isManager().equalsIgnoreCase("False")) {
-//                            System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
-//                            studentAccounts.put(user.getId(), user);
-//                        }
-//                    }
+                        System.out.println("MY NAME IS: " + user.getName());
+                        if (user.isManager().equalsIgnoreCase("False")) {
+                            System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
+                            studentAccounts.put(user.getId(), user);
+                        }
+                    }
                 }
 
                 @Override
@@ -98,6 +96,12 @@ public class AccountManipulator extends User {
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
+//        if (user.isManager().equalsIgnoreCase("true")) {
+//            managerAccounts.put(user.getId(), user);
+//        }
+//        else {
+//            studentAccounts.put(user.getId(), user);
+//        }
         return true;
     }
 
@@ -107,6 +111,13 @@ public class AccountManipulator extends User {
      */
     public Boolean deleteAccount(User user) {
         referenceUsers.child(user.getId()).removeValue();
+
+//        if (user.isManager().equalsIgnoreCase("true")) {
+//            managerAccounts.remove(user.getId());
+//        }
+//        else {
+//            studentAccounts.remove(user.getId());
+//        }
         return true;
     }
 
