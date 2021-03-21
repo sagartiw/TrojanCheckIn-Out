@@ -256,7 +256,7 @@ public class CompleteProfile extends AppCompatActivity {
                         user.setManager("true");
                     }
                 }
-
+                
                 user.setId(studentID.getText().toString());
 
                 Building building = new Building();
@@ -267,7 +267,6 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-                //accountManipulator.getStudentAccounts();
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);

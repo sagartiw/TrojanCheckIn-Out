@@ -79,7 +79,6 @@ public class ManagerLanding extends AppCompatActivity {
                         "Salvatori Computer Science Center",
                         "SAL",
                         100,
-                        null,
                         null
                 ));
 
@@ -88,7 +87,6 @@ public class ManagerLanding extends AppCompatActivity {
                         "Salvatori Computer Science Center",
                         "SAL",
                         100,
-                        null,
                         null
                 ));
 
@@ -97,7 +95,6 @@ public class ManagerLanding extends AppCompatActivity {
                         "Salvatori Computer Science Center",
                         "SAL",
                         100,
-                        null,
                         null
                 ));
 
