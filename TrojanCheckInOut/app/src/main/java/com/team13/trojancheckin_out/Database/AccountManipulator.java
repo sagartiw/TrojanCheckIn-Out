@@ -113,7 +113,40 @@ public class AccountManipulator extends User {
     /**
      * @return true if the user has successfully logged in.
      */
-    public Boolean login() { return true; }
+    public Boolean login() {
+        //gets authorization
+        @Override
+        public void onStart() {
+            super.onStart();
+            // Check if user is signed in (non-null) and update UI accordingly.
+            FirebaseUser currentUser = rootNode.getCurrentUser();
+            if(currentUser != null){
+                reload();
+            }
+        }
+
+
+        rootNode.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // nformation
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = rootNode.getCurrentUser();
+                            updateUI(user);
+                        }
+                        else {
+                            //sign in failed
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+        return true;
+    }
 
     /**
      * @return true if the user has successfully logged out.
