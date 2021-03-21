@@ -75,7 +75,7 @@ public class CompleteProfile extends AppCompatActivity {
                 accountManipulator.createAccount(user);
                 System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED");
                 for (User user : accountManipulator.getStudentAccounts().values()) {
-                    System.out.println(user.getName());
+                    System.out.println("USER: " + user.getName());
                 }
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
