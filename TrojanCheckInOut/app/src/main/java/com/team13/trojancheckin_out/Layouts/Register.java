@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
         Register = (Button)findViewById(R.id.signOut);
 
         email = (EditText) findViewById(R.id.editTextTextEmailAddress);
-        password = (EditText) findViewById(R.id.editTextTextPassword);
+        password = ( EditText) findViewById(R.id.editTextTextPassword);
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
