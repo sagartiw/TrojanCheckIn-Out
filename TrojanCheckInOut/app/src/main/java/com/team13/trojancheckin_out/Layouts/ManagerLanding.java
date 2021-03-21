@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
@@ -32,12 +33,14 @@ public class ManagerLanding extends AppCompatActivity {
     RecyclerView recyclerView;
 
     private Button Search;
-    private Button Import;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_landing);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         Search = (Button)findViewById(R.id.button5);
 
@@ -45,19 +48,12 @@ public class ManagerLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
 
-        Import = (Button)findViewById(R.id.button4);
 
-        Import.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
-                startActivity(intent);
-            }
-        });
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);

@@ -28,11 +28,10 @@ import java.util.List;
 public class SearchStudent2 extends AppCompatActivity {
     private Button Search;
     private Button Back;
-
+    private User user;
+    
     //a list to store all the products
     List<User> studentList;
-
-    //User user = studentList.currentUser or something like that once we get oath working ; -kabir
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -41,6 +40,8 @@ public class SearchStudent2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_student2);
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
+
         Search = (Button)findViewById(R.id.button7);
 
         Search.setOnClickListener(new View.OnClickListener() {
@@ -56,15 +57,14 @@ public class SearchStudent2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchStudent2.this, ManagerLanding.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
-        //if(user.isManager()) { this links to is manager working for current user - kabir
-            menu.getMenu().add("Student View");
-        //}
+        menu.getMenu().add("Student View");
         menu.getMenu().add("Sign Out");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
