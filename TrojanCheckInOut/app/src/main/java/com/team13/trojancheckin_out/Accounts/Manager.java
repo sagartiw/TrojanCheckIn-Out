@@ -66,22 +66,31 @@ public class Manager extends User {
      * @return the searched student.
      */
     public List<User> searchStudents(String time, Building building, String id, String major) {
-        // TODO: time
+        // TODO: add constraints for time
 
         List<User> list = new ArrayList<>();
-        if (id != null) {
-            list.add(accountManipulator.getStudentAccounts().get(id));
-            return list;
-        } else if (building != null){
-            return building.getCurrentStudents();
-        } else if (major != null) {
-            for (User user : accountManipulator.getStudentAccounts().values()) {
-                if (user.getMajor().equals(major)) {
-                    list.add(user);
-                }
-            }
-            return list;
-        }
+//        if (id != null) {
+//            list.add(accountManipulator.getStudentAccounts().get(id));
+//            return list;
+//        } else if (building != null){
+//            if (major != null) {
+//                for (User user : building.getCurrentStudents()) {
+//                    if (user.getMajor().equals(major)){
+//                        list.add(user);
+//                    }
+//                }
+//                return list;
+//            } else {
+//                return building.getCurrentStudents();
+//            }
+//        } else if (major != null) {
+//            for (User user : accountManipulator.getStudentAccounts().values()) {
+//                if (user.getMajor().equals(major)) {
+//                    list.add(user);
+//                }
+//            }
+//            return list;
+//        }
 
         return list;
     }
