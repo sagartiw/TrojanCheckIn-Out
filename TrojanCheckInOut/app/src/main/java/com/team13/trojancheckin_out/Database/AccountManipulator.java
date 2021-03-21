@@ -39,36 +39,45 @@ public class AccountManipulator extends User {
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
     public Map<String, User> getStudentAccounts() {
-
         referenceUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        User user = ds.getValue(User.class);
+//                        System.out.println(user.isManager());
+//                        if(user.isManager() == null){ user.setManager("false"); }
+                        if (user.isManager().equalsIgnoreCase("false")) {
+                            studentAccounts.put(user.getId(), user);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
         });
 
-        return this.studentAccounts;
+        return studentAccounts;
     }
 
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
     public Map<String, User> getManagerAccounts() {
-        referenceUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    User user = ds.getValue(User.class);
-                    if (user.isManager().equalsIgnoreCase("true")) {
-                        studentAccounts.put(user.getId(), user);
+        referenceUsers.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            User user = ds.getValue(User.class);
+                            if (user.isManager().equalsIgnoreCase("true")) {
+                                managerAccounts.put(user.getId(), user);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { }
+                });
 
         return managerAccounts;
     }
@@ -77,9 +86,7 @@ public class AccountManipulator extends User {
      * @param email
      * @return true if the user email has been successfully verified.
      */
-    public Boolean verifyEmail(String email) {
-        return true;
-    }
+    public Boolean verifyEmail(String email) { return true; }
 
     /**
      * @return true if the user account has been successfully created.
