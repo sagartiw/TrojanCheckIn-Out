@@ -4,7 +4,6 @@ import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +32,18 @@ public class Manager extends User {
      * @param capacity
      * @return true if the building capacity has been successfully updated.
      */
-    public Boolean updateBuildingCapacity(Building building, int capacity) { return true; }
+    public Boolean updateBuildingCapacity(Building building, int capacity) {
+        buildingManipulator.referenceBuildings.child(building.getAbbreviation()).child("capacity").setValue(capacity);
+        return true;
+    }
 
     /**
      * @param building
      * @return a list of the current users in a selected building.
      */
-    public List<User> getPeopleInBuilding(Building building) { return new ArrayList<User>(); }
+    public List<User> getPeopleInBuilding(Building building) {
+        return buildingManipulator.getCurrentBuildings().get(building).getCurrentStudents();
+    }
 
     /**
      * @param building
@@ -55,5 +59,13 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(String time, Building building, int id, String major) { return new ArrayList<User>(); }
+    public List<User> searchStudents(String time, Building building, int id, String major) {
+        // TODO:
+
+//        // If the only given parameter is the building object
+//        if (building != null && time == null && id == -1 && major == null) {
+//            buildingManipulator.referenceBuildings.child(building.getAbbreviation()).child("students");
+//        }
+        return new ArrayList<User>();
+    }
 }

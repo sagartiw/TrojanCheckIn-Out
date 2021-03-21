@@ -1,16 +1,10 @@
 package com.team13.trojancheckin_out.UPC;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
 
 import java.util.List;
 
-import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
-import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceDB;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
 /**
  * This class contains the instructions for creating a Building object. Each Building represents
@@ -99,7 +93,7 @@ public class Building {
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-        referenceDB.child(abbreviation).child("capacity").setValue(capacity);
+        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
     /**
@@ -108,7 +102,7 @@ public class Building {
      */
     public Boolean removeStudent(User user) {
         students.remove(user);
-        referenceDB.child(abbreviation).child("students").setValue(user);
+        referenceBuildings.child(abbreviation).child("students").setValue(user);
         return true;
     }
 
@@ -118,7 +112,7 @@ public class Building {
      */
     public Boolean addStudent(User user) {
         students.add(user);
-        referenceDB.child(name).child("students").setValue(user);
+        referenceBuildings.child(name).child("students").setValue(user);
         return true;
     }
 }

@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
@@ -23,7 +22,7 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
  */
 public class BuildingManipulator {
 
-    public static final DatabaseReference referenceDB = rootNode.getReference("Buildings");
+    public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings");
 
     private Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
@@ -33,7 +32,7 @@ public class BuildingManipulator {
      * @return a list of the currently established buildings.
      */
     public Map<String, Building> getCurrentBuildings() {
-        referenceDB.addValueEventListener(
+        referenceBuildings.addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,13 +65,17 @@ public class BuildingManipulator {
             while (scan.hasNextLine()) {
                 String line = scan.nextLine();
 
+                // CSV files will put unwanted double quotes around each line of data
+                line = line.replaceAll("\"","");
+
                 // <Abbreviation>|<Full Name>|<Capacity>
-                String[] data = line.split("|");
-                Building building = new Building(data[0], data[1], Integer.parseInt(data[3]),
+                String[] data = line.split("@");
+
+                Building building = new Building(data[0], data[1], Integer.parseInt(data[2]),
                         new ArrayList<>(), "QR");
 
                 // Store in DB
-                referenceDB.child(data[0]).setValue(building);
+                referenceBuildings.child(data[0]).setValue(building);
             }
             scan.close();
         } catch (FileNotFoundException e) {
