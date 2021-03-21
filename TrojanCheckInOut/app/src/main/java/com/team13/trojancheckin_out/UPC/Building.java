@@ -1,9 +1,10 @@
 package com.team13.trojancheckin_out.UPC;
 
 import com.team13.trojancheckin_out.Accounts.User;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
 
 import java.util.List;
+
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
 /**
  * This class contains the instructions for creating a Building object. Each Building represents
@@ -11,8 +12,9 @@ import java.util.List;
  * User activity by removing and admitting students as well as updating internal capacity.
  */
 public class Building {
+
+    private String abbreviation;
     private String name;
-    public String abbreviation;
     private int capacity;
     private List<User> students;
 
@@ -38,9 +40,25 @@ public class Building {
         this.QRCode = QRCode;
     }
 
+    /**
+     * @return the name of the current building.
+     */
     public String getName() { return this.name; }
+
+    /**
+     * @return the abbreviation of the name of the current building.
+     */
     public String getAbbreviation() { return this.abbreviation; }
-    public int getCurrentCount() { /*return this.students.size();*/ return 10; }
+
+    /**
+     * @return the number of students currently in the building.
+     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
+     */
+    public int getCurrentCount() { return 10;}
+
+    /**
+     * @return percentage of building filled up.
+     */
     public int getPercent() {
         double cur = (double) this.getCurrentCount();
         double cap = (double) this.capacity;
@@ -59,6 +77,10 @@ public class Building {
      */
     public int getCapacity() { return this.capacity; }
 
+    /**
+     * Sets the name of the building
+     * @param name
+     */
     public void setName(String name) { this.name = name; }
 
     /**
@@ -70,17 +92,28 @@ public class Building {
      * Updates the building capacity.
      * @param capacity
      */
-    public void setCapacity(int capacity) { this.capacity = capacity; }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+    }
 
     /**
      * @param user
      * @return true if the student has been successfully removed from the building.
      */
-    public Boolean removeStudent(User user) { return true; }
+    public Boolean removeStudent(User user) {
+        students.remove(user);
+        referenceBuildings.child(abbreviation).child("students").setValue(user);
+        return true;
+    }
 
     /**
      * @param user
      * @return true if the student has been successfully added into the building.
      */
-    public Boolean addStudent(User user) { return true; }
+    public Boolean addStudent(User user) {
+        students.add(user);
+        referenceBuildings.child(name).child("students").setValue(user);
+        return true;
+    }
 }
