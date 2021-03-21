@@ -63,21 +63,21 @@ public class AccountManipulator extends User {
      */
     public Map<String, User> getManagerAccounts() {
         referenceUsers.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            User user = ds.getValue(User.class);
-                            if (user.isManager().equals("True")) {
-                                System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
-                                managerAccounts.put(user.getId(), user);
-                            }
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        User user = ds.getValue(User.class);
+                        if (user.isManager().equals("True")) {
+                            System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
+                            managerAccounts.put(user.getId(), user);
                         }
                     }
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
+            });
 
         return this.managerAccounts;
     }
@@ -86,7 +86,9 @@ public class AccountManipulator extends User {
      * @param email
      * @return true if the user email has been successfully verified.
      */
-    public Boolean verifyEmail(String email) { return true; }
+    public Boolean verifyEmail(String email) {
+        return true;
+    }
 
     /**
      * @return true if the user account has been successfully created.
