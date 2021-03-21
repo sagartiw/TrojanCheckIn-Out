@@ -71,8 +71,7 @@ public class BuildingManipulator {
                 // <Full Name>|<Abbreviation>|<Capacity>
                 String[] data = line.split("@");
 
-                Building building = new Building(data[0], data[1], Integer.parseInt(data[2]),
-                        new ArrayList<>(), "QR");
+                Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
 
                 // Store in DB
                 referenceBuildings.child(data[1]).setValue(building);
