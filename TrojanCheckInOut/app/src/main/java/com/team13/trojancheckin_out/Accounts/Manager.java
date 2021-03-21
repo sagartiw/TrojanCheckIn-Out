@@ -1,8 +1,10 @@
 package com.team13.trojancheckin_out.Accounts;
 
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,20 @@ import java.util.List;
  * has access to certain facilitation mechanisms that would be absent from a regular user.
  */
 public class Manager extends User {
+
+    BuildingManipulator buildingManipulator;
+    public Manager(BuildingManipulator buildingManipulator) {
+        this.buildingManipulator = buildingManipulator;
+    }
+
     /**
      * @param file
      * @return true if the CSV file has been successfully imported.
      */
-    public Boolean importCSV(File file) { return true; }
+    public Boolean importCSV(File file) {
+        buildingManipulator.processCSV(file);
+        return true;
+    }
 
     /**
      * @param building
