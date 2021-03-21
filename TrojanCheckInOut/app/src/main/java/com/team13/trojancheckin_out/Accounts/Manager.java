@@ -1,5 +1,10 @@
 package com.team13.trojancheckin_out.Accounts;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
@@ -11,24 +16,40 @@ import java.util.List;
  * has access to certain facilitation mechanisms that would be absent from a regular user.
  */
 public class Manager extends User {
+
+    BuildingManipulator buildingManipulator;
+    AccountManipulator accountManipulator;
+    public Manager(BuildingManipulator buildingManipulator, AccountManipulator accountManipulator) {
+        this.buildingManipulator = buildingManipulator;
+        this.accountManipulator = accountManipulator;
+    }
+
     /**
      * @param file
      * @return true if the CSV file has been successfully imported.
      */
-    public Boolean importCSV(File file) { return true; }
+    public Boolean importCSV(File file) {
+        buildingManipulator.processCSV(file);
+        return true;
+    }
 
     /**
      * @param building
      * @param capacity
      * @return true if the building capacity has been successfully updated.
      */
-    public Boolean updateBuildingCapacity(Building building, int capacity) { return true; }
+    public Boolean updateBuildingCapacity(Building building, int capacity) {
+        buildingManipulator.referenceBuildings.child(building.getAbbreviation()).child("capacity").setValue(capacity);
+        return true;
+    }
 
     /**
      * @param building
      * @return a list of the current users in a selected building.
      */
-    public List<User> getPeopleInBuilding(Building building) { return new ArrayList<User>(); }
+    public List<User> getPeopleInBuilding(Building building) {
+        return buildingManipulator.getCurrentBuildings().get(building).getCurrentStudents();
+    }
 
     /**
      * @param building
@@ -44,5 +65,33 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(String time, Building building, int id, String major) { return new ArrayList<User>(); }
+    public List<User> searchStudents(String time, Building building, String id, String major) {
+        // TODO: add constraints for time
+
+        List<User> list = new ArrayList<>();
+//        if (id != null) {
+//            list.add(accountManipulator.getStudentAccounts().get(id));
+//            return list;
+//        } else if (building != null){
+//            if (major != null) {
+//                for (User user : building.getCurrentStudents()) {
+//                    if (user.getMajor().equals(major)){
+//                        list.add(user);
+//                    }
+//                }
+//                return list;
+//            } else {
+//                return building.getCurrentStudents();
+//            }
+//        } else if (major != null) {
+//            for (User user : accountManipulator.getStudentAccounts().values()) {
+//                if (user.getMajor().equals(major)) {
+//                    list.add(user);
+//                }
+//            }
+//            return list;
+//        }
+
+        return list;
+    }
 }
