@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invalid_email">Email is invalid</string>
+    <string name="invalid_password">Passwords do not match</string>
+    <string name="dialog_title">Javatpoint Alert Dialog</string>
+    <string name="if_you_are_checked_in_at_a_building_you_will_be_checked_out_when_you_sign_out">If you are checked in at a building, you will be checked out when you sign out.</string>
+    <string name="invalid_input" />
+</resources>
