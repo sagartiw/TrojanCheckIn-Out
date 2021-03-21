@@ -66,7 +66,6 @@ public class CompleteProfile extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.spinner);
 
         //create a list of items for the spinner.
-
         String[] items = new String[]{
                 "Accounting",
                 "Acting for the Stage, Screen and New Media",
