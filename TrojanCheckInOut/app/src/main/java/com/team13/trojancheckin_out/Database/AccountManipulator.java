@@ -42,13 +42,9 @@ public class AccountManipulator extends User {
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    System.out.println("I'm in onDataChange");
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         User user = ds.getValue(User.class);
-
-                        System.out.println("MY NAME IS: " + user.getName());
                         if (user.isManager().equalsIgnoreCase("False")) {
-                            System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
                             studentAccounts.put(user.getId(), user);
                         }
                     }
@@ -58,7 +54,7 @@ public class AccountManipulator extends User {
                 public void onCancelled(DatabaseError databaseError) { }
         });
 
-        return this.studentAccounts;
+        return studentAccounts;
     }
 
     /**
@@ -72,7 +68,6 @@ public class AccountManipulator extends User {
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             User user = ds.getValue(User.class);
                             if (user.isManager().equals("True")) {
-                                System.out.println("Name: " + user.getName() + " Email: " + user.isManager());
                                 managerAccounts.put(user.getId(), user);
                             }
                         }
@@ -82,7 +77,7 @@ public class AccountManipulator extends User {
                     public void onCancelled(DatabaseError databaseError) { }
                 });
 
-        return this.managerAccounts;
+        return managerAccounts;
     }
 
     /**
@@ -96,12 +91,11 @@ public class AccountManipulator extends User {
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
-//        if (user.isManager().equalsIgnoreCase("true")) {
-//            managerAccounts.put(user.getId(), user);
-//        }
-//        else {
-//            studentAccounts.put(user.getId(), user);
-//        }
+        if (user.isManager().equalsIgnoreCase("true")) {
+            managerAccounts.put(user.getId(), user);
+        } else {
+            studentAccounts.put(user.getId(), user);
+        }
         return true;
     }
 
@@ -111,13 +105,11 @@ public class AccountManipulator extends User {
      */
     public Boolean deleteAccount(User user) {
         referenceUsers.child(user.getId()).removeValue();
-
-//        if (user.isManager().equalsIgnoreCase("true")) {
-//            managerAccounts.remove(user.getId());
-//        }
-//        else {
-//            studentAccounts.remove(user.getId());
-//        }
+        if (user.isManager().equalsIgnoreCase("true")) {
+            managerAccounts.remove(user.getId());
+        } else {
+            studentAccounts.remove(user.getId());
+        }
         return true;
     }
 
