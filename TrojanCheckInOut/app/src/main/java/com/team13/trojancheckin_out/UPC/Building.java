@@ -2,6 +2,7 @@ package com.team13.trojancheckin_out.UPC;
 
 import com.team13.trojancheckin_out.Accounts.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenc
  * a unique building structure on USC's University Park Campus. Building objects can facilitate
  * User activity by removing and admitting students as well as updating internal capacity.
  */
-public class Building {
+public class Building implements Serializable {
 
     private String abbreviation;
     private String name;
@@ -29,8 +30,9 @@ public class Building {
 
     /**
      * Accesses private data members of Building for building creation via constructor.
+     * @param name
+     * @param abbreviation
      * @param capacity
-     * @param students
      * @param QRCode
      */
     public Building(String name, String abbreviation, int capacity, String QRCode) {
