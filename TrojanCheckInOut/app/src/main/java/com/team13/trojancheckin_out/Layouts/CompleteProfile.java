@@ -31,12 +31,15 @@ import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.MyCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -211,7 +214,7 @@ public class CompleteProfile extends AppCompatActivity {
 
         Register = (Button)findViewById(R.id.register3);
 
-        // Grab currrent data for the user
+        // Grab current data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
@@ -267,6 +270,17 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
+
+//                accountManipulator.getStudentAccounts(new MyCallback() {
+//                    @Override
+//                    public void onCallback(Map<String, User> map) {
+//                        System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+//                        for (Map.Entry<String, User> u : map.entrySet()) {
+//                            System.out.println("SHIT: " + u.getValue().getName());
+//                        }
+//                    }
+//                });
+
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
