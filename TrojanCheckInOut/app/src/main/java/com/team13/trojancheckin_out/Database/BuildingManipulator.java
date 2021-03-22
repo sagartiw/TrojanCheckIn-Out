@@ -108,7 +108,7 @@ public class BuildingManipulator {
 
                 Building building = getBuilding(data[1]);
 
-                //building.setCapacity(Integer.parseInt(data[2]));
+                building.setCapacity(Integer.parseInt(data[2]));
 
                 referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
                 //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
