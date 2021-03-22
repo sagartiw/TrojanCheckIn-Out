@@ -63,21 +63,20 @@ public class AccountManipulator extends User {
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
     public Map<String, User> getManagerAccounts() {
-        referenceUsers.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            User user = ds.getValue(User.class);
-                            if (user.isManager().equalsIgnoreCase("true")) {
-                                managerAccounts.put(user.getId(), user);
-                            }
-                        }
+        referenceUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    if (user.isManager().equalsIgnoreCase("true")) {
+                        studentAccounts.put(user.getId(), user);
                     }
+                }
+            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
 
         return managerAccounts;
     }
@@ -86,7 +85,9 @@ public class AccountManipulator extends User {
      * @param email
      * @return true if the user email has been successfully verified.
      */
-    public Boolean verifyEmail(String email) { return true; }
+    public Boolean verifyEmail(String email) {
+        return true;
+    }
 
     /**
      * @return true if the user account has been successfully created.
