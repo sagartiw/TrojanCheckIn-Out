@@ -1,22 +1,37 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -26,6 +41,16 @@ public class CompleteProfile extends AppCompatActivity {
     private User user;
     private EditText fName, lName, studentID;
     private String major;
+    private RadioGroup radioGroup;
+    private RadioButton studentButton;
+    private RadioButton managerButton;
+    private ImageButton profileImage;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    //https://firebase.google.com/docs/storage/android/upload-files
+    public final static int PICK_PHOTO_CODE = 1046;
+    //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +197,6 @@ public class CompleteProfile extends AppCompatActivity {
                 "Writing for Screen and Television",
         };
 
-
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -184,6 +208,18 @@ public class CompleteProfile extends AppCompatActivity {
 
         // Grab current data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+        radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
+
+        radioGroup.clearCheck();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Get the selected Radio Button
+                RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+            }
+        });
 
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,21 +234,37 @@ public class CompleteProfile extends AppCompatActivity {
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
-                user.setManager("false");
+
+                int radioChosen = radioGroup.getCheckedRadioButtonId();
+                if (radioChosen == -1) {
+                    Toast.makeText(CompleteProfile.this, "Please select account type!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    RadioButton chosen = (RadioButton)radioGroup.findViewById(radioChosen);
+                    studentButton = radioGroup.findViewById(R.id.radioButton3);
+                    managerButton = radioGroup.findViewById(R.id.radioButton2);
+
+                    if(chosen.getId() == studentButton.getId()){
+                        user.setManager("false");
+                    } else if(chosen.getId() == managerButton.getId()){
+                        user.setManager("true");
+                    }
+                }
+
                 user.setId(studentID.getText().toString());
 
+                // delete later
                 Building building = new Building();
                 building.setName("SAL");
                 user.setCurrentBuilding(building);
                 user.getHistory().add(building);
 
+
                 // Push user to DB
                 accountManipulator.createAccount(user);
-//                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED" + accountManipulator.getStudentAccounts().toString());
-//                for (User user : accountManipulator.getStudentAccounts().values()) {
-//                    System.out.println("USER: " + user.getName());
-//                }
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
@@ -223,8 +275,78 @@ public class CompleteProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CompleteProfile.this, Register.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
+
+
+
+        profileImage = (ImageButton)findViewById(R.id.imageButton);
+
+        profileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(intent, PICK_PHOTO_CODE);
+                }
+            }
+        });
     }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            String filepath = photoUri.getPath();
+            System.out.println("This is the filepath of the local file: " + filepath);
+
+            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
+            UploadTask uploadTask = selectedFile.putFile(photoUri);
+
+            user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+
+        }
+    }
+
 }

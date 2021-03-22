@@ -19,10 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
@@ -34,6 +39,9 @@ public class StudentLanding extends AppCompatActivity {
     private Button CheckOut;
     private Button Scan;
     private User user;
+    private FloatingActionButton soFab;
+    private TextView welcomeName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,14 @@ public class StudentLanding extends AppCompatActivity {
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+        soFab = (FloatingActionButton)findViewById(R.id.fab);
+        welcomeName = (TextView)findViewById(R.id.welcomeMessage);
+        System.out.println("NAME: " + user.getName());
+        welcomeName.setText("Welcome " + user.getName());
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+        Glide.with(StudentLanding.this).load(storageRef).into(soFab);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +73,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });

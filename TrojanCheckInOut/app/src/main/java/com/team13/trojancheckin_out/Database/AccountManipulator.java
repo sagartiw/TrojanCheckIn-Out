@@ -21,8 +21,8 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
-    private Map<String, User> studentAccounts = new HashMap<>();
-    private Map<String, User> managerAccounts = new HashMap<>();
+    private static Map<String, User> studentAccounts;
+    private static Map<String, User> managerAccounts;
     private static Map<String, User> allAccounts;
 
     /**
@@ -47,11 +47,15 @@ public class AccountManipulator extends User {
             public void onCancelled(DatabaseError databaseError) { }
         });
     }
+
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
-    public Map<String, User> getStudentAccounts() {
+    public void getStudentAccounts(MyUserCallback myUserCallback) {
+        studentAccounts = new HashMap<>();
+        managerAccounts = new HashMap<>();
+
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -62,61 +66,52 @@ public class AccountManipulator extends User {
                         }
                     }
 
-                    System.out.println("before leaving datachange");
+                    myUserCallback.onCallback(studentAccounts);
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
-
-
         });
-        System.out.println("BEFORE RETURN");
-        for (User u : studentAccounts.values()) {
-            System.out.println("My name: " + u.getName());
-        }
-        return studentAccounts;
-
     }
 
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
-    public Map<String, User> getManagerAccounts() {
-        referenceUsers.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            User user = ds.getValue(User.class);
-                            if (user.isManager().equalsIgnoreCase("true")) {
-                                managerAccounts.put(user.getId(), user);
-                            }
-                        }
+    public void getManagerAccounts(MyUserCallback myUserCallback) {
+        studentAccounts = new HashMap<>();
+        managerAccounts = new HashMap<>();
+
+        referenceUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    if (user.isManager().equalsIgnoreCase("true")) {
+                        studentAccounts.put(user.getId(), user);
                     }
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
-
-        return managerAccounts;
+                myUserCallback.onCallback(studentAccounts);
+            }
+          
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
     }
 
     /**
      * @param email
      * @return true if the user email has been successfully verified.
      */
-    public Boolean verifyEmail(String email) { return true; }
+    public Boolean verifyEmail(String email) {
+        return true;
+    }
 
     /**
      * @return true if the user account has been successfully created.
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
-        if (user.isManager().equalsIgnoreCase("true")) {
-            managerAccounts.put(user.getId(), user);
-        } else {
-            studentAccounts.put(user.getId(), user);
-        }
         return true;
     }
 
