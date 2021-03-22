@@ -23,7 +23,7 @@ public class Building implements Serializable {
     private String abbreviation;
     private String name;
     private int capacity;
-    private List<User> students = new ArrayList<>();
+    private List<User> students;
 
     // Have to use an image builder, using String for now
     private String QRCode;

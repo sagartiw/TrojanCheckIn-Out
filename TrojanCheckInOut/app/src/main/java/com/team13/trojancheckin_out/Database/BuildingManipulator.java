@@ -44,7 +44,6 @@ public class BuildingManipulator {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Building building = ds.getValue(Building.class);
                     currentBuildings.put(building.getAbbreviation(), building);
-                    System.out.println("CHECK HERE: " + building.getCurrentStudents().size());
                 }
 
                 myBuildingCallback.onCallback(currentBuildings);
