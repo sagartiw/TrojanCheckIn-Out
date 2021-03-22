@@ -80,7 +80,14 @@ public class StudentsList extends AppCompatActivity {
             }
         });
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         studentList = new ArrayList<>();
+
+        StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+        recyclerView.setAdapter(adapter);
 
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
@@ -100,12 +107,8 @@ public class StudentsList extends AppCompatActivity {
 //                recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
 //                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
 //                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
 
-                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
-                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
             }
         });
