@@ -64,6 +64,11 @@ public class AccountManipulator extends User {
                 public void onCancelled(DatabaseError databaseError) { }
         });
 
+
+        System.out.println("BEFORE RETURN");
+        for (User u : studentAccounts.values()) {
+            System.out.println("My name: " + u.getName());
+        }
         return studentAccounts;
     }
 
