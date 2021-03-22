@@ -80,7 +80,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
-
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
