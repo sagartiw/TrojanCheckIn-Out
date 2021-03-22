@@ -6,11 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-class TimeStamps {
-    String checkInTime = "";
-    String checkOutTime = "";
-}
-
 /**
  * This class contains the objects that define a user's account. Further, it establishes mechanisms
  * for the user to perform alterations to their own profile as well as interactions with buildings.

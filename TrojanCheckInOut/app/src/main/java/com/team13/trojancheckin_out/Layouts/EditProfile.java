@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +41,7 @@ public class EditProfile extends AppCompatActivity {
     private Button Back3; //id back3
     private Button yeetusDeletus; //id back3
     private User user;
-    private TextView name;
+    private TextView name, bigName;
     private TextView name2;
     private TextView id;
     private TextView major;
@@ -63,6 +64,9 @@ public class EditProfile extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.name2);
         name.setText(user.getName());
+
+        bigName = (TextView) findViewById(R.id.name);
+        bigName.setText(user.getName());
 
         id = (TextView) findViewById(R.id.name3);
         id.setText(user.getId());
@@ -92,6 +96,11 @@ public class EditProfile extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.change_password_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                Button submitter = (Button) popupView.findViewById(R.id.button11);
+                EditText oldP = (EditText) popupView.findViewById(R.id.editTextTextPassword);
+                EditText newP = (EditText) popupView.findViewById(R.id.editTextTextPassword4);
+                EditText confP = (EditText) popupView.findViewById(R.id.editTextTextPassword5);
+
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -110,6 +119,26 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
+                    }
+                });
+
+                submitter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println(oldP.getText().toString() + " : oldP");
+                        System.out.println(user.getPassword() + " : user pass");
+                        System.out.println(newP.getText().toString() + " : newP");
+                        System.out.println(confP.getText().toString() + " : confP");
+
+                        if(oldP.getText().toString().matches(user.getPassword()) && newP.getText().toString().matches(confP.getText().toString())){
+                            System.out.println(oldP.getText().toString() + " : oldP");
+                            System.out.println(user.getPassword() + " : user pass");
+                            System.out.println(newP.getText().toString() + " : newP");
+                            System.out.println(confP.getText().toString() + " : confP");
+                            referenceUsers.child(user.getId()).child("password").setValue(newP.getText().toString());
+                            submitter.setText("Success");
+                            popupWindow.dismiss();
+                        }
                     }
                 });
 
@@ -167,6 +196,7 @@ public class EditProfile extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.change_profile_pic, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                Button uploadButton = (Button) popupView.findViewById(R.id.button8);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -187,20 +217,22 @@ public class EditProfile extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+
+                uploadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            // Bring up gallery to select a photo
+                            startActivityForResult(intent, PICK_PHOTO_CODE);
+                        }
+                        popupWindow.dismiss();
+                    }
+                });
             }
         });
 
-        pfp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
-            }
-        });
     }
 
     public Bitmap loadFromUri(Uri photoUri) {

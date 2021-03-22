@@ -63,6 +63,7 @@ public class StudentsList extends AppCompatActivity {
 
 
         //adding some items to our list
+
         studentList.add(
                 new User(
                         "Mindy Diep",
