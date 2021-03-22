@@ -54,6 +54,8 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //ALERT 1: check if email is usc email and is valid
+
+                System.out.println("THIS IS MY SIZE: " + accountManipulator.getStudentAccounts().values().size());
                 if ((!email.getText().toString().contains("@usc.edu") &&
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");
@@ -81,7 +83,6 @@ public class Register extends AppCompatActivity {
                             popupWindow.dismiss();
                         }
                     });
-
                 }
                 //ALERT 2: check if passwords match
                 else if (!password.getText().toString().equals(completePassword.getText().toString())) {

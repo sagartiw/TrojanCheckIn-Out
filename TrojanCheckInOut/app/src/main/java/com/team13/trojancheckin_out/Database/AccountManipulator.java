@@ -31,8 +31,8 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
-    private Map<String, User> studentAccounts = new HashMap<>();
-    private Map<String, User> managerAccounts = new HashMap<>();
+    private static Map<String, User> studentAccounts = new HashMap<>();
+    private static Map<String, User> managerAccounts = new HashMap<>();
 
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
@@ -44,8 +44,6 @@ public class AccountManipulator extends User {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         User user = ds.getValue(User.class);
-//                        System.out.println(user.isManager());
-//                        if(user.isManager() == null){ user.setManager("false"); }
                         if (user.isManager().equalsIgnoreCase("false")) {
                             studentAccounts.put(user.getId(), user);
                         }
