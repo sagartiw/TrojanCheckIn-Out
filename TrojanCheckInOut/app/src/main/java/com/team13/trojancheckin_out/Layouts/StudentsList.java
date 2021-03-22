@@ -85,7 +85,12 @@ public class StudentsList extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         studentList = new ArrayList<>();
+        final StudentAdapter[] adapter = new StudentAdapter[1];
+
+        //creating recyclerview adapter
+        //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
 
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
@@ -97,13 +102,9 @@ public class StudentsList extends AppCompatActivity {
                     }
                 }
 
+                adapter[0] = new StudentAdapter(StudentsList.this, studentList);
+                recyclerView.setAdapter(adapter[0]);
 
-
-                StudentAdapter adapter2 = new StudentAdapter(StudentsList.this, studentList);
-
-                //creating recyclerview adapter
-                //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
-                recyclerView.setAdapter(adapter2);
             }
         });
 
