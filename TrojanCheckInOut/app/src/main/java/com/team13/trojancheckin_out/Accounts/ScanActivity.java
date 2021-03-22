@@ -34,11 +34,15 @@ public class ScanActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private BuildingManipulator buildingManipulator;
     private AccountManipulator accountManipulator;
+    private User user;
+    private Building curr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         surfaceView = findViewById(R.id.camera);
         textView = findViewById(R.id.text);
@@ -91,6 +95,7 @@ public class ScanActivity extends AppCompatActivity {
 
                             // check buildingAcronym against the database to find the building object
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
+                            //String holder = qrcode.valueAt(0).displayValue.toString();
 
                             if (match == null) {
                                 return;
@@ -133,7 +138,10 @@ public class ScanActivity extends AppCompatActivity {
                             }
 
 
+                            user.setCurrentBuilding(curr);
+                            user.setInBuilding(true);
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
+                            intent.putExtra("PrevPageData", user);
                             startActivity(intent);
 
                         }

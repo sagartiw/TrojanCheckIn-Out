@@ -87,9 +87,16 @@ public class BuildingManipulator {
 
                 referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
                 //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+                //referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
+               // Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+
+                //User user = new User("Adam Levine", "adam@usc.edu", "adam",
+                  //      "Photo", "123", false, null, new ArrayList<Building>(),
+                   //     "Business", "true");
+                //building.addStudent(user);
 
                 // Store in DB
-                //referenceBuildings.child(data[1]).setValue(building);
+                referenceBuildings.child(data[1]).setValue(building);
             }
             scan.close();
         } catch (FileNotFoundException e) {

@@ -94,7 +94,7 @@ public class AccountManipulator extends User {
 
                 myUserCallback.onCallback(studentAccounts);
             }
-
+          
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
@@ -114,12 +114,6 @@ public class AccountManipulator extends User {
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
         currentUser = user;
-
-//        if (user.isManager().equalsIgnoreCase("true")) {
-//            managerAccounts.put(user.getId(), user);
-//        } else {
-//            studentAccounts.put(user.getId(), user);
-//        }
         return true;
     }
 
@@ -141,7 +135,9 @@ public class AccountManipulator extends User {
     /**
      * @return true if the user has successfully logged in.
      */
-    public Boolean login() { return true; }
+    public Boolean login() {
+        return true;
+    }
 
     /**
      * @return true if the user has successfully logged out.
