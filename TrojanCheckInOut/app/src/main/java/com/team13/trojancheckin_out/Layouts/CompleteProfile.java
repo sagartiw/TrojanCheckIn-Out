@@ -1,8 +1,5 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,8 +18,16 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,6 +52,8 @@ public class CompleteProfile extends AppCompatActivity {
     private ImageButton profileImage;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+    private FirebaseAuth mAuth;
+    private FirebaseUser curr;
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
@@ -285,7 +292,28 @@ public class CompleteProfile extends AppCompatActivity {
 
 
 
+        mAuth = FirebaseAuth.getInstance();
+        curr = mAuth.getCurrentUser();
+
+        if(curr == null){
+            mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        //Log.w(TAG, "signInAnonymously:failure", task.getException());
+                        Toast.makeText(CompleteProfile.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         profileImage = (ImageButton)findViewById(R.id.imageButton);
+
+
 
         profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -299,6 +327,13 @@ public class CompleteProfile extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     public Bitmap loadFromUri(Uri photoUri) {
