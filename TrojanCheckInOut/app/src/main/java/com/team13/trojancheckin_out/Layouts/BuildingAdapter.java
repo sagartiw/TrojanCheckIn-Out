@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.UPC.Building;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
@@ -132,9 +133,10 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         });
     }
 
-
     @Override
     public int getItemCount() {
+        if (buildingList == null) return 0;
+        if (buildingList.isEmpty()) return 0;
         return buildingList.size();
     }
 
