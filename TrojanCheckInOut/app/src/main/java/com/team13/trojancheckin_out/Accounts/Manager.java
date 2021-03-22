@@ -74,7 +74,6 @@ public class Manager extends User {
     public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major) {
         // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
 
-<<<<<<< HEAD
         List<User> list = new ArrayList<>();
 
         if (id != null) {
@@ -92,8 +91,9 @@ public class Manager extends User {
         } else if (building != null) {
             if (major != null && startTime != -1) {
                 for (User user : building.getCurrentStudents()) {
-                    TimeStamps ts = user.getHistory().get(building);
-                    if (user.getMajor().equals(major) && ts.checkInTime >= startTime && ts.checkOutTime <= endTime) {
+                    String s = user.getHistory().get(building.getAbbreviation());
+                    String[] ts = s.split(" ");
+                    if (user.getMajor().equals(major) && Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
                         list.add(user);
                     }
                 }
@@ -114,8 +114,9 @@ public class Manager extends User {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> user : map.entrySet()) {
-                            TimeStamps ts = user.getValue().getHistory().get(building);
-                            if (user.getValue().getMajor().equals(major) && ts.checkInTime >= startTime && ts.checkOutTime <= endTime) {
+                            String s = user.getValue().getHistory().get(building.getAbbreviation());
+                            String[] ts = s.split(" ");
+                            if (user.getValue().getMajor().equals(major) && Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
                                 list.add(user.getValue());
                             }
                         }
@@ -135,31 +136,6 @@ public class Manager extends User {
             }
             return list;
         }
-=======
-          List<User> list = new ArrayList<>();
-//        if (id != null) {
-//            list.add(accountManipulator.getStudentAccounts().get(id));
-//            return list;
-//        } else if (building != null){
-//            if (major != null) {
-//                for (User user : building.getCurrentStudents()) {
-//                    if (user.getMajor().equals(major)){
-//                        list.add(user);
-//                    }
-//                }
-//                return list;
-//            } else {
-//                return building.getCurrentStudents();
-//            }
-//        } else if (major != null) {
-//            for (User user : accountManipulator.getStudentAccounts().values()) {
-//                if (user.getMajor().equals(major)) {
-//                    list.add(user);
-//                }
-//            }
-//            return list;
-//        }
->>>>>>> bb81b69a3de206846fc1175c1afda66dc01acbd1
 
         return list;
     }

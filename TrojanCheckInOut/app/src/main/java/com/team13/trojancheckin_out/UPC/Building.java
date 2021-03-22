@@ -58,6 +58,7 @@ public class Building implements Serializable {
      * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
     public int getCurrentCount() {
+        if (students == null) return 0;
         if (!students.isEmpty()) {
             return 0;
         }
