@@ -50,6 +50,7 @@ public class EditProfile extends AppCompatActivity {
     private StorageReference storageRef = storage.getReference();
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
+    private int x;
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
     @Override
@@ -111,6 +112,7 @@ public class EditProfile extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+
             }
         });
 
@@ -148,10 +150,12 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         referenceUsers.child(user.getId()).removeValue();
-                        
-                        popupWindow.dismiss();
+                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        v.getContext().startActivity(intent);
+
                     }
                 });
+
             }
         });
 
