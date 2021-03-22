@@ -78,6 +78,7 @@ public class BuildingManipulator {
      */
     public Building getBuilding(String acronym) {
         System.out.println("IM HERE: " + acronym);
+        if (currentBuildings == null ) return new Building();
         System.out.println("BITCH : " + currentBuildings.get(acronym).getAbbreviation());
         return currentBuildings.get(acronym);
     }

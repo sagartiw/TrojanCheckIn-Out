@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,11 +28,12 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Layouts.CompleteProfile;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
@@ -44,6 +46,8 @@ public class ScanActivity extends AppCompatActivity {
     private AccountManipulator accountManipulator;
     private User user;
     private Building curr;
+    private Map<User, String> sendIt;
+    public static String buildingCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,17 +104,20 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             // this should be a building acronym
+                            sendIt = new HashMap<>();
                             String buildingAcronym = qrcode.valueAt(0).displayValue;
-
+                            buildingCheck = qrcode.valueAt(0).displayValue;
                             System.out.println("hello i am me: " + buildingAcronym);
 
                             // check buildingAcronym against the database to find the building object
 
-                            Building match = buildingManipulator.getBuilding(buildingAcronym);
+
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
-                            if (match == null) { return; }
+                            if (buildingManipulator == null) { return; }
+                            Building match = buildingManipulator.getBuilding(buildingAcronym);
                             User user = accountManipulator.currentUser;
+
                             // check if user is checking in or out of a building
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
@@ -183,6 +190,7 @@ public class ScanActivity extends AppCompatActivity {
                                 else { // check in the user
                                     match.addStudent(user);
                                     // set in building for curr user to be true so that they check in
+
                                     user.setCurrentBuilding(match);
                                     user.setInBuilding(true);
                                 }

@@ -24,9 +24,11 @@ import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.UPC.Building;
 
+import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
-import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
 public class StudentLanding extends AppCompatActivity {
@@ -49,6 +51,7 @@ public class StudentLanding extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_landing);
+
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
@@ -66,15 +69,23 @@ public class StudentLanding extends AppCompatActivity {
         ID.setText(user.getId());
         Major = (TextView)findViewById(R.id.id2);
         Major.setText(user.getMajor());
-
         currBuilding = (TextView)findViewById(R.id.buildingName);
-        currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
+
 
         if(user.isInBuilding() == true){
+            if(user.getCurrentBuilding().getAbbreviation() == buildingCheck){
+                currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
+            }
+            else{
+                currBuilding.setText(buildingCheck);
+                user.setCurrentBuilding(buildingManipulator.getBuilding(buildingCheck));
+            }
             Scan.setEnabled(false);
         } else {
+            currBuilding.setText("USC");
             CheckOut.setEnabled(false);
         }
+
 
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
@@ -152,6 +163,7 @@ public class StudentLanding extends AppCompatActivity {
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupWindow.setElevation(20);
 
@@ -171,9 +183,10 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
-
-                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        //currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                        user.setInBuilding(false);
+                        user.setCurrentBuilding(null);
+                        Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
                     }
