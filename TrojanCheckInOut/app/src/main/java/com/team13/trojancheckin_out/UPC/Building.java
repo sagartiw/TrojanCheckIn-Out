@@ -116,7 +116,7 @@ public class Building implements Serializable {
      */
     public Boolean addStudent(User user) {
         students.add(user);
-        referenceBuildings.child(name).child("students").setValue(user);
+       // referenceBuildings.child(name).child("students").setValue(user);
         return true;
     }
 }

@@ -27,6 +27,7 @@ public class BuildingManipulator {
 
     public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings_2");
 
+
     private Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
     private File file;
@@ -77,10 +78,12 @@ public class BuildingManipulator {
 
                 //referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
                 Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+
                 User user = new User("Adam Levine", "adam@usc.edu", "adam",
                         "Photo", "123", false, null, new ArrayList<Building>(),
                         "Business", "true");
                 building.addStudent(user);
+
                 // Store in DB
                 referenceBuildings.child(data[1]).setValue(building);
             }
