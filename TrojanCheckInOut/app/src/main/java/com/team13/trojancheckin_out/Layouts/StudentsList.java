@@ -91,7 +91,7 @@ public class StudentsList extends AppCompatActivity {
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
-                for (Map.Entry <String, User> e : map.entrySet()) {
+                for (Map.Entry<String, User> e : map.entrySet()) {
                     User user = e.getValue();
                     if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
                         studentList.add(user);
