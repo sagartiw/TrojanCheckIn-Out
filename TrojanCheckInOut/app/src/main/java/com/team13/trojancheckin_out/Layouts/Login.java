@@ -101,7 +101,7 @@ public class Login extends AppCompatActivity {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-                                intent = new Intent(Login.this, StudentLanding.class);
+                                intent = new Intent(Login.this, ManagerLanding.class);
                                 intent.putExtra("PrevPageData", user);
                                 startActivity(intent);
                             }
