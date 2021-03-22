@@ -71,17 +71,33 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get current buildings
+        buildingList = new ArrayList<>();
+
         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
             @Override
             public void onCallback(Map<String, Building> map) {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
-                    System.out.println("i am here " + checkBuilding.getKey());
-
-                    buildingList.add(checkBuilding.getValue());
+                    System.out.println("I am here");
+                    Building b = checkBuilding.getValue();
+                    System.out.println("Name: " + b.getName() + "Abbrev: " + b.getAbbreviation() + "Capacity: " + b.getCapacity() + "QR: " + b.getQRCode());
+                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
                 }
+
+                //creating recyclerview adapter
+                BuildingAdapter adapter = new BuildingAdapter(ManagerLanding.this, buildingList);
+
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
+
             }
         });
-        //adding some items to our list
+
+        ///Thread.wait(1000);
+
+//        System.out.println("I am after " + buildingList.size());
+//
+//
+//        // adding some items to our list
 //        buildingList.add(
 //                new Building(
 //                        "Salvatori Computer Science Center",
@@ -105,12 +121,8 @@ public class ManagerLanding extends AppCompatActivity {
 //                        100,
 //                        null
 //                ));
-
-        //creating recyclerview adapter
-        BuildingAdapter adapter = new BuildingAdapter(this, buildingList);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+//
+//
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
