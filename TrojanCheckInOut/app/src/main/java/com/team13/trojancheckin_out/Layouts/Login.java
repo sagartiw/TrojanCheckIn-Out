@@ -90,12 +90,12 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                            System.out.println("2 BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("2 ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
-                                System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                                System.out.println("2 AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                                System.out.println("2 ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
@@ -103,7 +103,7 @@ public class Login extends AppCompatActivity {
                                 intent.putExtra("PrevPageData", user);
                                 startActivity(intent);
                             }
-                            System.out.println("WE HAVE GOTTEN HERE");
+                            System.out.println("2 WE HAVE GOTTEN HERE");
                         }
                     }
                 });
