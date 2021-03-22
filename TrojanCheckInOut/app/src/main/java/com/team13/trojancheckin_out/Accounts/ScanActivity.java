@@ -177,9 +177,6 @@ public class ScanActivity extends AppCompatActivity {
                                         }
                                     });
 
-
-
-
                                 }
                                 else { // check in the user
                                     match.addStudent(user);
