@@ -49,13 +49,6 @@ public class Register extends AppCompatActivity {
         //Alert Dialog Declaration
         builder = new AlertDialog.Builder(this);
 
-        String e = email.getText().toString();
-        String p = password.getText().toString();
-        String cp = completePassword.getText().toString();
-        if(e.matches("") || p.matches("") || cp.matches("")){
-            Register.setEnabled(false);
-        }
-
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +84,7 @@ public class Register extends AppCompatActivity {
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
                     closeButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +95,8 @@ public class Register extends AppCompatActivity {
                     });
                 }
                 //ALERT 2: check if passwords match
-                else if (!password.getText().toString().equals(completePassword.getText().toString())) {
+                else if (!password.getText().toString().equals(completePassword.getText().toString())
+                            || password.getText().toString().matches("")) {
                     System.out.println("PASSWORD ERROR!");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -119,7 +113,7 @@ public class Register extends AppCompatActivity {
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
                     closeButton.setOnClickListener(new View.OnClickListener() {
