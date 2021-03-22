@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 class TimeStamps {
-    String checkInTime = "";
-    String checkOutTime = "";
+    int checkInTime = 0;
+    int checkOutTime = 0;
 }
 
 /**
@@ -26,7 +26,7 @@ public class User implements Serializable {
     private String id;
     private boolean inBuilding;
     private Building currentBuilding;
-    private List<Building> history;
+    private Map<Building, TimeStamps> history;
     private String major;
     private String isManager;
 
@@ -49,7 +49,7 @@ public class User implements Serializable {
      * @param isManager
      */
     public User (String name, String email, String password, String photo, String id,
-                 boolean inBuilding, Building currentBuilding, List<Building> history,
+                 boolean inBuilding, Building currentBuilding, Map<Building, TimeStamps> history,
                  String major, String isManager) {
         this.name = name;
         this.email = email;
@@ -126,11 +126,11 @@ public class User implements Serializable {
         this.currentBuilding = currentBuilding;
     }
 
-    public List<Building> getHistory() {
+    public Map<Building, TimeStamps> getHistory() {
         return history;
     }
 
-    public void setHistory(List<Building> history) {
+    public void setHistory(Map<Building, TimeStamps> history) {
         this.history = history;
     }
 

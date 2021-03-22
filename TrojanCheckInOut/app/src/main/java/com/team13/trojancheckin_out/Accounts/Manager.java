@@ -5,11 +5,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.Layouts.BuildingAdapter;
+import com.team13.trojancheckin_out.Layouts.ManagerLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Manager class is an extension of the User class. The primary difference is that a Manager
@@ -66,33 +71,69 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(String time, Building building, String id, String major) {
-        // TODO: add constraints for time
-
+    public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major) {
+        // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
 
         List<User> list = new ArrayList<>();
-//        if (id != null) {
-//            list.add(accountManipulator.getStudentAccounts().get(id));
-//            return list;
-//        } else if (building != null){
-//            if (major != null) {
-//                for (User user : building.getCurrentStudents()) {
-//                    if (user.getMajor().equals(major)){
-//                        list.add(user);
-//                    }
-//                }
-//                return list;
-//            } else {
-//                return building.getCurrentStudents();
-//            }
-//        } else if (major != null) {
-//            for (User user : accountManipulator.getStudentAccounts().values()) {
-//                if (user.getMajor().equals(major)) {
-//                    list.add(user);
-//                }
-//            }
-//            return list;
-//        }
+
+        if (id != null) {
+            accountManipulator.getAllAccounts(new MyUserCallback() {
+                @Override
+                public void onCallback(Map<String, User> map) {
+                    for (Map.Entry<String, User> user : map.entrySet()) {
+                        if (id.equals(user.getValue().getId())) {
+                            list.add(user.getValue());
+                        }
+                    }
+                }
+            });
+            return list;
+        } else if (building != null) {
+            if (major != null && startTime != -1) {
+                for (User user : building.getCurrentStudents()) {
+                    TimeStamps ts = user.getHistory().get(building);
+                    if (user.getMajor().equals(major) && ts.checkInTime >= startTime && ts.checkOutTime <= endTime) {
+                        list.add(user);
+                    }
+                }
+                return list;
+            } else if (major != null && startTime == -1) {
+                for (User user : building.getCurrentStudents()) {
+                    if (user.getMajor().equals(major)){
+                        list.add(user);
+                    }
+                }
+                return list;
+            } else {
+                return building.getCurrentStudents();
+            }
+        } else if (major != null) {
+            if (startTime != -1) {
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> user : map.entrySet()) {
+                            TimeStamps ts = user.getValue().getHistory().get(building);
+                            if (user.getValue().getMajor().equals(major) && ts.checkInTime >= startTime && ts.checkOutTime <= endTime) {
+                                list.add(user.getValue());
+                            }
+                        }
+                    }
+                });
+            } else {
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> user : map.entrySet()) {
+                            if (user.getValue().getMajor().equals(major)) {
+                                list.add(user.getValue());
+                            }
+                        }
+                    }
+                });
+            }
+            return list;
+        }
 
         return list;
     }
