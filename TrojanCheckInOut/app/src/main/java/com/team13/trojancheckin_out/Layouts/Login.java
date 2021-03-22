@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.MyCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 
 import java.util.Map;
 
@@ -47,43 +47,32 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                for (User checkUser : accountManipulator.getStudentAccounts().values()) {
-//                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)){
-//                        user = checkUser;
-//                        System.out.println(user.isManager());
-//                        intent = new Intent(Login.this, StudentLanding.class);
-//                        intent.putExtra("PrevPageData", user);
-//                        startActivity(intent);
-//                    }
-//
-//                }
-//
-//                for (User checkUser : accountManipulator.getManagerAccounts().values()) {
-//                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)) {
-//                        user = checkUser;
-//                        System.out.println(user.isManager());
-//                        intent = new Intent(Login.this, ManagerLanding.class);
-//                        intent.putExtra("PrevPageData", user);
-//                        startActivity(intent);
-//                    }
-//                }
-
-                accountManipulator.getStudentAccounts(new MyCallback() {
+                accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("BEFOREEXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                             System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
-                                System.out.println("AFTEREXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                                System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                                 System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-                                intent = new Intent(Login.this, StudentLanding.class);
-                                intent.putExtra("PrevPageData", user);
-                                startActivity(intent);
+                                //Student Case
+                                if (user.isManager().equalsIgnoreCase("false")){
+                                    intent = new Intent(Login.this, StudentLanding.class);
+                                    intent.putExtra("PrevPageData", user);
+                                    startActivity(intent);
+                                }
+                                //Manager Case
+                                else if (user.isManager().equalsIgnoreCase("true")){
+                                    intent = new Intent(Login.this, ManagerLanding.class);
+                                    intent.putExtra("PrevPageData", user);
+                                    startActivity(intent);
+                                }
+
                             }
                             System.out.println("WE HAVE GOTTEN HERE");
                         }
@@ -92,28 +81,49 @@ public class Login extends AppCompatActivity {
 
 
 
-
-                accountManipulator.getManagerAccounts(new MyCallback() {
-                    @Override
-                    public void onCallback(Map<String, User> map) {
-                        for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("BEFOREEXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
-                            if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
-                                    checkUser.getValue().getPassword().equals(password.getText().toString())) {
-                                System.out.println("AFTEREXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
-                                user = checkUser.getValue();
-                                System.out.println(user.isManager());
-                                found = true;
-                                intent = new Intent(Login.this, StudentLanding.class);
-                                intent.putExtra("PrevPageData", user);
-                                startActivity(intent);
-                            }
-                            System.out.println("WE HAVE GOTTEN HERE manager");
-                        }
-                    }
-                });
+//                accountManipulator.getStudentAccounts(new MyUserCallback() {
+//                    @Override
+//                    public void onCallback(Map<String, User> map) {
+//                        for (Map.Entry<String, User> checkUser : map.entrySet()) {
+//                            System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+//                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+//                            if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
+//                                    checkUser.getValue().getPassword().equals(password.getText().toString())) {
+//                                System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+//                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+//                                user = checkUser.getValue();
+//                                System.out.println(user.isManager());
+//                                found = true;
+//                                intent = new Intent(Login.this, StudentLanding.class);
+//                                intent.putExtra("PrevPageData", user);
+//                                startActivity(intent);
+//                            }
+//                            System.out.println("WE HAVE GOTTEN HERE");
+//                        }
+//                    }
+//                });
+//
+//                accountManipulator.getManagerAccounts(new MyUserCallback() {
+//                    @Override
+//                    public void onCallback(Map<String, User> map) {
+//                        for (Map.Entry<String, User> checkUser : map.entrySet()) {
+//                            System.out.println("2 BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+//                            System.out.println("2 ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+//                            if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
+//                                    checkUser.getValue().getPassword().equals(password.getText().toString())) {
+//                                System.out.println("2 AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+//                                System.out.println("2 ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+//                                user = checkUser.getValue();
+//                                System.out.println(user.isManager());
+//                                found = true;
+//                                intent = new Intent(Login.this, ManagerLanding.class);
+//                                intent.putExtra("PrevPageData", user);
+//                                startActivity(intent);
+//                            }
+//                            System.out.println("2 WE HAVE GOTTEN HERE");
+//                        }
+//                    }
+//                });
 
                 if(!found){
                     //reset the page here. user not found!
