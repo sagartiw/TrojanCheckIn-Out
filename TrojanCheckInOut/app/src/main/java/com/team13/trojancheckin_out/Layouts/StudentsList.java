@@ -51,7 +51,7 @@ public class StudentsList extends AppCompatActivity {
     private Building building;
 
     //a list to store all the products
-    Map<String, User> studentList;
+    List<User> studentList;
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -81,28 +81,26 @@ public class StudentsList extends AppCompatActivity {
         });
 
         //initializing the productlist
-        studentList = new HashMap<>();
+        studentList = new ArrayList<>();
         System.out.println("BEFORE I ENTER");
-        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+        accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
-            public void onCallback(Map<String, Building> map) {
-                System.out.println("Building name; " + building.getAbbreviation());
-                studentList = map.get(building.getAbbreviation()).getCurrentStudents();
-
-                System.out.println("THIS IS A TEST" + currentBuildings.get(building.getAbbreviation()).getCurrentStudents().size());
+            public void onCallback(Map<String, User> map) {
+                for (Map.Entry e : map.entrySet()) {
+                    User user = (User) e.getValue();
+                    if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
+                        studentList.add(user);
+                    }
+                }
 
                 //getting the recyclerview from xml
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-                List<User> chicken = new ArrayList<>();
-                for (Map.Entry entry : studentList.entrySet()) {
-                    chicken.add((User) entry.getValue());
-                }
 
                 //creating recyclerview adapter
-                StudentAdapter adapter = new StudentAdapter(getApplicationContext(), chicken);
+                StudentAdapter adapter = new StudentAdapter(getApplicationContext(), studentList);
 
                 //setting adapter to recyclerview
                 recyclerView.setAdapter(adapter);

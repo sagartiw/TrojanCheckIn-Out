@@ -24,12 +24,11 @@ public class Building implements Serializable {
     private String abbreviation;
     private String name;
     private int capacity;
-    private Map<String, User> students;
 
     // Have to use an image builder, using String for now
     private String QRCode;
 
-   // private List<User> students;
+   private List<User> students;
 
 
     /**
@@ -106,14 +105,14 @@ public class Building implements Serializable {
     /**
      * @return the building's list of admitted students.
      */
-    public Map<String, User> getCurrentStudents() {
+    public List<User> getCurrentStudents() {
         if (students == null) return null;
         System.out.println("HERE: " + this.students.size());
         return this.students;
     }
 
 
-    public void setStudents(Map<String, User> students) { this.students = students; }
+    public void setStudents(List<User> students) { this.students = students; }
 
 
     /**
@@ -144,7 +143,7 @@ public class Building implements Serializable {
      *  checks if a student is in a building
      *  */
     public Boolean isInBuilding(User user) {
-        return students.containsValue(user);
+        return students.contains(user);
     }
 
     /**
@@ -162,7 +161,7 @@ public class Building implements Serializable {
      * @return true if the student has been successfully added into the building.
      */
     public Boolean addStudent(User user) {
-        students.put(user.getId(), user);
+        students.add(user);
         referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).setValue(user);
         return true;
     }
