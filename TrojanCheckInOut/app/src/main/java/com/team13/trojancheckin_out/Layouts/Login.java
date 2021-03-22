@@ -14,16 +14,11 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyCallback;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
@@ -73,11 +68,12 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("BEFOREEXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                             System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
-
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
+                                System.out.println("AFTEREXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
