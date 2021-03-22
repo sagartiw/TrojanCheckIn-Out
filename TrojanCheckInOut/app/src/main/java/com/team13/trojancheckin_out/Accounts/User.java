@@ -125,8 +125,8 @@ public class User implements Serializable {
     }
 
     public void setCurrentBuilding(Building currentBuilding) {
-        referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
-        //this.currentBuilding = currentBuilding;
+        //referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
+        this.currentBuilding = currentBuilding;
     }
 
     public Map<String, String> getHistory() {
