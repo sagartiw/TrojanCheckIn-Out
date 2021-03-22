@@ -28,13 +28,6 @@ public class AccountManipulator extends User {
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
-
-    public Map<String,User> studentRetrieval() {
-        this.getStudentAccounts();
-        return this.studentAccounts;
-    }
-
-
     public Map<String, User> getStudentAccounts() {
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
