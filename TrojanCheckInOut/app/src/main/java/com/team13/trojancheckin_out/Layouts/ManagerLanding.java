@@ -56,7 +56,7 @@ public class ManagerLanding extends AppCompatActivity {
         Search = (Button)findViewById(R.id.button5);
         welcome = (TextView) findViewById(R.id.TextView16);
 
-        welcome.setText("welcome" + user.getName());
+        welcome.setText("welcome " + user.getName());
 
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
