@@ -263,17 +263,8 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-                //ORIGINAL
-                //Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+                Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
 
-                //EDIT
-                Intent intent;
-                if (user.isManager() == "true"){
-                     intent = new Intent(CompleteProfile.this, ManagerLanding.class);
-                }
-                else {
-                     intent = new Intent(CompleteProfile.this, StudentLanding.class);
-                }
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
