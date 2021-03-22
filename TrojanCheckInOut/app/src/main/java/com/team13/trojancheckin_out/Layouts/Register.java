@@ -1,8 +1,5 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
@@ -49,10 +49,17 @@ public class Register extends AppCompatActivity {
         //Alert Dialog Declaration
         builder = new AlertDialog.Builder(this);
 
+        String e = email.getText().toString();
+        String p = password.getText().toString();
+        String cp = completePassword.getText().toString();
+        if(e.matches("") || p.matches("") || cp.matches("")){
+            Register.setEnabled(false);
+        }
+
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
 
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override

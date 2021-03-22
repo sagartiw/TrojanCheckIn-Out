@@ -1,28 +1,21 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,14 +25,19 @@ import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
-import java.io.IOException;
-
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
     private Button CheckOut;
     private Button Scan;
     private User user;
     private FloatingActionButton soFab;
+    private TextView welcomeMessage;
+    private TextView Name;
+    private TextView ID;
+    private TextView Major;
+    private TextView currBuilding;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     private TextView welcomeName;
 
 
@@ -56,9 +54,27 @@ public class StudentLanding extends AppCompatActivity {
         System.out.println("NAME: " + user.getName());
         welcomeName.setText("Welcome " + user.getName());
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        welcomeMessage = (TextView)findViewById(R.id.welcomeMessage);
+        welcomeMessage.setText("welcome " + user.getName());
+        Name = (TextView)findViewById(R.id.name);
+        Name.setText(user.getName());
+        ID = (TextView)findViewById(R.id.id);
+        ID.setText(user.getId());
+        Major = (TextView)findViewById(R.id.id2);
+        Major.setText(user.getMajor());
 
-        Glide.with(StudentLanding.this).load(storageRef).into(soFab);
+        currBuilding = (TextView)findViewById(R.id.buildingName);
+        if(user.isInBuilding() == true){
+            Major.setText(user.getCurrentBuilding().getName());
+            Scan.setEnabled(false);
+        } else {
+            CheckOut.setEnabled(false);
+        }
+
+        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
+
+        System.out.println("This is the user photo in student landing" + user.getPhoto());
+        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
