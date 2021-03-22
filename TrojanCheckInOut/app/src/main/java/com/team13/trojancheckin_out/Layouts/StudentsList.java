@@ -93,6 +93,8 @@ public class StudentsList extends AppCompatActivity {
                     }
                 }
 
+                System.out.println(studentList.size());
+
                 //getting the recyclerview from xml
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
                 recyclerView.setHasFixedSize(true);
