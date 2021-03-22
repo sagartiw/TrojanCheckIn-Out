@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Layouts.CompleteProfile;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -112,12 +114,16 @@ public class ScanActivity extends AppCompatActivity {
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
+                                    Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else { // user is trying to check in
                                 // check if there is capacity in the building
                                 if (match.getCurrentCount() + 1 > match.getCapacity()) {
                                     // return error to the user saying they cannot check into this building because it is full
+                                    Toast.makeText(ScanActivity.this, "Building is Full!",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                                 else { // check in the user
                                     match.addStudent(user);

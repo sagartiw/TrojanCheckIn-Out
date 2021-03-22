@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,24 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
 
@@ -142,16 +133,34 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             }
         });
 
+        String h = holder.textViewCurrent.getText().toString();
+        String i = holder.textViewCapacity.getText().toString();
+
+
+
         cap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.cap_popup, null);
+
+                int cur = Integer.parseInt(h);
+                int capa = Integer.parseInt(i);
+
+                int perc = cur/capa;
+
+
+
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
                 Button submitButton = (Button) popupView.findViewById(R.id.button9);
                 TextView name = (TextView) popupView.findViewById(R.id.textView18);
                 name.setText(building.getName());
+                TextView percent = (TextView) popupView.findViewById(R.id.textViewPercent);
+                TextView cap1 = (TextView) popupView.findViewById(R.id.textViewCurrent);
+                ProgressBar bar = (ProgressBar) popupView.findViewById(R.id.progressBar);
+
+
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -165,7 +174,10 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-
+                String p = "" + perc + "";
+                percent.setText(p);
+                
+                bar.setProgress(perc);
 
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
@@ -181,9 +193,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
 
                         EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
                         String w = num.getText().toString();
-                        System.out.println("COOCHIE: " + w);
                         int x = Integer.parseInt(w);
-                        System.out.println("COOCHIE 2: " + x);
                         building.setCapacity(x, building.getAbbreviation());
                         popupWindow.dismiss();
                     }
