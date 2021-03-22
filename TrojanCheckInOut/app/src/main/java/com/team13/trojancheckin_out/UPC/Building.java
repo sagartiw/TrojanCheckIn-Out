@@ -1,16 +1,10 @@
 package com.team13.trojancheckin_out.UPC;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
-import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
@@ -28,7 +22,7 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-   private List<User> students;
+   private List<User> students = new ArrayList<>();
 
     /**
      * Accesses Building object via a default constructor.

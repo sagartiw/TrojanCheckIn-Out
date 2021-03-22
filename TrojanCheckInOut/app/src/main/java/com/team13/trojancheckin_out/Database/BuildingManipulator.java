@@ -9,13 +9,11 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
 /**
@@ -78,7 +76,7 @@ public class BuildingManipulator {
      */
     public Building getBuilding(String acronym) {
         System.out.println("IM HERE: " + acronym);
-        System.out.println("BITCH : " + currentBuildings.get(acronym).getAbbreviation());
+        //System.out.println("BITCH : " + currentBuildings.get(acronym).getAbbreviation());
         return currentBuildings.get(acronym);
     }
 
@@ -119,7 +117,7 @@ public class BuildingManipulator {
                 //building.addStudent(user);
 
                 // Store in DB
-                referenceBuildings.child(data[1]).setValue(building);
+//                referenceBuildings.child(data[1]).setValue(building);
             }
             scan.close();
         } catch (FileNotFoundException e) {
