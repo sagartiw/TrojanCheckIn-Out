@@ -1,10 +1,5 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,12 +13,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.team13.trojancheckin_out.Layouts.ManagerLanding.tracker;
 
 public class StudentsList extends AppCompatActivity {
 
@@ -46,6 +48,7 @@ public class StudentsList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentsList.this, ManagerLanding.class);
+                intent.putExtra("PrevPageData", tracker);
                 startActivity(intent);
             }
         });
