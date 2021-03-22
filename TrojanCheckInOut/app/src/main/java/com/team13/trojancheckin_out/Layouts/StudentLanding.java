@@ -59,6 +59,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
@@ -67,6 +68,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
@@ -75,6 +77,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
@@ -91,11 +94,13 @@ public class StudentLanding extends AppCompatActivity {
 
                 if(item.getTitle().toString().equals("Edit Profile")){
                     Intent intent = new Intent(StudentLanding.this, EditProfile.class);
+                    intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
 
                 if(item.getTitle().toString().equals("Manager View")){
                     Intent intent = new Intent(StudentLanding.this, ManagerLanding.class);
+                    intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
 
@@ -167,6 +172,7 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), Startup.class);
+                        intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
                     }
                 });
