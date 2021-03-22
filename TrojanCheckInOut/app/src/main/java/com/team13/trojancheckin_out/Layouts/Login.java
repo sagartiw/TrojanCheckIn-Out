@@ -21,6 +21,8 @@ import com.team13.trojancheckin_out.Database.MyUserCallback;
 
 import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+
 public class Login extends AppCompatActivity {
 
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -78,6 +80,9 @@ public class Login extends AppCompatActivity {
                                 System.out.println(user.isManager());
                                 found = true;
                                 //Student Case
+
+                                currentUser = user;
+
                                 if (user.isManager().equalsIgnoreCase("false")){
                                     intent = new Intent(Login.this, StudentLanding.class);
                                     intent.putExtra("PrevPageData", user);

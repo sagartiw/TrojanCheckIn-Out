@@ -16,11 +16,14 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.List;
@@ -31,6 +34,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private Context mCtx;
     private ImageButton qrButton;
     private Button cap, studentList;
+    private User user;
 
     public static final FirebaseStorage storage = FirebaseStorage.getInstance();
     //public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
@@ -146,6 +150,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StudentsList.class);
+                intent.putExtra("PrevPageData", user);
                 v.getContext().startActivity(intent);
             }
         });
