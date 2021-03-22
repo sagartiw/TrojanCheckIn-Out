@@ -57,7 +57,12 @@ public class Building implements Serializable {
      * @return the number of students currently in the building.
      * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
-    public int getCurrentCount() { return students.size(); }
+    public int getCurrentCount() {
+        if (!students.isEmpty()) {
+            return 0;
+        }
+        return students.size();
+    }
 
     /**
      * @return percentage of building filled up.
@@ -97,7 +102,7 @@ public class Building implements Serializable {
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
     /**
