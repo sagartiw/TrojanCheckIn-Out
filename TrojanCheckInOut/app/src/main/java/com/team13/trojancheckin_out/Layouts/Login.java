@@ -69,6 +69,9 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                            System.out.println("EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("ACTUAL: " + email + " " + password);
+
                             if (checkUser.getValue().getEmail().equals(email) && checkUser.getValue().getPassword().equals(password)) {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
