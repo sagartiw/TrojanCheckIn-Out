@@ -1,8 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,17 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
@@ -30,6 +30,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private Context mCtx;
     private ImageButton qrButton;
     private Button cap, studentList;
+    private User user;
 
     //we are storing all the products in a list
     private List<Building> buildingList;
@@ -101,6 +102,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.cap_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                Button submitButton = (Button) popupView.findViewById(R.id.button9);
+                TextView name = (TextView) popupView.findViewById(R.id.textView18);
+                name.setText(building.getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -114,10 +118,23 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+
+
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
+                        String w = num.toString();
+                        building.setCapacity(Integer.parseInt(w));
                         popupWindow.dismiss();
                     }
                 });
@@ -128,6 +145,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StudentsList.class);
+                intent.putExtra("PrevPageData", user);
                 v.getContext().startActivity(intent);
             }
         });
