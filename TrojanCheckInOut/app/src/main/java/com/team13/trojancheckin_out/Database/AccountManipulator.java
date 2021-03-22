@@ -1,24 +1,14 @@
 package com.team13.trojancheckin_out.Database;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * This class generates and deletes user accounts, facilitates logins and logouts, and provides access
@@ -38,6 +28,13 @@ public class AccountManipulator extends User {
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
+
+    public Map<String,User> studentRetrieval() {
+        this.getStudentAccounts();
+        return this.studentAccounts;
+    }
+
+
     public Map<String, User> getStudentAccounts() {
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -58,18 +55,22 @@ public class AccountManipulator extends User {
                             }
                         }
                     }
+
+                    System.out.println("before leaving datachange");
                 }
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
+
+
         });
-
-
         System.out.println("BEFORE RETURN");
         for (User u : studentAccounts.values()) {
             System.out.println("My name: " + u.getName());
         }
         return studentAccounts;
+
     }
 
     /**
