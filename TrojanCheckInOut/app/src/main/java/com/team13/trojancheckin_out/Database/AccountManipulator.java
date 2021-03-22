@@ -53,8 +53,9 @@ public class AccountManipulator extends User {
 
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
+     * @param myCallback
      */
-    public Map<String, User> getManagerAccounts() {
+    public Map<String, User> getManagerAccounts(MyCallback myCallback) {
         referenceUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
