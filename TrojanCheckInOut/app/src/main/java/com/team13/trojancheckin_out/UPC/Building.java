@@ -103,7 +103,7 @@ public class Building implements Serializable {
      */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
     /**
@@ -119,7 +119,7 @@ public class Building implements Serializable {
      */
     public Boolean removeStudent(User user) {
         students.remove(user);
-        referenceBuildings.child(abbreviation).child("students").setValue(user);
+        referenceBuildings.child(abbreviation).child("students").child(user.getId()).removeValue();
         return true;
     }
 

@@ -137,6 +137,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                         System.out.println("COOCHIE: " + w);
                         int x = Integer.parseInt(w);
                         System.out.println("COOCHIE 2: " + x);
+                        System.out.println("COOCHIE 3: " + building.getAbbreviation());
                         building.setCapacity(x);
                         popupWindow.dismiss();
                     }

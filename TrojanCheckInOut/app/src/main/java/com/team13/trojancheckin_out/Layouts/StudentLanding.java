@@ -68,8 +68,9 @@ public class StudentLanding extends AppCompatActivity {
         Major.setText(user.getMajor());
 
         currBuilding = (TextView)findViewById(R.id.buildingName);
+        currBuilding.setText(user.getCurrentBuilding().getName());
+
         if(user.isInBuilding() == true){
-            Major.setText(user.getCurrentBuilding().getName());
             Scan.setEnabled(false);
         } else {
             CheckOut.setEnabled(false);
