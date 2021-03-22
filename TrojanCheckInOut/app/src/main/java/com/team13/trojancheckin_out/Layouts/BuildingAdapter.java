@@ -1,8 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,10 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
@@ -44,6 +42,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private Context mCtx;
     private ImageButton qrButton;
     private Button cap, studentList;
+    private User user;
 
     public static final FirebaseStorage storage = FirebaseStorage.getInstance();
     public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
@@ -176,6 +175,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StudentsList.class);
+                intent.putExtra("PrevPageData", user);
                 v.getContext().startActivity(intent);
             }
         });

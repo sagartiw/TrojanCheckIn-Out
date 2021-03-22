@@ -4,12 +4,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +56,8 @@ public class BuildingManipulator {
      * @return a list of the currently established buildings.
      */
     public Building getBuilding(String acronym) {
+        System.out.println("IM HERE: " + acronym);
+        System.out.println("BITCH : " + currentBuildings.get(acronym).getAbbreviation());
         return currentBuildings.get(acronym);
     }
 
