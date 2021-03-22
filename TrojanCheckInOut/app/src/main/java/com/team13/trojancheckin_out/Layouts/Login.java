@@ -31,11 +31,6 @@ public class Login extends AppCompatActivity {
     private Intent intent;
     private boolean found = false;
 
-    private AccountManipulator accountManipulator = new AccountManipulator();
-    private EditText email, password;
-    private User user;
-    private Intent intent;
-    private boolean found = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
