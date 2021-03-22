@@ -79,16 +79,20 @@ public class Login extends AppCompatActivity {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-                                intent = new Intent(Login.this, StudentLanding.class);
-                                intent.putExtra("PrevPageData", user);
-                                startActivity(intent);
+                                break;
                             }
                             System.out.println("WE HAVE GOTTEN HERE");
                         }
                     }
                 });
 
-                if(!found){
+
+                if(found){
+                    intent = new Intent(Login.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
+                else{
                     //reset the page here. user not found!
                     System.out.println("LOGIN ERROR!");
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
