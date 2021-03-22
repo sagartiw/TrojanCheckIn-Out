@@ -22,10 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.MyCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -55,7 +57,18 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 //ALERT 1: check if email is usc email and is valid
 
-                System.out.println("THIS IS MY SIZE: " + accountManipulator.getStudentAccounts().size());
+                accountManipulator.getStudentAccounts(new MyCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+                        for (Map.Entry<String, User> u : map.entrySet()) {
+                            System.out.println("SHIT: " + u.getValue().getName());
+                        }
+                    }
+                });
+
+
+
                 if ((!email.getText().toString().contains("@usc.edu") &&
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");
@@ -114,22 +127,31 @@ public class Register extends AppCompatActivity {
                 }
                 else{
                     System.out.println("BEFORE THE ACCOUNT SEARCH");
-                    for (User checkUser : accountManipulator.getStudentAccounts().values()) {
-                        if (checkUser.getEmail().equals(email)){
-                            user = checkUser;
-                            System.out.println(user.isManager());
+                    accountManipulator.getStudentAccounts(new MyCallback() {
+                        @Override
+                        public void onCallback(Map<String, User> map) {
+                            System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+                            for (Map.Entry<String, User> u : map.entrySet()) {
+                                System.out.println("SHIT: " + u.getValue().getName());
+                            }
                         }
-                        System.out.println("STUDENT ACCOUNT SEARCH INDICATOR");
-                    }
-
-                    for (User checkUser : accountManipulator.getManagerAccounts().values()) {
-                        if (checkUser.getEmail().equals(email)) {
-                            user = checkUser;
-                            System.out.println(user.isManager());
-                        }
-                        System.out.println("MANAGER ACCOUNT SEARCH INDICATOR");
-                    }
-                    System.out.println("AFTER THE ACCOUNT SEARCH");
+                    });
+//                    for (User checkUser : accountManipulator.getStudentAccounts().values()) {
+//                        if (checkUser.getEmail().equals(email)){
+//                            user = checkUser;
+//                            System.out.println(user.isManager());
+//                        }
+//                        System.out.println("STUDENT ACCOUNT SEARCH INDICATOR");
+//                    }
+//
+//                    for (User checkUser : accountManipulator.getManagerAccounts().values()) {
+//                        if (checkUser.getEmail().equals(email)) {
+//                            user = checkUser;
+//                            System.out.println(user.isManager());
+//                        }
+//                        System.out.println("MANAGER ACCOUNT SEARCH INDICATOR");
+//                    }
+//                    System.out.println("AFTER THE ACCOUNT SEARCH");
                     //ALERT 3: account already exists
                     if(user != null){
                         System.out.println("DUPLICATE ACCOUNT ERROR!");

@@ -21,6 +21,9 @@ import com.google.android.gms.common.api.ApiException;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.MyCallback;
+
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
@@ -43,26 +46,41 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for (User checkUser : accountManipulator.getStudentAccounts().values()) {
-                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)){
-                        user = checkUser;
-                        System.out.println(user.isManager());
-                        intent = new Intent(Login.this, StudentLanding.class);
-                        intent.putExtra("PrevPageData", user);
-                        startActivity(intent);
-                    }
+//                for (User checkUser : accountManipulator.getStudentAccounts().values()) {
+//                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)){
+//                        user = checkUser;
+//                        System.out.println(user.isManager());
+//                        intent = new Intent(Login.this, StudentLanding.class);
+//                        intent.putExtra("PrevPageData", user);
+//                        startActivity(intent);
+//                    }
+//
+//                }
+//
+//                for (User checkUser : accountManipulator.getManagerAccounts().values()) {
+//                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)) {
+//                        user = checkUser;
+//                        System.out.println(user.isManager());
+//                        intent = new Intent(Login.this, ManagerLanding.class);
+//                        intent.putExtra("PrevPageData", user);
+//                        startActivity(intent);
+//                    }
+//                }
 
-                }
-
-                for (User checkUser : accountManipulator.getManagerAccounts().values()) {
-                    if (checkUser.getEmail().equals(email) && checkUser.getPassword().equals(password)) {
-                        user = checkUser;
-                        System.out.println(user.isManager());
-                        intent = new Intent(Login.this, ManagerLanding.class);
-                        intent.putExtra("PrevPageData", user);
-                        startActivity(intent);
+                accountManipulator.getStudentAccounts(new MyCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                            if (checkUser.getValue().getEmail().equals(email) && checkUser.getValue().getPassword().equals(password)) {
+                                user = checkUser.getValue();
+                                System.out.println(user.isManager());
+                                intent = new Intent(Login.this, StudentLanding.class);
+                                intent.putExtra("PrevPageData", user);
+                                startActivity(intent);
+                            }
+                        }
                     }
-                }
+                });
 
                 //reset the page here. user not found!
                 System.out.println("LOGIN ERROR!");
