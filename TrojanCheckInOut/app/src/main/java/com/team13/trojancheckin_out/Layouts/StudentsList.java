@@ -1,5 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.animation.BidirectionalTypeConverter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -46,15 +48,13 @@ import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 public class StudentsList extends AppCompatActivity {
 
     private Button Back;
+    private RecyclerView recyclerView;
     private AccountManipulator accountManipulator = new AccountManipulator();
     private TextView buildingName;
     private Building building;
 
     //a list to store all the products
     private List<User> studentList;
-
-    //the recyclerview
-    private RecyclerView recyclerView;
 
 
     @Override
@@ -84,10 +84,9 @@ public class StudentsList extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        System.out.println("BEFORE MANIP");
 
-        //initializing the productlist
         studentList = new ArrayList<>();
+
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
@@ -97,11 +96,12 @@ public class StudentsList extends AppCompatActivity {
                         studentList.add(user);
                     }
                 }
-                System.out.println("IN MANIP: " + studentList.size());
+
+                StudentAdapter adapter2 = new StudentAdapter(StudentsList.this, studentList);
 
                 //creating recyclerview adapter
-                StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
-                recyclerView.setAdapter(adapter1);
+                //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
+                recyclerView.setAdapter(adapter2);
             }
         });
 
