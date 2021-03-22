@@ -91,21 +91,19 @@ public class StudentsList extends AppCompatActivity {
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
-                for (Map.Entry e : map.entrySet()) {
-                    User user = (User) e.getValue();
+                for (Map.Entry <String, User> e : map.entrySet()) {
+                    User user = e.getValue();
                     if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
                         studentList.add(user);
                     }
                 }
                 System.out.println("IN MANIP: " + studentList.size());
-                //creating recyclerview adapter
-                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
 
-                //setting adapter to recyclerview
-                recyclerView.setAdapter(adapter);
+                //creating recyclerview adapter
+                StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
+                recyclerView.setAdapter(adapter1);
             }
         });
-
 
         /*
         //getting the recyclerview from xml
