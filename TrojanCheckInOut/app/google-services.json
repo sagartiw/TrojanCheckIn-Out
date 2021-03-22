@@ -1,10 +1,7 @@
 {
   "project_info": {
     "project_number": "669230689738",
-<<<<<<< HEAD
     "firebase_url": "https://trojancheckin-out-default-rtdb.firebaseio.com",
-=======
->>>>>>> e163132bef6241d49896c333afb840e45c086368
     "project_id": "trojancheckin-out",
     "storage_bucket": "trojancheckin-out.appspot.com"
   },
@@ -17,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "669230689738-ohl2mneee43e47r9194ogv2fr6qjuvdi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team13.trojancheckin_out",
+            "certificate_hash": "84420c8797ce9ef00434cea67cc4bf5d2e4ce590"
+          }
+        },
         {
           "client_id": "669230689738-p0jlrrseggecr15k51jlrhb8eic0pbo1.apps.googleusercontent.com",
           "client_type": 3
