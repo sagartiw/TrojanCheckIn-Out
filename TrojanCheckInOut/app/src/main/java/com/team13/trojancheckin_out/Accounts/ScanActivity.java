@@ -115,7 +115,7 @@ public class ScanActivity extends AppCompatActivity {
                             System.out.println("hello i am me: " + buildingAcronym);
 
                             // check buildingAcronym against the database to find the building object
-                            Building match = buildingManipulator.getBuilding(buildingAcronym);
+                            //Building match = buildingManipulator.getBuilding(buildingAcronym);
 
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
