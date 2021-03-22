@@ -82,7 +82,8 @@ public class StudentsList extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        System.out.println("CHANGE");
 
         studentList = new ArrayList<>();
 
@@ -99,6 +100,7 @@ public class StudentsList extends AppCompatActivity {
                     User user = e.getValue();
                     if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
                         studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
+                        System.out.println("USER NAME: " + user.getName());
                     }
                 }
                 //getting the recyclerview from xml
@@ -108,7 +110,7 @@ public class StudentsList extends AppCompatActivity {
 //                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
 //                recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
+                System.out.println("NOTIFY! " + adapter.getItemCount());
 
             }
         });

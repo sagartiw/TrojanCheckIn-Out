@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+
 class TimeStamps {
     String checkInTime = "";
     String checkOutTime = "";
@@ -123,7 +125,8 @@ public class User implements Serializable {
     }
 
     public void setCurrentBuilding(Building currentBuilding) {
-        this.currentBuilding = currentBuilding;
+        referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
+        //this.currentBuilding = currentBuilding;
     }
 
     public Map<String, String> getHistory() {

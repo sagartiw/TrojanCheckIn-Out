@@ -120,8 +120,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     @Override
     public int getItemCount() {
-        //return studentList.size();
-        return 0;
+        if (studentList == null) return 0;
+        if (studentList.isEmpty()) return 0;
+        return studentList.size();
     }
 
 
