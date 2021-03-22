@@ -55,28 +55,6 @@ public class BuildingManipulator {
     /**
      * @return a list of the currently established buildings.
      */
-    public void getBuildingList(MyBuildingCallback myBuildingCallback) {
-        currentBuildings = new HashMap<>();
-
-        referenceBuildings.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Building building = ds.getValue(Building.class);
-                    currentBuildings.put(building.getAbbreviation(), building);
-                }
-
-                myBuildingCallback.onCallback(currentBuildings);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
-    }
-
-    /**
-     * @return a list of the currently established buildings.
-     */
     public Building getBuilding(String acronym) {
         return currentBuildings.get(acronym);
     }

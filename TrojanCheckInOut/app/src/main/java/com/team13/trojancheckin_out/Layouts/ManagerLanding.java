@@ -38,12 +38,9 @@ import java.util.Map;
 public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
-    List<Building> buildingList;
-    BuildingManipulator buildingManipulator;
-
-    //the recyclerview
-    RecyclerView recyclerView;
-
+    private List<Building> buildingList;
+    private BuildingManipulator buildingManipulator;
+    private RecyclerView recyclerView;
     private Button Search;
     private User user;
     private TextView txt_path, successText;
@@ -55,7 +52,7 @@ public class ManagerLanding extends AppCompatActivity {
         setContentView(R.layout.activity_manager_landing);
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
-
+        buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
 
         Search.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +71,7 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get current buildings
-        buildingManipulator.getBuildingsList(new MyBuildingCallback() {
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
             @Override
             public void onCallback(Map<String, Building> map) {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
