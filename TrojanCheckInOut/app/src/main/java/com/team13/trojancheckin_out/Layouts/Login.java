@@ -67,26 +67,28 @@ public class Login extends AppCompatActivity {
 //                    }
 //                }
 
-
-
                 accountManipulator.getStudentAccounts(new MyCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                            System.out.println("EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
                                 user = checkUser.getValue();
+                                System.out.println(user.isManager());
                                 found = true;
+                                intent = new Intent(Login.this, StudentLanding.class);
+                                intent.putExtra("PrevPageData", user);
+                                startActivity(intent);
                             }
+                            System.out.println("WE HAVE GOTTEN HERE");
                         }
                     }
                 });
 
-                if (found) {
-                    intent = new Intent(Login.this, StudentLanding.class);
-                    intent.putExtra("PrevPageData", user);
-                    startActivity(intent);
-                } else {
+                if(!found){
                     //reset the page here. user not found!
                     System.out.println("LOGIN ERROR!");
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
