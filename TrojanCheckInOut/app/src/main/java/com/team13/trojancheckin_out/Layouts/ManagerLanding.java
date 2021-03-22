@@ -26,20 +26,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
-    List<Building> buildingList;
-
-    //the recyclerview
-    RecyclerView recyclerView;
-
+    private List<Building> buildingList;
+    private BuildingManipulator buildingManipulator;
+    private RecyclerView recyclerView;
     private Button Search;
     private User user;
     private TextView txt_path, successText;
@@ -51,7 +52,7 @@ public class ManagerLanding extends AppCompatActivity {
         setContentView(R.layout.activity_manager_landing);
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
-
+        buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
         welcome = (TextView) findViewById(R.id.TextView16);
 
@@ -72,40 +73,59 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //initializing the productlist
+        //get current buildings
         buildingList = new ArrayList<>();
 
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                    System.out.println("I am here");
+                    Building b = checkBuilding.getValue();
+                    System.out.println("Name: " + b.getName() + "Abbrev: " + b.getAbbreviation() + "Capacity: " + b.getCapacity() + "QR: " + b.getQRCode());
+                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
+                }
 
-        //adding some items to our list
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+                //creating recyclerview adapter
+                BuildingAdapter adapter = new BuildingAdapter(ManagerLanding.this, buildingList);
 
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
 
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+            }
+        });
 
-        //creating recyclerview adapter
-        BuildingAdapter adapter = new BuildingAdapter(this, buildingList);
+        ///Thread.wait(1000);
 
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+//        System.out.println("I am after " + buildingList.size());
+//
+//
+//        // adding some items to our list
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);

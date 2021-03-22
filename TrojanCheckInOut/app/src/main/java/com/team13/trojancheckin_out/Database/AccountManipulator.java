@@ -21,6 +21,7 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
+    public static User currentUser;
     private static Map<String, User> studentAccounts;
     private static Map<String, User> managerAccounts;
     private static Map<String, User> allAccounts;
@@ -112,6 +113,7 @@ public class AccountManipulator extends User {
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
+        currentUser = user;
         return true;
     }
 
@@ -120,6 +122,7 @@ public class AccountManipulator extends User {
      * @return true if the user account has been successfully deleted.
      */
     public Boolean deleteAccount(User user) {
+        currentUser = null;
         referenceUsers.child(user.getId()).removeValue();
         if (user.isManager().equalsIgnoreCase("true")) {
             managerAccounts.remove(user.getId());

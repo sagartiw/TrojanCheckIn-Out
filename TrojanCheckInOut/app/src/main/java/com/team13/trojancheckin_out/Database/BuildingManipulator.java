@@ -24,16 +24,14 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
  */
 public class BuildingManipulator {
 
-
     public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings_2");
 
-
-    private Map<String, Building> currentBuildings;
+    private static Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
     private File file;
 
     /**
-     * @return a list of the currently established buildings.
+     * @return a map of the currently established buildings.
      */
     public void getCurrentBuildings(MyBuildingCallback myBuildingCallback) {
         currentBuildings = new HashMap<>();
@@ -52,6 +50,13 @@ public class BuildingManipulator {
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+    }
+
+    /**
+     * @return a list of the currently established buildings.
+     */
+    public Building getBuilding(String acronym) {
+        return currentBuildings.get(acronym);
     }
 
     /**
@@ -76,13 +81,19 @@ public class BuildingManipulator {
                 // <Full Name>|<Abbreviation>|<Capacity>
                 String[] data = line.split("@");
 
-                //referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
-                Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+                Building building = getBuilding(data[1]);
 
-                User user = new User("Adam Levine", "adam@usc.edu", "adam",
-                        "Photo", "123", false, null, new ArrayList<Building>(),
-                        "Business", "true");
-                building.addStudent(user);
+                building.setCapacity(Integer.parseInt(data[2]));
+
+                referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
+                //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+                //referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
+               // Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+
+                //User user = new User("Adam Levine", "adam@usc.edu", "adam",
+                  //      "Photo", "123", false, null, new ArrayList<Building>(),
+                   //     "Business", "true");
+                //building.addStudent(user);
 
                 // Store in DB
                 referenceBuildings.child(data[1]).setValue(building);
