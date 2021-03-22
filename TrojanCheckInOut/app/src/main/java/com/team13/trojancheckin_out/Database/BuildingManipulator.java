@@ -40,8 +40,10 @@ public class BuildingManipulator {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    System.out.println(ds.getValue());
                     Building building = ds.getValue(Building.class);
                     currentBuildings.put(building.getAbbreviation(), building);
+                    System.out.println("qr path = " + building.getQRCode());
                 }
 
                 myBuildingCallback.onCallback(currentBuildings);
