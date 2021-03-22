@@ -43,7 +43,6 @@ public class AccountManipulator extends User {
                     System.out.println("before leaving datachange");
                 }
 
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
 
