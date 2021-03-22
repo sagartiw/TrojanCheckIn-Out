@@ -35,6 +35,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EditProfile.this, StudentLanding.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
