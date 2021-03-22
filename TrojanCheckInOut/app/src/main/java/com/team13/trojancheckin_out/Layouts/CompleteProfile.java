@@ -242,7 +242,7 @@ public class CompleteProfile extends AppCompatActivity {
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 if (radioChosen == -1) {
-                    Toast.makeText(CompleteProfile.this, "No answer has been selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CompleteProfile.this, "Please select account type!", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
@@ -334,7 +334,7 @@ public class CompleteProfile extends AppCompatActivity {
 
             user = (User) getIntent().getSerializableExtra("PrevPageData");
 
-            user.setPhoto("");
+            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
 
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
