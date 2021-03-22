@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +40,13 @@ public class StudentLanding extends AppCompatActivity {
     private Button Scan;
     private User user;
     private FloatingActionButton soFab;
+    private TextView welcomeMessage;
+    private TextView Name;
+    private TextView ID;
+    private TextView Major;
+    private TextView currBuilding;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
 
     @Override
@@ -51,14 +59,30 @@ public class StudentLanding extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("PrevPageData");
         soFab = (FloatingActionButton)findViewById(R.id.fab);
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        welcomeMessage = (TextView)findViewById(R.id.welcomeMessage);
+        welcomeMessage.setText("welcome" + user.getName());
+        Name = (TextView)findViewById(R.id.name);
+        Name.setText(user.getName());
+        ID = (TextView)findViewById(R.id.id);
+        ID.setText(user.getId());
+        Major = (TextView)findViewById(R.id.id2);
+        Major.setText(user.getMajor());
 
-        Glide.with(StudentLanding.this).load(storageRef).into(soFab);
+        currBuilding = (TextView)findViewById(R.id.buildingName);
+        if(user.isInBuilding() == true){
+            Major.setText(user.getCurrentBuilding().getName());
+        }
+
+        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
+
+        System.out.println("This is the user photo in student landing" + user.getPhoto());
+        Glide.with(StudentLanding.this).load(pfp).into(soFab);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
+
                 startActivity(intent);
             }
         });
@@ -75,6 +99,7 @@ public class StudentLanding extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
