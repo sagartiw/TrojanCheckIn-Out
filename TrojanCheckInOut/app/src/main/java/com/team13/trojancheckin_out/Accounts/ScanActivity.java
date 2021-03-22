@@ -27,6 +27,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Layouts.CompleteProfile;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
@@ -42,6 +43,7 @@ public class ScanActivity extends AppCompatActivity {
     private TextView textView;
     private BarcodeDetector barcodeDetector;
     private AccountManipulator accountManipulator;
+    //private BuildingManipulator buildingManipulator2 = new BuildingManipulator();
     private User user;
     private Building curr;
 
@@ -105,7 +107,6 @@ public class ScanActivity extends AppCompatActivity {
                             System.out.println("hello i am me: " + buildingAcronym);
 
                             // check buildingAcronym against the database to find the building object
-
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
