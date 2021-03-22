@@ -89,7 +89,7 @@ public class StudentsList extends AppCompatActivity {
                 System.out.println("Building name; " + building.getAbbreviation());
                 studentList = map.get(building.getAbbreviation()).getCurrentStudents();
 
-                System.out.println("THIS IS A TEST" + currentBuildings.get(building.getAbbreviation()));
+                System.out.println("THIS IS A TEST" + currentBuildings.get(building.getAbbreviation()).getCurrentStudents().size());
 
                 //getting the recyclerview from xml
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
