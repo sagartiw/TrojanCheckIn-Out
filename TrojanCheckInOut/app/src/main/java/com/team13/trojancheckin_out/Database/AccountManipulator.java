@@ -39,16 +39,7 @@ public class AccountManipulator extends User {
                         User user = ds.getValue(User.class);
 
                         if (user.isManager().equalsIgnoreCase("false")) {
-                            System.out.println("BEFORE PUT:");
-                            for (User u : studentAccounts.values()) {
-                                System.out.println("My name: " + u.getName());
-                            }
                             studentAccounts.put(user.getId(), user);
-
-                            System.out.println("AFTER PUT:");
-                            for (User u : studentAccounts.values()) {
-                                System.out.println("My name: " + u.getName());
-                            }
                         }
                     }
 

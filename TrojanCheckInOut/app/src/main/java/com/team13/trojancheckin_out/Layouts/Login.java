@@ -78,6 +78,7 @@ public class Login extends AppCompatActivity {
                                 intent.putExtra("PrevPageData", user);
                                 startActivity(intent);
                             }
+                            System.out.println("WE HAVE GOTTEN HERE");
                         }
                     }
                 });
