@@ -85,9 +85,10 @@ public class StudentsList extends AppCompatActivity {
         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
             @Override
             public void onCallback(Map<String, Building> map) {
-                studentList = map.get(buildingName).getCurrentStudents();
+                System.out.println("Building name; " + building.getAbbreviation());
+                studentList = map.get(building.getAbbreviation()).getCurrentStudents();
 
-                System.out.println("THIS IS A TEST" + currentBuildings.get(buildingName));
+                System.out.println("THIS IS A TEST" + currentBuildings.get(building.getAbbreviation()));
 
                 //getting the recyclerview from xml
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
