@@ -116,6 +116,7 @@ public class ManagerLanding extends AppCompatActivity {
                 Log.d("menu title: ", item.getTitle().toString());
                 if(item.getTitle().toString().equals("Student View")){
                     Intent intent = new Intent(ManagerLanding.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
                 if(item.getTitle().toString().equals("Sign Out")){

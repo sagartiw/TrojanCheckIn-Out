@@ -4,11 +4,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -31,22 +33,23 @@ public class BuildingManipulator {
     /**
      * @return a map of the currently established buildings.
      */
-    public Map<String, Building> getCurrentBuildings() {
-        referenceBuildings.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            Building building = ds.getValue(Building.class);
-                            currentBuildings.put(building.getAbbreviation(), building);
-                        }
-                    }
+    public void getCurrentBuildings(MyBuildingCallback myBuildingCallback) {
+        currentBuildings = new HashMap<>();
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
+        referenceBuildings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Building building = ds.getValue(Building.class);
+                    currentBuildings.put(building.getAbbreviation(), building);
+                }
 
-        return this.currentBuildings;
+                myBuildingCallback.onCallback(currentBuildings);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
     }
 
     /**
@@ -104,6 +107,7 @@ public class BuildingManipulator {
 
                 building.setCapacity(Integer.parseInt(data[2]));
 
+                referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
                 //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
 
                 // Store in DB
