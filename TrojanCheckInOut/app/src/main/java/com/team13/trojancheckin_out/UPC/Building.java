@@ -23,7 +23,7 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-    private List<User> students;
+    //private List<User> students;
 
 
     /**
@@ -68,17 +68,19 @@ public class Building implements Serializable {
      * @return the building's capacity.
      */
     public int getCapacity() { return this.capacity; }
-    public int getCurrentCount() {
 
-        if(students == null){
-            return 0;
-        }
+//    public int getCurrentCount() {
+//
+//        if(students == null){
+//            return 0;
+//        }
+//
+//        if (!students.isEmpty()) {
+//            return 0;
+//        }
+//        return students.size();
+//    }
 
-        if (!students.isEmpty()) {
-            return 0;
-        }
-        return students.size();
-    }
     /**
      * Updates the building capacity.
      * @param capacity
