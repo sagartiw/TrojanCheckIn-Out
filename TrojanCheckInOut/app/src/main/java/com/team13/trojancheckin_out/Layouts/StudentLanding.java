@@ -47,6 +47,7 @@ public class StudentLanding extends AppCompatActivity {
     private TextView currBuilding;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    private TextView welcomeName;
 
 
     @Override
@@ -58,6 +59,9 @@ public class StudentLanding extends AppCompatActivity {
         CheckOut = (Button)findViewById(R.id.checkOut);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
         soFab = (FloatingActionButton)findViewById(R.id.fab);
+        welcomeName = (TextView)findViewById(R.id.welcomeMessage);
+        System.out.println("NAME: " + user.getName());
+        welcomeName.setText("Welcome " + user.getName());
 
         welcomeMessage = (TextView)findViewById(R.id.welcomeMessage);
         welcomeMessage.setText("welcome " + user.getName());

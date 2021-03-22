@@ -11,18 +11,15 @@ import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.MyCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
@@ -57,7 +54,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 //ALERT 1: check if email is usc email and is valid
 
-                accountManipulator.getStudentAccounts(new MyCallback() {
+                accountManipulator.getStudentAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
@@ -127,7 +124,7 @@ public class Register extends AppCompatActivity {
                 }
                 else{
                     System.out.println("BEFORE THE ACCOUNT SEARCH");
-                    accountManipulator.getStudentAccounts(new MyCallback() {
+                    accountManipulator.getStudentAccounts(new MyUserCallback() {
                         @Override
                         public void onCallback(Map<String, User> map) {
                             System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
