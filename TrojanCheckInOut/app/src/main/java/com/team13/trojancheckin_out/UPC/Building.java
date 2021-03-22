@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
@@ -23,7 +24,7 @@ public class Building implements Serializable {
     private String abbreviation;
     private String name;
     private int capacity;
-    private List<User> students;
+    private Map<String, User> students;
 
     // Have to use an image builder, using String for now
     private String QRCode;
@@ -105,14 +106,14 @@ public class Building implements Serializable {
     /**
      * @return the building's list of admitted students.
      */
-    public List<User> getCurrentStudents() {
+    public Map<String, User> getCurrentStudents() {
         if (students == null) return null;
         System.out.println("HERE: " + this.students.size());
         return this.students;
     }
 
 
-    public void setStudents(List<User> students) { this.students = students; }
+    public void setStudents(Map<String, User> students) { this.students = students; }
 
 
     /**
@@ -143,7 +144,7 @@ public class Building implements Serializable {
      *  checks if a student is in a building
      *  */
     public Boolean isInBuilding(User user) {
-        return students.contains(user);
+        return students.containsValue(user);
     }
 
     /**
@@ -161,7 +162,7 @@ public class Building implements Serializable {
      * @return true if the student has been successfully added into the building.
      */
     public Boolean addStudent(User user) {
-        students.add(user);
+        students.put(user.getId(), user);
         referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).setValue(user);
         return true;
     }
