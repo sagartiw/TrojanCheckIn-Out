@@ -68,11 +68,13 @@ public class StudentLanding extends AppCompatActivity {
         Major.setText(user.getMajor());
 
         currBuilding = (TextView)findViewById(R.id.buildingName);
-        currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
+
 
         if(user.isInBuilding() == true){
+            currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
             Scan.setEnabled(false);
         } else {
+            currBuilding.setText("USC");
             CheckOut.setEnabled(false);
         }
 
@@ -95,6 +97,7 @@ public class StudentLanding extends AppCompatActivity {
         Scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentUser = null;
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
@@ -172,8 +175,9 @@ public class StudentLanding extends AppCompatActivity {
                     public void onClick(View v) {
 
                         currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
-
-                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        user.setCurrentBuilding(null);
+                        user.setInBuilding(false);
+                        Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
                     }
