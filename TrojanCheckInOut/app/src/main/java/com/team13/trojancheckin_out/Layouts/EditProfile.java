@@ -1,11 +1,18 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +23,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+
+import java.io.IOException;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -29,6 +43,11 @@ public class EditProfile extends AppCompatActivity {
     private TextView major;
     private ImageView pfp;
     private Button editpic;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    //https://firebase.google.com/docs/storage/android/upload-files
+    public final static int PICK_PHOTO_CODE = 1046;
+    //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +56,7 @@ public class EditProfile extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
-        Back3 = (Button)findViewById(R.id.back3);
+
         name = (TextView) findViewById(R.id.name2);
         name.setText(user.getName());
 
@@ -49,6 +68,8 @@ public class EditProfile extends AppCompatActivity {
 
         pfp = (ImageView) findViewById(R.id.pfp);
 
+
+        Back3 = (Button)findViewById(R.id.back3);
 
         Back3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,5 +172,68 @@ public class EditProfile extends AppCompatActivity {
                 });
             }
         });
+
+        pfp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(intent, PICK_PHOTO_CODE);
+                }
+            }
+        });
+    }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            String filepath = photoUri.getPath();
+            System.out.println("This is the filepath of the local file: " + filepath);
+
+            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
+            UploadTask uploadTask = selectedFile.putFile(photoUri);
+
+            user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+
+        }
     }
 }
