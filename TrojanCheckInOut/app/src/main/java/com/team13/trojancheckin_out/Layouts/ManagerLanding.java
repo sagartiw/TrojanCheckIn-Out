@@ -75,6 +75,8 @@ public class ManagerLanding extends AppCompatActivity {
             @Override
             public void onCallback(Map<String, Building> map) {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                    System.out.println("i am here " + checkBuilding.getKey());
+
                     buildingList.add(checkBuilding.getValue());
                 }
             }
