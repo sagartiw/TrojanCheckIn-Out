@@ -26,6 +26,8 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
@@ -66,8 +68,9 @@ public class StudentLanding extends AppCompatActivity {
         Major.setText(user.getMajor());
 
         currBuilding = (TextView)findViewById(R.id.buildingName);
+        currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
+
         if(user.isInBuilding() == true){
-            Major.setText(user.getCurrentBuilding().getName());
             Scan.setEnabled(false);
         } else {
             CheckOut.setEnabled(false);
@@ -88,14 +91,6 @@ public class StudentLanding extends AppCompatActivity {
             }
         });
 
-        CheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StudentLanding.this, Startup.class);
-                intent.putExtra("PrevPageData", user);
-                startActivity(intent);
-            }
-        });
 
         Scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +142,10 @@ public class StudentLanding extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.check_out_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                Button nameButton = (Button) popupView.findViewById(R.id.button8);
+                Button submit = (Button) popupView.findViewById(R.id.button10);
+
+                nameButton.setText(user.getCurrentBuilding().getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -165,6 +164,18 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         popupWindow.dismiss();
+                    }
+                });
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+
+                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        intent.putExtra("PrevPageData", user);
+                        v.getContext().startActivity(intent);
                     }
                 });
             }
