@@ -98,14 +98,14 @@ public class StudentsList extends AppCompatActivity {
                     }
                 }
                 System.out.println("IN MANIP: " + studentList.size());
+                //creating recyclerview adapter
+                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
             }
         });
-        System.out.println("AFTER MANIP: " + studentList.size());
-        //creating recyclerview adapter
-        StudentAdapter adapter = new StudentAdapter(this, studentList);
 
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
 
         /*
         //getting the recyclerview from xml
