@@ -24,6 +24,8 @@ import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 
+
+
 public class Login extends AppCompatActivity {
 
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -43,9 +45,25 @@ public class Login extends AppCompatActivity {
 
         Login = (Button)findViewById(R.id.login);
 
+/*
+        //requests email through google sign in
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient loginClient = GoogleSignIn.getClient(this.gso);
+        GoogleSignInAccount loginAccount = GoogleSignIn.getLastSignedInAccount(this);
+        //User already signed in
+        if (loginAccount != null){
+            Toast.makeText(this, "User is signed in already", Toast.LENGTH_SHORT).show();
+        }
+
+ */
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+                public void onClick(View v) {
+                //Intent sign = loginClient.getSignInIntent();
+                //startActivityForResult(sign, GOOGLE_REQUEST_CODE);
                 Intent intent = new Intent(Login.this, ManagerLanding.class);
                 startActivity(intent);
             }
@@ -66,7 +84,7 @@ public class Login extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextTextPassword3);
         //forgotPassword = (Button) findViewById(R.id.button);
 
-        Login.setOnClickListener(new View.OnClickListener(){
+        Login.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -75,11 +93,11 @@ public class Login extends AppCompatActivity {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
                             System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                            System.out.println("ACTUAL: " + email.getText().toString() + " " + password.getText().toString());
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
                                 System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                                System.out.println("ACTUAL: " + email.getText().toString() + " " + password.getText().toString());
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
@@ -87,13 +105,13 @@ public class Login extends AppCompatActivity {
 
                                 currentUser = user;
 
-                                if (user.isManager().equalsIgnoreCase("false")){
+                                if (user.isManager().equalsIgnoreCase("false")) {
                                     intent = new Intent(Login.this, StudentLanding.class);
                                     intent.putExtra("PrevPageData", user);
                                     startActivity(intent);
                                 }
                                 //Manager Case
-                                else if (user.isManager().equalsIgnoreCase("true")){
+                                else if (user.isManager().equalsIgnoreCase("true")) {
                                     intent = new Intent(Login.this, ManagerLanding.class);
                                     intent.putExtra("PrevPageData", user);
                                     startActivity(intent);
@@ -104,7 +122,6 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
-
 
 
 //                accountManipulator.getStudentAccounts(new MyUserCallback() {
@@ -151,7 +168,7 @@ public class Login extends AppCompatActivity {
 //                    }
 //                });
 
-                if(!found){
+                if (!found) {
                     //reset the page here. user not found!
                     System.out.println("LOGIN ERROR!");
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -189,6 +206,18 @@ public class Login extends AppCompatActivity {
                     });
                 }
             }
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GOOGLE_REQUEST_CODE){
+            Task<GoogleSignInAccount> loginTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount loginAcct = loginTask.getResult(ApiException.class);
+                Toast.makeText(this, "You are now logged in", Toast.LENGTH_SHORT).show();
+>>>>>>> cd8e4bf9d9f228bc78d74440b187ec3a159d7c9b
+            }
         });
 
         Back = (Button)findViewById(R.id.back2);
@@ -203,6 +232,7 @@ public class Login extends AppCompatActivity {
 
 
     }
+<<<<<<< HEAD
 }
 
 //package com.team13.trojancheckin_out.Layouts;
@@ -338,3 +368,9 @@ public class Login extends AppCompatActivity {
 //        });
 //    }
 //}
+=======
+
+ */
+        });
+    }
+}
