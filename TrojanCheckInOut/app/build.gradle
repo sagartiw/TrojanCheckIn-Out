@@ -41,6 +41,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:20.0.3'
     implementation 'com.google.firebase:firebase-database:19.7.0'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
+<<<<<<< HEAD
+=======
+    implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

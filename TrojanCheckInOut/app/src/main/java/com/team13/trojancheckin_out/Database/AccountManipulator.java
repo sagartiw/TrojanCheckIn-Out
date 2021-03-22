@@ -21,14 +21,50 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
+<<<<<<< HEAD
     private Map<String, User> studentAccounts = new HashMap<>();
     private Map<String, User> managerAccounts = new HashMap<>();
+=======
+    private static Map<String, User> studentAccounts;
+    private static Map<String, User> managerAccounts;
+    private static Map<String, User> allAccounts;
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
 
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
+<<<<<<< HEAD
     public Map<String, User> getStudentAccounts() {
+=======
+    public void getAllAccounts(MyUserCallback myUserCallback) {
+        allAccounts = new HashMap<>();
+
+        referenceUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    allAccounts.put(user.getId(), user);
+                }
+
+                myUserCallback.onCallback(allAccounts);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+    }
+
+    /**
+     * @return the current list of registered student accounts. Accesses the Google Firebase to
+     * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
+     */
+    public void getStudentAccounts(MyUserCallback myUserCallback) {
+        studentAccounts = new HashMap<>();
+        managerAccounts = new HashMap<>();
+
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -39,7 +75,11 @@ public class AccountManipulator extends User {
                         }
                     }
 
+<<<<<<< HEAD
                     System.out.println("before leaving datachange");
+=======
+                    myUserCallback.onCallback(studentAccounts);
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
                 }
 
                 @Override
@@ -47,17 +87,21 @@ public class AccountManipulator extends User {
 
 
         });
+<<<<<<< HEAD
         System.out.println("BEFORE RETURN");
         for (User u : studentAccounts.values()) {
             System.out.println("My name: " + u.getName());
         }
         return studentAccounts;
 
+=======
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
     }
 
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      */
+<<<<<<< HEAD
     public Map<String, User> getManagerAccounts() {
         referenceUsers.addValueEventListener(
                 new ValueEventListener() {
@@ -69,31 +113,60 @@ public class AccountManipulator extends User {
                                 managerAccounts.put(user.getId(), user);
                             }
                         }
+=======
+    public void getManagerAccounts(MyUserCallback myUserCallback) {
+        studentAccounts = new HashMap<>();
+        managerAccounts = new HashMap<>();
+
+        referenceUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    User user = ds.getValue(User.class);
+                    if (user.isManager().equalsIgnoreCase("true")) {
+                        studentAccounts.put(user.getId(), user);
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
                     }
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
+                myUserCallback.onCallback(studentAccounts);
+            }
 
+<<<<<<< HEAD
         return managerAccounts;
+=======
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
     }
 
     /**
      * @param email
      * @return true if the user email has been successfully verified.
      */
-    public Boolean verifyEmail(String email) { return true; }
+    public Boolean verifyEmail(String email) {
+        return true;
+    }
 
     /**
      * @return true if the user account has been successfully created.
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
+<<<<<<< HEAD
         if (user.isManager().equalsIgnoreCase("true")) {
             managerAccounts.put(user.getId(), user);
         } else {
             studentAccounts.put(user.getId(), user);
         }
+=======
+//        if (user.isManager().equalsIgnoreCase("true")) {
+//            managerAccounts.put(user.getId(), user);
+//        } else {
+//            studentAccounts.put(user.getId(), user);
+//        }
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
         return true;
     }
 

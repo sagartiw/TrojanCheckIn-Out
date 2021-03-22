@@ -23,8 +23,13 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
 
+    private AccountManipulator accountManipulator = new AccountManipulator();
+    private EditText email, password;
     private Button Login;
     private Button Back;
+    private User user;
+    private Intent intent;
+    private boolean found = false;
 
     private AccountManipulator accountManipulator = new AccountManipulator();
     private EditText email, password;
@@ -36,14 +41,18 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Login = (Button) findViewById(R.id.login);
+        email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
+        password = (EditText) findViewById(R.id.editTextTextPassword3);
 
-        Login = (Button)findViewById(R.id.login);
-
-        Login.setOnClickListener(new View.OnClickListener() {
+        Login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
                 password = (EditText) findViewById(R.id.editTextTextPassword3);
+=======
+>>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
 
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
@@ -172,7 +181,6 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }
 
