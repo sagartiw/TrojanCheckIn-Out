@@ -1,5 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -78,29 +79,35 @@ public class StudentsList extends AppCompatActivity {
             }
         });
 
+        //initializing the productlist
+        studentList = new ArrayList<>();
+        System.out.println("BEFORE I ENTER");
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                studentList = map.get(buildingName).getCurrentStudents();
+
+                System.out.println("THIS IS A TEST" + currentBuildings.get(buildingName));
+
+                //getting the recyclerview from xml
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+                //creating recyclerview adapter
+                StudentAdapter adapter = new StudentAdapter(getApplicationContext(), studentList);
+
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        /*
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //initializing the productlist
-        studentList = new ArrayList<>();
-        studentList = building.getCurrentStudents();
-        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
-                @Override
-                public void onCallback(Map<String, Building> map) {
-                    for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
-                       if (checkBuilding.getValue().getAbbreviation().equals(buildingName.getText().toString())){
-                           studentList = checkBuilding.getValue().getCurrentStudents();
-                           break;
-                       }
-                    }
-                }
-            });
-
-
-        System.out.println("THIS IS A TEST" + currentBuildings.get(buildingName));
-
+        */
         //studentList = currentBuildings.get(buildingName).getCurrentStudents();
 
 //        DatabaseReference r = referenceBuildings.child(building.getAbbreviation()).child("currentStudents");
@@ -293,11 +300,6 @@ public class StudentsList extends AppCompatActivity {
 //                        "false"
 //                ));
 
-        //creating recyclerview adapter
-        StudentAdapter adapter = new StudentAdapter(this, studentList);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
         final PopupMenu menu = new PopupMenu(this, fab);

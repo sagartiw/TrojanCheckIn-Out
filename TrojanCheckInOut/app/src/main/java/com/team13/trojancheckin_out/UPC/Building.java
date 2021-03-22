@@ -106,6 +106,7 @@ public class Building implements Serializable {
      * @return the building's list of admitted students.
      */
     public List<User> getCurrentStudents() {
+        System.out.println("HERE: " + this.students.size());
         return this.students;
     }
 
