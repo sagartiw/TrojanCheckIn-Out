@@ -23,7 +23,6 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-    private List<User> students;
 
 
     /**
@@ -101,18 +100,6 @@ public class Building implements Serializable {
 
     public void setStudents(List<User> students) { this.students = students; }
 
-
-    /**
-     * @return the number of students currently in the building.
-     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
-     */
-
-    public int getCurrentCount() {
-        if (!students.isEmpty()) {
-            return 0;
-        }
-        return students.size();
-    }
 
     /**
      * @return percentage of building filled up.
