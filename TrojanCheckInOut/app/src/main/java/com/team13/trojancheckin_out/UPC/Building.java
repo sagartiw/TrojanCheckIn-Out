@@ -64,10 +64,17 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
-    public int getCapacity() { return this.capacity; }
+    public int getCapacity() {
+        return this.capacity;
+    }
 
     public int getCurrentCount() {
-        if (students == null) return 0;
+        if (students == null) {
+            return 0;
+        }
+        return students.size();
+    }
+
 
     /**
      * Updates the building capacity.
