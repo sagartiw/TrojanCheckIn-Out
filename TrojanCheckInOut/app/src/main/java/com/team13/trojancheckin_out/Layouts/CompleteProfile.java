@@ -213,7 +213,7 @@ public class CompleteProfile extends AppCompatActivity {
 
         Register = (Button)findViewById(R.id.register3);
 
-        // Grab current data for the user
+        // Grab currrent data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
@@ -261,6 +261,12 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setId(studentID.getText().toString());
 
+
+                // delete later
+                Building building = new Building();
+                building.setName("USC Campus");
+                user.setCurrentBuilding(building);
+                user.getHistory().put("USC", "1234 0123");
                 // delete later
                 Building building = new Building();
 

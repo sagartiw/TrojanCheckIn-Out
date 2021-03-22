@@ -39,6 +39,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private Button cap, studentList;
     private User user;
 
+    //NEW STUFF
+    private Building building;
+
     public static final FirebaseStorage storage = FirebaseStorage.getInstance();
     //public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
     public static final StorageReference buildingQRCodes = storage.getReference();
@@ -64,7 +67,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     @Override
     public void onBindViewHolder(BuildingViewHolder holder, int position) {
         //getting the product of the specified position
-        Building building = buildingList.get(position);
+        //Building building was the og. i added private member.
+        building = buildingList.get(position);
 
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
@@ -190,8 +194,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         studentList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                building = buildingList.get(position);
                 Intent intent = new Intent(v.getContext(), StudentsList.class);
-                intent.putExtra("PrevPageData", user);
+                intent.putExtra("PrevPageData", building);
                 v.getContext().startActivity(intent);
             }
         });

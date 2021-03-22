@@ -6,6 +6,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+
+class TimeStamps {
+    String checkInTime = "";
+    String checkOutTime = "";
+}
+
 /**
  * This class contains the objects that define a user's account. Further, it establishes mechanisms
  * for the user to perform alterations to their own profile as well as interactions with buildings.
@@ -118,6 +125,7 @@ public class User implements Serializable {
     }
 
     public void setCurrentBuilding(Building currentBuilding) {
+        //referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
         this.currentBuilding = currentBuilding;
     }
 

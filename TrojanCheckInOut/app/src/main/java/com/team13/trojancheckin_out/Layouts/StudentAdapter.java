@@ -51,7 +51,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         //binding the data with the viewholder views
         holder.fullName.setText(student.getName());
         holder.studentID.setText(String.valueOf(student.getId()));
-        holder.currentBuilding.setText("Current Building: SAL");
+        holder.currentBuilding.setText("Current Building: " + student.getCurrentBuilding().getAbbreviation());
 
         profileButton = holder.profileButton;
         historyBuilding = holder.historyButton;
@@ -63,6 +63,15 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.student_profile_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                TextView nameText = (TextView) popupView.findViewById(R.id.name6);
+                TextView idText = (TextView) popupView.findViewById(R.id.id5);
+                TextView majorText = (TextView) popupView.findViewById(R.id.id6);
+                TextView buildingName = (TextView) popupView.findViewById(R.id.buildingName2);
+
+                nameText.setText(student.getName());
+                idText.setText(student.getId());
+                majorText.setText(student.getMajor());
+                buildingName.setText(student.getCurrentBuilding().getAbbreviation());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -120,6 +129,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     @Override
     public int getItemCount() {
+        if (studentList == null) return 0;
+        if (studentList.isEmpty()) return 0;
         return studentList.size();
     }
 

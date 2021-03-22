@@ -4,15 +4,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
 /**
@@ -24,9 +27,10 @@ public class BuildingManipulator {
 
     public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings_2");
 
-    private static Map<String, Building> currentBuildings;
+    public static Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
     private File file;
+    private Map<String,User> studentList;
 
     /**
      * @return a map of the currently established buildings.
@@ -38,10 +42,8 @@ public class BuildingManipulator {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    System.out.println(ds.getValue());
                     Building building = ds.getValue(Building.class);
                     currentBuildings.put(building.getAbbreviation(), building);
-                    System.out.println("qr path = " + building.getQRCode());
                 }
 
                 myBuildingCallback.onCallback(currentBuildings);
@@ -51,6 +53,25 @@ public class BuildingManipulator {
             public void onCancelled(DatabaseError databaseError) { }
         });
     }
+
+//    public void getStudentsInBuilding(MyBuildingCallback myBuildingCallback, Building b) {
+//        studentList = new HashMap<String, User>();
+//
+//        referenceUsers.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    User user = ds.getValue(User.class);
+//                    studentList.add(user);
+//                }
+//
+//                myBuildingCallback.onCallback(studentList);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) { }
+//        });
+//    }
 
     /**
      * @return a list of the currently established buildings.

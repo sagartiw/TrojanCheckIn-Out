@@ -1,10 +1,16 @@
 package com.team13.trojancheckin_out.UPC;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
@@ -18,10 +24,11 @@ public class Building implements Serializable {
     private String abbreviation = "";
     private String name;
     private int capacity;
-    private List<User> students = new ArrayList<>();
 
     // Have to use an image builder, using String for now
     private String QRCode;
+
+   private List<User> students;
 
     /**
      * Accesses Building object via a default constructor.
@@ -64,6 +71,20 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
+
+    public int getCapacity() { return this.capacity; }
+//    public int getCurrentCount() {
+//
+//        if(students == null){
+//            return 0;
+//        }
+//
+//        if (!students.isEmpty()) {
+//            return 0;
+//        }
+//        return students.size();
+//    }
+
     public int getCapacity() {
         return this.capacity;
     }
@@ -97,12 +118,30 @@ public class Building implements Serializable {
     /**
      * @return the building's list of admitted students.
      */
-    public List<User> getCurrentStudents() { return this.students; }
+    public List<User> getCurrentStudents() {
+        if (students == null) return null;
+        System.out.println("HERE: " + this.students.size());
+        return this.students;
+    }
+
 
     public void setStudents(List<User> students) { this.students = students; }
 
 
     /**
+     * @return the number of students currently in the building.
+     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
+     */
+    public int getCurrentCount() {
+        if (students == null) return 0;
+        if (!students.isEmpty()) {
+            return 0;
+        }
+        return students.size();
+    }
+
+    /**
+
      * @return percentage of building filled up.
      */
     public int getPercent() {
