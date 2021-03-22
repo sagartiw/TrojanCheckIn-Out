@@ -83,7 +83,7 @@ public class StudentsList extends AppCompatActivity {
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
 
 
         studentList = new ArrayList<>();
