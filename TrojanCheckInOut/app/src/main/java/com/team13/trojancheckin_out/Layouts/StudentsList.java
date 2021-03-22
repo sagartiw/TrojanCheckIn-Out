@@ -84,6 +84,7 @@ public class StudentsList extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println("BEFORE MANIP");
 
         //initializing the productlist
         studentList = new ArrayList<>();
@@ -96,10 +97,10 @@ public class StudentsList extends AppCompatActivity {
                         studentList.add(user);
                     }
                 }
-
+                System.out.println("IN MANIP: " + studentList.size());
             }
         });
-
+        System.out.println("AFTER MANIP: " + studentList.size());
         //creating recyclerview adapter
         StudentAdapter adapter = new StudentAdapter(this, studentList);
 
