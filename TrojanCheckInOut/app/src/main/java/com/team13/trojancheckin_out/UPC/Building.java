@@ -1,9 +1,14 @@
 package com.team13.trojancheckin_out.UPC;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
@@ -23,7 +28,7 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-    private List<User> students;
+   // private List<User> students;
 
 
     /**
@@ -68,17 +73,17 @@ public class Building implements Serializable {
      * @return the building's capacity.
      */
     public int getCapacity() { return this.capacity; }
-    public int getCurrentCount() {
-
-        if(students == null){
-            return 0;
-        }
-
-        if (!students.isEmpty()) {
-            return 0;
-        }
-        return students.size();
-    }
+//    public int getCurrentCount() {
+//
+//        if(students == null){
+//            return 0;
+//        }
+//
+//        if (!students.isEmpty()) {
+//            return 0;
+//        }
+//        return students.size();
+//    }
     /**
      * Updates the building capacity.
      * @param capacity
@@ -100,7 +105,10 @@ public class Building implements Serializable {
     /**
      * @return the building's list of admitted students.
      */
-    public List<User> getCurrentStudents() { return this.students; }
+    public List<User> getCurrentStudents() {
+        return this.students;
+    }
+
 
     public void setStudents(List<User> students) { this.students = students; }
 

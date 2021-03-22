@@ -255,10 +255,10 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setId(studentID.getText().toString());
 
 //                // delete later
-//                Building building = new Building();
-//                building.setName("Salvatory");
-//                user.setCurrentBuilding(building);
-//                user.getHistory().put("SAL", "1234 0123");
+                Building building = new Building();
+                building.setName("USC Campus");
+                user.setCurrentBuilding(building);
+                user.getHistory().put("USC", "1234 0123");
 
 
                 // Push user to DB

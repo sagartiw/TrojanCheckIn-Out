@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
@@ -19,17 +21,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.currentBuildings;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.ManagerLanding.tracker;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class StudentsList extends AppCompatActivity {
 
     private Button Back;
+    private AccountManipulator accountManipulator = new AccountManipulator();
+    private TextView buildingName;
+    private Building building;
 
     //a list to store all the products
     List<User> studentList;
@@ -37,12 +54,20 @@ public class StudentsList extends AppCompatActivity {
     //the recyclerview
     RecyclerView recyclerView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
 
         Back = (Button)findViewById(R.id.backer2);
+
+        buildingName = (TextView) findViewById(R.id.textView32);
+        building = (Building) getIntent().getSerializableExtra("PrevPageData");
+
+        //NEED TO MAKE THIS OUR ACTUAL BUILDING OBJECT
+        buildingName.setText(building.getAbbreviation());
+
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,176 +85,213 @@ public class StudentsList extends AppCompatActivity {
 
         //initializing the productlist
         studentList = new ArrayList<>();
+        studentList = building.getCurrentStudents();
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                @Override
+                public void onCallback(Map<String, Building> map) {
+                    for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                       if (checkBuilding.getValue().getAbbreviation().equals(buildingName.getText().toString())){
+                           studentList = checkBuilding.getValue().getCurrentStudents();
+                           break;
+                       }
+                    }
+                }
+            });
 
 
-        //adding some items to our list
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+        System.out.println("THIS IS A TEST" + currentBuildings.get(buildingName));
 
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+        //studentList = currentBuildings.get(buildingName).getCurrentStudents();
 
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+//        DatabaseReference r = referenceBuildings.child(building.getAbbreviation()).child("currentStudents");
+//        for (DataSnapshot ds : r.get().getResult().getChildren()) {
+//            User user = ds.getValue(User.class);
+//            studentList.add(user);
+//        }
 
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
 
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+//        //trying to add cards
+//        accountManipulator.getAllAccounts(new MyUserCallback() {
+//            @Override
+//            public void onCallback(Map<String, User> map) {
+//                for (Map.Entry<String, User> checkUser : map.entrySet()) {
+//                    System.out.println(checkUser.getValue());
+//                    if (checkUser.getValue().getCurrentBuilding().equals("BSR")) {
+//                        studentList.add(checkUser.getValue());
+//                    }
+//                }
+//            }
+//        });
 
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
 
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+//        //adding some items to our list
+//        studentList.add(
+//                new User(
+//                        "Mindy Diep",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Arian Memari",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Sagar Tiwari",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Kabir Samra",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Annika Oeth",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Elizabeth Moody",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Mindy Diep",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Arian Memari",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Sagar Tiwari",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Kabir Samra",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Annika Oeth",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
+//
+//        studentList.add(
+//                new User(
+//                        "Elizabeth Moody",
+//                        "mindydie@usc.edu",
+//                        "hello",
+//                        "photo",
+//                        "123456789",
+//                        true,
+//                        null,
+//                        null,
+//                        "CSBA",
+//                        "false"
+//                ));
 
         //creating recyclerview adapter
         StudentAdapter adapter = new StudentAdapter(this, studentList);
