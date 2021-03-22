@@ -132,7 +132,7 @@ public class Building implements Serializable {
      */
     public Boolean addStudent(User user) {
         students.add(user);
-        referenceBuildings.child(name).child("currentStudents").setValue(user);
+        referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).setValue(user);
         return true;
     }
 }

@@ -112,36 +112,26 @@ public class ScanActivity extends AppCompatActivity {
                                     match.removeStudent(user);
                                     user.setCurrentBuilding(null);
                                     user.setInBuilding(false);
-
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
-
                                 }
-
                             }
                             else { // user is trying to check in
-
                                 // check if there is capacity in the building
                                 if (match.getCurrentCount() + 1 > match.getCapacity()) {
                                     // return error to the user saying they cannot check into this building because it is full
-
-
-
                                 }
                                 else { // check in the user
                                     match.addStudent(user);
                                     // set in building for curr user to be true so that they check in
                                     user.setCurrentBuilding(match);
                                     user.setInBuilding(true);
-
                                 }
-
                             }
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
                             intent.putExtra("PrevPageData", user);
                             startActivity(intent);
-
                         }
                     });
                 }
