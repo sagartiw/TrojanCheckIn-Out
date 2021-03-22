@@ -125,7 +125,7 @@ public class Login extends AppCompatActivity {
 
                     // show the popup window
                     // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
                     // dismiss the popup window when touched
                     closeButton.setOnClickListener(new View.OnClickListener() {
