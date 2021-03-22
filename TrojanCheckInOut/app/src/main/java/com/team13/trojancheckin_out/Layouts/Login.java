@@ -68,11 +68,33 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("BEFOREEXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                             System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
-                                System.out.println("AFTEREXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                                System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                                System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                                user = checkUser.getValue();
+                                System.out.println(user.isManager());
+                                found = true;
+                                intent = new Intent(Login.this, StudentLanding.class);
+                                intent.putExtra("PrevPageData", user);
+                                startActivity(intent);
+                            }
+                            System.out.println("WE HAVE GOTTEN HERE");
+                        }
+                    }
+                });
+
+                accountManipulator.getManagerAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                            System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
+                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
+                            if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
+                                    checkUser.getValue().getPassword().equals(password.getText().toString())) {
+                                System.out.println("AFTER EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                                 System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
