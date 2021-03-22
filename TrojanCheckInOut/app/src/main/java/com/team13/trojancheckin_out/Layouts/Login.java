@@ -67,107 +67,62 @@ public class Login extends AppCompatActivity {
 //                    }
 //                }
 
+
+
                 accountManipulator.getStudentAccounts(new MyCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
-                            System.out.println("EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
-
                             if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
                                     checkUser.getValue().getPassword().equals(password.getText().toString())) {
                                 user = checkUser.getValue();
-                                System.out.println(user.isManager());
                                 found = true;
-                                intent = new Intent(Login.this, StudentLanding.class);
-                                intent.putExtra("PrevPageData", user);
-                                startActivity(intent);
                             }
-                            System.out.println("WE HAVE GOTTEN HERE");
-                        }
-                        if(!found){
-                            //reset the page here. user not found!
-                            System.out.println("LOGIN ERROR!");
-                            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                            View popupView = inflater.inflate(R.layout.login_popup, null);
-                            Button closeButton = (Button) popupView.findViewById(R.id.button12);
-                            Button registerButton = (Button) popupView.findViewById(R.id.button10);
-
-                            // create the popup window
-                            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                            boolean focusable = true; // lets taps outside the popup also dismiss it
-                            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                            popupWindow.setElevation(20);
-
-                            // show the popup window
-                            // which view you pass in doesn't matter, it is only used for the window token
-                            popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-
-                            // dismiss the popup window when touched
-                            closeButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    popupWindow.dismiss();
-                                }
-                            });
-
-                            //reroute to register
-                            registerButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    intent = new Intent(Login.this, Register.class);
-                                    startActivity(intent);
-                                }
-                            });
                         }
                     }
                 });
 
+                if (found) {
+                    intent = new Intent(Login.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                } else {
+                    //reset the page here. user not found!
+                    System.out.println("LOGIN ERROR!");
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.login_popup, null);
+                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                    Button registerButton = (Button) popupView.findViewById(R.id.button10);
 
-//                if(found){
-//                    intent = new Intent(Login.this, StudentLanding.class);
-//                    intent.putExtra("PrevPageData", user);
-//                    startActivity(intent);
-//                }
-//                else{
-//                    //reset the page here. user not found!
-//                    System.out.println("LOGIN ERROR!");
-//                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//                    View popupView = inflater.inflate(R.layout.login_popup, null);
-//                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-//                    Button registerButton = (Button) popupView.findViewById(R.id.button10);
-//
-//                    // create the popup window
-//                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                    boolean focusable = true; // lets taps outside the popup also dismiss it
-//                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    popupWindow.setElevation(20);
-//
-//                    // show the popup window
-//                    // which view you pass in doesn't matter, it is only used for the window token
-//                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-//
-//                    // dismiss the popup window when touched
-//                    closeButton.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            popupWindow.dismiss();
-//                        }
-//                    });
-//
-//                    //reroute to register
-//                    registerButton.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            intent = new Intent(Login.this, Register.class);
-//                            startActivity(intent);
-//                        }
-//                    });
-//                }
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    popupWindow.setElevation(20);
+
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+
+                    // dismiss the popup window when touched
+                    closeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }
+                    });
+
+                    //reroute to register
+                    registerButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            intent = new Intent(Login.this, Register.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
 
