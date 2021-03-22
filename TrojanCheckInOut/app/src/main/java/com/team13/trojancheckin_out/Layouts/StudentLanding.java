@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +40,7 @@ public class StudentLanding extends AppCompatActivity {
     private Button Scan;
     private User user;
     private FloatingActionButton soFab;
+    private TextView welcomeName;
 
 
     @Override
@@ -50,6 +52,9 @@ public class StudentLanding extends AppCompatActivity {
         CheckOut = (Button)findViewById(R.id.checkOut);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
         soFab = (FloatingActionButton)findViewById(R.id.fab);
+        welcomeName = (TextView)findViewById(R.id.welcomeMessage);
+        System.out.println("NAME: " + user.getName());
+        welcomeName.setText("Welcome " + user.getName());
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
