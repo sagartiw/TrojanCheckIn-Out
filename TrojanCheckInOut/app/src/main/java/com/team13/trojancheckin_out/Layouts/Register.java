@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+
 public class Register extends AppCompatActivity {
 
     private Button Register;
@@ -189,6 +191,7 @@ public class Register extends AppCompatActivity {
                     }
                     //REGISTER. We can create a user object and move on to Complete Profile
                     else{
+                        currentUser = user;
                         System.out.println("CREATION OF ACCOUNT");
                         List<Building> buildingList = new ArrayList<>();
                         User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),

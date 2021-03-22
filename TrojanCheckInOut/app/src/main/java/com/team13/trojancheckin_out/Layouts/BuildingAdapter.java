@@ -1,8 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,11 +15,12 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
@@ -30,6 +29,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private Context mCtx;
     private ImageButton qrButton;
     private Button cap, studentList;
+    private User user;
 
     //we are storing all the products in a list
     private List<Building> buildingList;
@@ -128,6 +128,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StudentsList.class);
+                intent.putExtra("PrevPageData", user);
                 v.getContext().startActivity(intent);
             }
         });

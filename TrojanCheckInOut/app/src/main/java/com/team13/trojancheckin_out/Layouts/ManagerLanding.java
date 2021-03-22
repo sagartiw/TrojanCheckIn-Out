@@ -1,13 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,29 +15,36 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
-import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
     private List<Building> buildingList;
-    private BuildingManipulator buildingManipulator;
     private RecyclerView recyclerView;
     private Button Search;
     private User user;
     private TextView txt_path, successText;
     private TextView welcome;
+    public static User tracker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class ManagerLanding extends AppCompatActivity {
         setContentView(R.layout.activity_manager_landing);
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+        tracker = user;
         buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
         welcome = (TextView) findViewById(R.id.TextView16);
@@ -241,7 +242,7 @@ public class ManagerLanding extends AppCompatActivity {
                     String path = dataPath.replace("/document/raw:", "");
                     txt_path.setText(path);
                     successText.setText("Upload successful!");
-                    BuildingManipulator buildingManipulator = new BuildingManipulator();
+                    //BuildingManipulator buildingManipulator = new BuildingManipulator();
                     File file = new File(path);
                     buildingManipulator.processCSV(file);
                 }

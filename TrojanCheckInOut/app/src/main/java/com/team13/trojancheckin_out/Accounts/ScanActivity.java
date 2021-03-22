@@ -1,9 +1,5 @@
 package com.team13.trojancheckin_out.Accounts;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,18 +9,21 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
-import com.team13.trojancheckin_out.Layouts.Register;
-import com.team13.trojancheckin_out.Layouts.Startup;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
 public class ScanActivity extends AppCompatActivity {
@@ -32,7 +31,6 @@ public class ScanActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private TextView textView;
     private BarcodeDetector barcodeDetector;
-    private BuildingManipulator buildingManipulator;
     private AccountManipulator accountManipulator;
     private User user;
     private Building curr;
@@ -41,6 +39,7 @@ public class ScanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
@@ -93,7 +92,10 @@ public class ScanActivity extends AppCompatActivity {
                             // this should be a building acronym
                             String buildingAcronym = qrcode.valueAt(0).displayValue;
 
+                            System.out.println("hello i am me: " + buildingAcronym);
+
                             // check buildingAcronym against the database to find the building object
+
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
@@ -136,10 +138,6 @@ public class ScanActivity extends AppCompatActivity {
                                 }
 
                             }
-
-
-                            user.setCurrentBuilding(curr);
-                            user.setInBuilding(true);
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
                             intent.putExtra("PrevPageData", user);
                             startActivity(intent);

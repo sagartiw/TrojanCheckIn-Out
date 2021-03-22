@@ -18,7 +18,7 @@ public class Building implements Serializable {
     private String abbreviation;
     private String name;
     private int capacity;
-    private List<User> students;
+    private List<User> students = new ArrayList<>();
 
     // Have to use an image builder, using String for now
     private String QRCode;
@@ -39,7 +39,6 @@ public class Building implements Serializable {
         this.name = name;
         this.abbreviation = abbreviation;
         this.capacity = capacity;
-        this.students = new ArrayList<User>();
         this.QRCode = QRCode;
     }
 
@@ -58,6 +57,11 @@ public class Building implements Serializable {
      * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
     public int getCurrentCount() {
+
+        if(students == null){
+            return 0;
+        }
+
         if (!students.isEmpty()) {
             return 0;
         }
@@ -128,7 +132,7 @@ public class Building implements Serializable {
      */
     public Boolean addStudent(User user) {
         students.add(user);
-       // referenceBuildings.child(name).child("students").setValue(user);
+        referenceBuildings.child(name).child("currentStudents").setValue(user);
         return true;
     }
 }

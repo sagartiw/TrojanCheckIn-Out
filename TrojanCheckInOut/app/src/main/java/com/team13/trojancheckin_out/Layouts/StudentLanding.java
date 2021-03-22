@@ -25,6 +25,8 @@ import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
     private Button CheckOut;
@@ -79,6 +81,7 @@ public class StudentLanding extends AppCompatActivity {
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentUser = null;
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
@@ -192,6 +195,7 @@ public class StudentLanding extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        currentUser = null;
                         Intent intent = new Intent(v.getContext(), Startup.class);
                         intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
