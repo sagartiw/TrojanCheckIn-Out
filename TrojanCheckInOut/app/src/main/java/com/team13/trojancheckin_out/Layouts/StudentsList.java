@@ -93,7 +93,7 @@ public class StudentsList extends AppCompatActivity {
                     }
                 }
 
-                System.out.println("FUCK MY PUSSY: " + studentList.size());
+                System.out.println("FUCK MY PUSSY: " + studentList.toString());
 
                 //getting the recyclerview from xml
                 recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
