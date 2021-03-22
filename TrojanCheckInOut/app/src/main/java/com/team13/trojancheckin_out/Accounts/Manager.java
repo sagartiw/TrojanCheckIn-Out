@@ -48,7 +48,8 @@ public class Manager extends User {
      * @return a list of the current users in a selected building.
      */
     public List<User> getPeopleInBuilding(Building building) {
-        return buildingManipulator.getCurrentBuildings().get(building).getCurrentStudents();
+        //return buildingManipulator.getCurrentBuildings().get(building).getCurrentStudents();
+        return new ArrayList<User>();
     }
 
     /**
