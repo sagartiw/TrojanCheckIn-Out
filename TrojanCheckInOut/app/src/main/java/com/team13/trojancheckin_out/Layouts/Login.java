@@ -70,9 +70,10 @@ public class Login extends AppCompatActivity {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
                             System.out.println("EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
-                            System.out.println("ACTUAL: " + email + " " + password);
+                            System.out.println("ACTUAL: " + email.getText().toString()+ " " + password.getText().toString());
 
-                            if (checkUser.getValue().getEmail().equals(email) && checkUser.getValue().getPassword().equals(password)) {
+                            if (checkUser.getValue().getEmail().equals(email.getText().toString()) &&
+                                    checkUser.getValue().getPassword().equals(password.getText().toString())) {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 intent = new Intent(Login.this, StudentLanding.class);
