@@ -51,10 +51,10 @@ public class StudentsList extends AppCompatActivity {
     private Building building;
 
     //a list to store all the products
-    List<User> studentList;
+    private List<User> studentList;
 
     //the recyclerview
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -81,7 +81,7 @@ public class StudentsList extends AppCompatActivity {
         });
 
         //getting the recyclerview from xml
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         System.out.println("BEFORE MANIP");
