@@ -26,11 +26,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ManagerLanding extends AppCompatActivity {
 
@@ -71,9 +74,14 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //get current buildings
-        buildingList = buildingManipulator.getBuildingsList();
-
-
+        buildingManipulator.getBuildingsList(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                    buildingList.add(checkBuilding.getValue());
+                }
+            }
+        });
         //adding some items to our list
 //        buildingList.add(
 //                new Building(

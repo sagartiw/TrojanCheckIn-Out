@@ -55,23 +55,23 @@ public class BuildingManipulator {
     /**
      * @return a list of the currently established buildings.
      */
-    public List<Building> getBuildingsList() {
-        List<Building> buildingList = new ArrayList<>();
-        referenceBuildings.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            Building building = ds.getValue(Building.class);
-                            buildingList.add(building);
-                        }
-                    }
+    public void getBuildingList(MyBuildingCallback myBuildingCallback) {
+        currentBuildings = new HashMap<>();
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) { }
-                });
+        referenceBuildings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Building building = ds.getValue(Building.class);
+                    currentBuildings.put(building.getAbbreviation(), building);
+                }
 
-        return buildingList;
+                myBuildingCallback.onCallback(currentBuildings);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
     }
 
     /**
