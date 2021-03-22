@@ -23,6 +23,9 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
+    private List<User> students;
+
+
     /**
      * Accesses Building object via a default constructor.
      */
@@ -43,25 +46,70 @@ public class Building implements Serializable {
     }
 
     /**
+     * @return the abbreviation of the name of the current building.
+     */
+    public String getAbbreviation() { return this.abbreviation; }
+
+    public void setAbbreviation(String a) { this.abbreviation = a; }
+
+    /**
      * @return the name of the current building.
      */
     public String getName() { return this.name; }
 
     /**
-     * @return the abbreviation of the name of the current building.
+     * Sets the name of the building
+     * @param name
      */
-    public String getAbbreviation() { return this.abbreviation; }
+    public void setName(String name) { this.name = name; }
+
 
     /**
-     * @return the number of students currently in the building.
-     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
+     * @return the building's capacity.
      */
+    public int getCapacity() { return this.capacity; }
     public int getCurrentCount() {
 
         if(students == null){
             return 0;
         }
 
+        if (!students.isEmpty()) {
+            return 0;
+        }
+        return students.size();
+    }
+    /**
+     * Updates the building capacity.
+     * @param capacity
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+    }
+
+
+    /**
+     * @return the building's QRCode.
+     */
+    public String getQRCode() { return this.QRCode; }
+
+
+    public void setQRCode(String code) { this.QRCode = code; }
+
+    /**
+     * @return the building's list of admitted students.
+     */
+    public List<User> getCurrentStudents() { return this.students; }
+
+    public void setStudents(List<User> students) { this.students = students; }
+
+
+    /**
+     * @return the number of students currently in the building.
+     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
+     */
+    public int getCurrentCount() {
         if (!students.isEmpty()) {
             return 0;
         }
@@ -79,35 +127,6 @@ public class Building implements Serializable {
         return percent;
     }
 
-    /**
-     * @return the building's QRCode.
-     */
-    public String getQRCode() { return this.QRCode; }
-
-    /**
-     * @return the building's capacity.
-     */
-    public int getCapacity() { return this.capacity; }
-
-    /**
-     * Sets the name of the building
-     * @param name
-     */
-    public void setName(String name) { this.name = name; }
-
-    /**
-     * @return the building's list of admitted students.
-     */
-    public List<User> getCurrentStudents() { return this.students; }
-
-    /**
-     * Updates the building capacity.
-     * @param capacity
-     */
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-        //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
-    }
 
     /**
      *  checks if a student is in a building

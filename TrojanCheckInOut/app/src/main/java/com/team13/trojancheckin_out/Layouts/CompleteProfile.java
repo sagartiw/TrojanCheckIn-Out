@@ -254,11 +254,11 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setId(studentID.getText().toString());
 
-                // delete later
-                Building building = new Building();
-                building.setName("SAL");
-                user.setCurrentBuilding(building);
-                user.getHistory().add(building);
+//                // delete later
+//                Building building = new Building();
+//                building.setName("Salvatory");
+//                user.setCurrentBuilding(building);
+//                user.getHistory().put("SAL", "1234 0123");
 
 
                 // Push user to DB

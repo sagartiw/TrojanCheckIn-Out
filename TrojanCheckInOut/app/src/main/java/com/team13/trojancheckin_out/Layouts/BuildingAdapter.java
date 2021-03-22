@@ -4,24 +4,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
 
@@ -30,6 +43,13 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private ImageButton qrButton;
     private Button cap, studentList;
     private User user;
+
+    public static final FirebaseStorage storage = FirebaseStorage.getInstance();
+    public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
+//    public static final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+
+
 
     //we are storing all the products in a list
     private List<Building> buildingList;
@@ -71,6 +91,33 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.qr_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+
+                TextView buildingName = (TextView) popupView.findViewById(R.id.textView19);
+                buildingName.setText(building.getName());
+
+                ImageView qrImage = (ImageView) popupView.findViewById(R.id.imageView8);
+
+                String pathToPicture = building.getQRCode();
+
+                //qrImage.setImageBitmap(BitmapFactory.decodeFile(pathToPicture));
+
+                System.out.println("qr code path = " + pathToPicture);
+
+//                Uri filePath = Uri.parse(pathToPicture);
+//                Bitmap bitmap = null;
+//                try {
+//                    bitmap = MediaStore.Images.Media.getBitmap(mCtx.getContentResolver(), filePath);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                //qrImage.setImageBitmap(bitmap);
+
+                System.out.println(pathToPicture);
+                StorageReference httpsReference = storage.getReference().child(pathToPicture);
+
+                Glide.with(mCtx).load(httpsReference).into(qrImage);
+
+                //qrImage.setImageResource(building.getQRCode());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
