@@ -16,10 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
@@ -37,10 +40,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private User user;
 
     public static final FirebaseStorage storage = FirebaseStorage.getInstance();
-    public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
-//    public static final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-
+    //public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
+    public static final StorageReference buildingQRCodes = storage.getReference();
 
 
     //we are storing all the products in a list
@@ -85,31 +86,16 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 TextView buildingName = (TextView) popupView.findViewById(R.id.textView19);
-                buildingName.setText(building.getName());
+                buildingName.setText(buildingList.get(position).getName());
+                String buildingAbb = buildingList.get(position).getAbbreviation();
 
                 ImageView qrImage = (ImageView) popupView.findViewById(R.id.imageView8);
+                System.out.println(buildingName.getText().toString().toLowerCase());
 
-                String pathToPicture = building.getQRCode();
+                String uri = "@drawable/" + buildingAbb.toLowerCase();  // where myresource (without the extension) is the file
+                int imageId = mCtx.getResources().getIdentifier(uri, "drawable", mCtx.getPackageName());
+                qrImage.setImageResource(imageId);
 
-                //qrImage.setImageBitmap(BitmapFactory.decodeFile(pathToPicture));
-
-                System.out.println("qr code path = " + pathToPicture);
-
-//                Uri filePath = Uri.parse(pathToPicture);
-//                Bitmap bitmap = null;
-//                try {
-//                    bitmap = MediaStore.Images.Media.getBitmap(mCtx.getContentResolver(), filePath);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                //qrImage.setImageBitmap(bitmap);
-
-                System.out.println(pathToPicture);
-                StorageReference httpsReference = storage.getReference().child(pathToPicture);
-
-                Glide.with(mCtx).load(httpsReference).into(qrImage);
-
-                //qrImage.setImageResource(building.getQRCode());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
