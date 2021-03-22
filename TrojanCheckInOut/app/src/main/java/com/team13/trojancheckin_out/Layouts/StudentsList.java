@@ -97,14 +97,14 @@ public class StudentsList extends AppCompatActivity {
                     }
                 }
 
-
-                //creating recyclerview adapter
-                StudentAdapter adapter = new StudentAdapter(getApplicationContext(), studentList);
-
-                //setting adapter to recyclerview
-                recyclerView.setAdapter(adapter);
             }
         });
+
+        //creating recyclerview adapter
+        StudentAdapter adapter = new StudentAdapter(this, studentList);
+
+        //setting adapter to recyclerview
+        recyclerView.setAdapter(adapter);
 
         /*
         //getting the recyclerview from xml
