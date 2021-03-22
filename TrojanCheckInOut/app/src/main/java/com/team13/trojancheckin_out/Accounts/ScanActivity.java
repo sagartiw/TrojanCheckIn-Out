@@ -20,6 +20,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Layouts.Register;
 import com.team13.trojancheckin_out.Layouts.Startup;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 
@@ -29,11 +30,15 @@ public class ScanActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private TextView textView;
     private BarcodeDetector barcodeDetector;
+    private User user;
+    private Building curr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         surfaceView = findViewById(R.id.camera);
         textView = findViewById(R.id.text);
@@ -82,7 +87,7 @@ public class ScanActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            String holder = qrcode.valueAt(0).displayValue;
+                            String holder = qrcode.valueAt(0).displayValue.toString();
 
 
                             // check holder against the database to find the building object
@@ -90,7 +95,10 @@ public class ScanActivity extends AppCompatActivity {
                             // use the building object to update the capacity of that building
                             // set in building for curr user to be true so that the check in
 
+                            user.setCurrentBuilding(curr);
+                            user.setInBuilding(true);
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
+                            intent.putExtra("PrevPageData", user);
                             startActivity(intent);
 
                         }

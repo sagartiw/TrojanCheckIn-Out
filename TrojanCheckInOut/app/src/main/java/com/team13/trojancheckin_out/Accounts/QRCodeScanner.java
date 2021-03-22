@@ -22,11 +22,15 @@ public class QRCodeScanner extends AppCompatActivity {
 
     private Button camera;
     private Button scan;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanner_logic);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
+
         camera = findViewById(R.id.camera);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +44,7 @@ public class QRCodeScanner extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QRCodeScanner.this, ScanActivity.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
