@@ -80,14 +80,7 @@ public class StudentsList extends AppCompatActivity {
             }
         });
 
-        //getting the recyclerview from xml
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
-
-
         studentList = new ArrayList<>();
-        final StudentAdapter[] adapter = new StudentAdapter[1];
 
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
@@ -101,9 +94,18 @@ public class StudentsList extends AppCompatActivity {
                         studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
                     }
                 }
+                //getting the recyclerview from xml
+//                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+//                recyclerView.setHasFixedSize(true);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
+//                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+//                recyclerView.setAdapter(adapter);
 
-                adapter[0] = new StudentAdapter(StudentsList.this, studentList);
-                recyclerView.setAdapter(adapter[0]);
+                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
             }
         });
