@@ -124,79 +124,120 @@ public class Register extends AppCompatActivity {
                 }
                 else{
                     System.out.println("BEFORE THE ACCOUNT SEARCH");
-                    accountManipulator.getStudentAccounts(new MyUserCallback() {
+//                    accountManipulator.getStudentAccounts(new MyUserCallback() {
+//                        @Override
+//                        public void onCallback(Map<String, User> map) {
+//                            System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+//                            for (Map.Entry<String, User> u : map.entrySet()) {
+//                                System.out.println("SHIT: " + u.getValue().getName());
+//                            }
+//                        }
+//                    });
+
+                    accountManipulator.getAllAccounts(new MyUserCallback() {
                         @Override
                         public void onCallback(Map<String, User> map) {
-                            System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+                            System.out.println("CHECKING MAP CONTENTS USING GET ALL ACCOUNTS");
                             for (Map.Entry<String, User> u : map.entrySet()) {
                                 System.out.println("SHIT: " + u.getValue().getName());
+                                if (u.getValue().getEmail().equals(email)) {
+                                    System.out.println("DUPLICATE ACCOUNT ERROR!");
+                                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                                    View popupView = inflater.inflate(R.layout.registration_popup3, null);
+                                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                                    Button loginButton = (Button) popupView.findViewById(R.id.button10);
+
+                                    // create the popup window
+                                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    popupWindow.setElevation(20);
+
+                                    // show the popup window
+                                    // which view you pass in doesn't matter, it is only used for the window token
+                                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+
+                                    // dismiss the popup window when touched
+                                    closeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+
+                                    //reroute to login
+                                    loginButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            intent = new Intent(Register.this, Login.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    break;
+                                }
                             }
+                            System.out.println("CREATION OF ACCOUNT");
+                            List<Building> buildingList = new ArrayList<>();
+                            User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
+                                    "Photo", "123", false, null, buildingList,
+                                    "Business", "true");
+                            Intent intent = new Intent(Register.this, CompleteProfile.class);
+                            intent.putExtra("PrevPageData", user);
+                            startActivity(intent);
+
                         }
+
                     });
-//                    for (User checkUser : accountManipulator.getStudentAccounts().values()) {
-//                        if (checkUser.getEmail().equals(email)){
-//                            user = checkUser;
-//                            System.out.println(user.isManager());
-//                        }
-//                        System.out.println("STUDENT ACCOUNT SEARCH INDICATOR");
-//                    }
+//                    //ALERT 3: account already exists
+//                    if(user != null){
+//                        System.out.println("DUPLICATE ACCOUNT ERROR!");
+//                        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                        View popupView = inflater.inflate(R.layout.registration_popup3, null);
+//                        Button closeButton = (Button) popupView.findViewById(R.id.button12);
+//                        Button loginButton = (Button) popupView.findViewById(R.id.button10);
 //
-//                    for (User checkUser : accountManipulator.getManagerAccounts().values()) {
-//                        if (checkUser.getEmail().equals(email)) {
-//                            user = checkUser;
-//                            System.out.println(user.isManager());
-//                        }
-//                        System.out.println("MANAGER ACCOUNT SEARCH INDICATOR");
+//                        // create the popup window
+//                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                        boolean focusable = true; // lets taps outside the popup also dismiss it
+//                        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                        popupWindow.setElevation(20);
+//
+//                        // show the popup window
+//                        // which view you pass in doesn't matter, it is only used for the window token
+//                        popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//
+//                        // dismiss the popup window when touched
+//                        closeButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                popupWindow.dismiss();
+//                            }
+//                        });
+//
+//                        //reroute to login
+//                        loginButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                intent = new Intent(Register.this, Login.class);
+//                                startActivity(intent);
+//                            }
+//                        });
 //                    }
-//                    System.out.println("AFTER THE ACCOUNT SEARCH");
-                    //ALERT 3: account already exists
-                    if(user != null){
-                        System.out.println("DUPLICATE ACCOUNT ERROR!");
-                        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                        View popupView = inflater.inflate(R.layout.registration_popup3, null);
-                        Button closeButton = (Button) popupView.findViewById(R.id.button12);
-                        Button loginButton = (Button) popupView.findViewById(R.id.button10);
-
-                        // create the popup window
-                        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                        boolean focusable = true; // lets taps outside the popup also dismiss it
-                        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        popupWindow.setElevation(20);
-
-                        // show the popup window
-                        // which view you pass in doesn't matter, it is only used for the window token
-                        popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-
-                        // dismiss the popup window when touched
-                        closeButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupWindow.dismiss();
-                            }
-                        });
-
-                        //reroute to login
-                        loginButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                intent = new Intent(Register.this, Login.class);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-                    //REGISTER. We can create a user object and move on to Complete Profile
-                    else{
-                        System.out.println("CREATION OF ACCOUNT");
-                        List<Building> buildingList = new ArrayList<>();
-                        User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
-                                "Photo", "123", false, null, buildingList,
-                                "Business", "true");
-                        Intent intent = new Intent(Register.this, CompleteProfile.class);
-                        intent.putExtra("PrevPageData", user);
-                        startActivity(intent);
-                    }
+//                    //REGISTER. We can create a user object and move on to Complete Profile
+//                    else{
+//                        System.out.println("CREATION OF ACCOUNT");
+//                        List<Building> buildingList = new ArrayList<>();
+//                        User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
+//                                "Photo", "123", false, null, buildingList,
+//                                "Business", "true");
+//                        Intent intent = new Intent(Register.this, CompleteProfile.class);
+//                        intent.putExtra("PrevPageData", user);
+//                        startActivity(intent);
+//                    }
                 }
             }
         });
