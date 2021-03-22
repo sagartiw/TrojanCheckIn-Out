@@ -16,7 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.storage.FirebaseStorage;
@@ -65,8 +69,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
         holder.textViewCurrent.setText(String.valueOf(building.getCurrentCount()));
-        holder.textViewPercent.setText(String.valueOf(building.getPercent()) + "%");
         holder.textViewCapacity.setText(String.valueOf(building.getCapacity()));
+        holder.textViewPercent.setText(String.valueOf(building.getPercent()) + "%");
         holder.progressBar.setProgress((building.getPercent()));
 
         qrButton = holder.imageButton;
@@ -130,7 +134,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 int cur = Integer.parseInt(h);
                 int capa = Integer.parseInt(i);
 
-                int perc = cur/capa * 100;
+                int perc = cur/capa;
 
 
 
@@ -157,9 +161,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
                 String p = "" + perc + "";
-                //percent.setText(p);
+                percent.setText(p);
                 
-                //bar.setProgress(perc);
+                bar.setProgress(perc);
 
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
