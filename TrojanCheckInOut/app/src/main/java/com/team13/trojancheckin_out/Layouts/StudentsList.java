@@ -80,9 +80,13 @@ public class StudentsList extends AppCompatActivity {
             }
         });
 
+        //getting the recyclerview from xml
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //initializing the productlist
         studentList = new ArrayList<>();
-        System.out.println("BEFORE I ENTER");
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
@@ -92,13 +96,6 @@ public class StudentsList extends AppCompatActivity {
                         studentList.add(user);
                     }
                 }
-
-                System.out.println("FUCK MY PUSSY: " + studentList.toString());
-
-                //getting the recyclerview from xml
-                recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
 
                 //creating recyclerview adapter
