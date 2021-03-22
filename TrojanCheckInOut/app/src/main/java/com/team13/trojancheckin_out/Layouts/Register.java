@@ -55,7 +55,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 //ALERT 1: check if email is usc email and is valid
 
-                System.out.println("THIS IS MY SIZE: " + accountManipulator.getStudentAccounts().size());
+                System.out.println("THIS IS MY SIZE: " + accountManipulator.studentRetrieval().size());
                 if ((!email.getText().toString().contains("@usc.edu") &&
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");
@@ -114,7 +114,7 @@ public class Register extends AppCompatActivity {
                 }
                 else{
                     System.out.println("BEFORE THE ACCOUNT SEARCH");
-                    for (User checkUser : accountManipulator.getStudentAccounts().values()) {
+                    for (User checkUser : accountManipulator.studentRetrieval().values()) {
                         if (checkUser.getEmail().equals(email)){
                             user = checkUser;
                             System.out.println(user.isManager());
