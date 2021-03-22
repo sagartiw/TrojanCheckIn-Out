@@ -133,8 +133,11 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                     public void onClick(View v) {
 
                         EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
-                        String w = num.toString();
-                        building.setCapacity(Integer.parseInt(w));
+                        String w = num.getText().toString();
+                        System.out.println("COOCHIE: " + w);
+                        int x = Integer.parseInt(w);
+                        System.out.println("COOCHIE 2: " + x);
+                        building.setCapacity(x);
                         popupWindow.dismiss();
                     }
                 });

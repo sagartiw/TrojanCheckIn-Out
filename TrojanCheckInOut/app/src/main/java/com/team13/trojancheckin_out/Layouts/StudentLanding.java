@@ -26,6 +26,8 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
@@ -91,6 +93,9 @@ public class StudentLanding extends AppCompatActivity {
         CheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                referenceBuildings.child(currentUser.getCurrentBuilding().getAbbreviation()).child("currentStudents").child(user.getId()).removeValue();
+
                 Intent intent = new Intent(StudentLanding.this, Startup.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
