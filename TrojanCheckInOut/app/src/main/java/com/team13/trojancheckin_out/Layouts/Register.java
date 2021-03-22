@@ -58,7 +58,7 @@ public class Register extends AppCompatActivity {
                 //ALERT 3: account already exists
                 else if (/*INSERT ARI'S ACCOUNT MANIPULATOR CODE WHEN ITS FIXED.
                             Access student accounts and manager accounts similar to login*/
-                            accountManipulator.){
+                            false){
 
                 }
                 //REGISTER. We can create a user object and move on to Complete Profile
