@@ -17,6 +17,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -73,6 +74,12 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
+
+                System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+                for (Map.Entry<String, User> u : accountManipulator.getStudentAccounts().entrySet()) {
+                    System.out.println("NAME: " + u.getValue().getName());
+                }
+
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }
