@@ -4,6 +4,12 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+class TimeStamps {
+    String checkInTime = "";
+    String checkOutTime = "";
+}
 
 /**
  * This class contains the objects that define a user's account. Further, it establishes mechanisms
