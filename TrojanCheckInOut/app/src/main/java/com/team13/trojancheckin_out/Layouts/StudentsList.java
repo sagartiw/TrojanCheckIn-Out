@@ -80,7 +80,10 @@ public class StudentsList extends AppCompatActivity {
             }
         });
 
-
+        //getting the recyclerview from xml
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         studentList = new ArrayList<>();
 
@@ -90,14 +93,11 @@ public class StudentsList extends AppCompatActivity {
                 for (Map.Entry<String, User> e : map.entrySet()) {
                     User user = e.getValue();
                     if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
-                        studentList.add(user);
+                        studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
                     }
                 }
 
-                //getting the recyclerview from xml
-                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
+
 
                 StudentAdapter adapter2 = new StudentAdapter(StudentsList.this, studentList);
 
