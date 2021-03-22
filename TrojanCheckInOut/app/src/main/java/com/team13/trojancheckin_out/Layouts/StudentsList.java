@@ -34,11 +34,14 @@ public class StudentsList extends AppCompatActivity {
 
     //the recyclerview
     RecyclerView recyclerView;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
+
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         Back = (Button)findViewById(R.id.backer2);
 
@@ -46,6 +49,7 @@ public class StudentsList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentsList.this, ManagerLanding.class);
+                intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });
