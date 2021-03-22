@@ -25,6 +25,7 @@ public class Login extends AppCompatActivity {
     private EditText email, password;
     private Button Login;
     private Button Back;
+    private Button forgotPassword;
     private User user;
     private Intent intent;
 
@@ -35,6 +36,7 @@ public class Login extends AppCompatActivity {
         Login = (Button) findViewById(R.id.login);
         email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
         password = (EditText) findViewById(R.id.editTextTextPassword3);
+        forgotPassword = (Button) findViewById(R.id.button);
 
         Login.setOnClickListener(new View.OnClickListener(){
 
@@ -100,6 +102,17 @@ public class Login extends AppCompatActivity {
                 });
             }
         });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_forgot_password);
+
+            }
+        });
+
+
 
     }
 }
