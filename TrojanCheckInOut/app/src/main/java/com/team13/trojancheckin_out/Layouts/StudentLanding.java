@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,12 +29,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
+import com.team13.trojancheckin_out.Accounts.User;
+
+import java.io.IOException;
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
     private Button CheckOut;
     private Button Scan;
+    private User user;
     private FloatingActionButton soFab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,7 @@ public class StudentLanding extends AppCompatActivity {
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
         soFab = (FloatingActionButton)findViewById(R.id.fab);
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -71,7 +82,9 @@ public class StudentLanding extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
         menu.getMenu().add("Edit Profile");
-        menu.getMenu().add("Manager View");
+        if(user.isManager().equals("true")) {
+            menu.getMenu().add("Manager View");
+        }
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here

@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="350dp"
-        android:layout_height="330dp"
+        android:layout_height="270dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -26,22 +26,37 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button8"
-                android:layout_width="250dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="24dp"
+                android:id="@+id/button10"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="50dp"
                 android:backgroundTint="@color/red"
                 android:fontFamily="@font/montserrat_semibold"
                 android:letterSpacing="0.02"
                 android:stateListAnimator="@null"
-                android:text="   Upload file"
-                android:textAllCaps="false"
-                android:textSize="22sp"
+                android:text="SUBMIT"
+                android:textSize="10sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/montserrat_semibold"
+                android:letterSpacing="0.02"
+                android:stateListAnimator="@null"
+                android:text="CANCEL"
+                android:textColor="@color/red"
+                android:textSize="10sp"
+                app:cornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView20"
+                app:layout_constraintTop_toBottomOf="@+id/textView26"
                 app:strokeColor="@color/red"
                 app:strokeWidth="1dp" />
 
@@ -51,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Import CSV"
+                android:text="Delete Account"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="24sp"
@@ -61,49 +76,19 @@
                 tools:layout_conversion_absoluteHeight="30dp"
                 tools:layout_conversion_absoluteWidth="234dp" />
 
-            <Button
-                android:id="@+id/button6"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="49dp"
-                android:layout_height="47dp"
-                android:text="X"
-                android:textColor="#990000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="34dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/button8"
-                app:layout_constraintStart_toStartOf="@+id/button8"
-                app:layout_constraintTop_toTopOf="@+id/button8"
-                app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
-
             <TextView
-                android:id="@+id/fileName"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="11dp"
-                android:fontFamily="@font/montserrat"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button8" />
-
-            <TextView
-                android:id="@+id/successText"
-                android:layout_width="300dp"
+                android:id="@+id/textView26"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/montserrat_medium"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="This will delete your account permanently."
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="#565656"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fileName" />
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -16,6 +17,9 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.team13.trojancheckin_out.Layouts.Register;
+import com.team13.trojancheckin_out.Layouts.Startup;
+import com.team13.trojancheckin_out.Layouts.StudentLanding;
 
 import java.io.IOException;
 
@@ -77,7 +81,18 @@ public class ScanActivity extends AppCompatActivity {
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
-                            textView.setText(qrcode.valueAt(0).displayValue);
+
+                            String holder = qrcode.valueAt(0).displayValue;
+
+
+                            // check holder against the database to find the building object
+                            // check if there is capacity in the building
+                            // use the building object to update the capacity of that building
+                            // set in building for curr user to be true so that the check in
+
+                            Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
+                            startActivity(intent);
+
                         }
                     });
                 }
