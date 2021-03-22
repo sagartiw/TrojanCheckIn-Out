@@ -257,7 +257,7 @@ public class CompleteProfile extends AppCompatActivity {
                 // delete later
                 Building building = new Building();
 
-                building.setName("SAL");
+                building.setName("USC");
                 user.setCurrentBuilding(building);
 
                 user.getHistory().put("SLH", "0123 2344");

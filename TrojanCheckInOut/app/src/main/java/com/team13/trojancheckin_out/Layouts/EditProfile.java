@@ -40,7 +40,7 @@ public class EditProfile extends AppCompatActivity {
     private Button Back3; //id back3
     private Button yeetusDeletus; //id back3
     private User user;
-    private TextView name;
+    private TextView name, bigName;
     private TextView name2;
     private TextView id;
     private TextView major;
@@ -63,6 +63,9 @@ public class EditProfile extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.name2);
         name.setText(user.getName());
+
+        bigName = (TextView) findViewById(R.id.name);
+        bigName.setText(user.getName());
 
         id = (TextView) findViewById(R.id.name3);
         id.setText(user.getId());
