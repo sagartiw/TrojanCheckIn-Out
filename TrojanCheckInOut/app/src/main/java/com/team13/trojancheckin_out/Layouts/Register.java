@@ -52,9 +52,9 @@ public class Register extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ALERT 1: check if email is usc email and is valid
+                
 
-                accountManipulator.getStudentAccounts(new MyUserCallback() {
+                accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
@@ -65,7 +65,7 @@ public class Register extends AppCompatActivity {
                 });
 
 
-
+              //ALERT 1: check if email is usc email and is valid
                 if ((!email.getText().toString().contains("@usc.edu") &&
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");

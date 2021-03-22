@@ -44,7 +44,6 @@ public class ManagerLanding extends AppCompatActivity {
     private User user;
     private TextView txt_path, successText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
