@@ -273,15 +273,13 @@ public class CompleteProfile extends AppCompatActivity {
 
                 accountManipulator.getStudentAccounts(new MyCallback() {
                     @Override
-                    public void onCallback(User user) {
-                        System.out.println("NAME: " + user.getName());
+                    public void onCallback(Map<String, User> map) {
+                        System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
+                        for (Map.Entry<String, User> u : map.entrySet()) {
+                            System.out.println("SHIT: " + u.getValue().getName());
+                        }
                     }
                 });
-
-//                System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
-//                for (Map.Entry<String, User> u : accountManipulator.getStudentAccounts().entrySet()) {
-//                    System.out.println("NAME: " + u.getValue().getName());
-//                }
 
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 intent.putExtra("PrevPageData", user);

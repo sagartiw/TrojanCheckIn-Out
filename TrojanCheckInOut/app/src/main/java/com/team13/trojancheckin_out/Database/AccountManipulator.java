@@ -39,16 +39,19 @@ public class AccountManipulator extends User {
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
      */
     public void getStudentAccounts(MyCallback myCallback) {
+        studentAccounts = new HashMap<>();
+        managerAccounts = new HashMap<>();
+
         referenceUsers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         User user = ds.getValue(User.class);
-                        myCallback.onCallback(user);
-//                        if (user.isManager().equalsIgnoreCase("false")) {
-//                            studentAccounts.put(user.getId(), user);
-//                        }
+                        if (user.isManager().equalsIgnoreCase("false")) {
+                            studentAccounts.put(user.getId(), user);
+                        }
                     }
+                    myCallback.onCallback(studentAccounts);
                 }
 
                 @Override
