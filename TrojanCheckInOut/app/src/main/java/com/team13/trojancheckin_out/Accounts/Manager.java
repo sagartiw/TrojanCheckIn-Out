@@ -74,6 +74,7 @@ public class Manager extends User {
     public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major) {
         // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
 
+<<<<<<< HEAD
         List<User> list = new ArrayList<>();
 
         if (id != null) {
@@ -134,6 +135,31 @@ public class Manager extends User {
             }
             return list;
         }
+=======
+          List<User> list = new ArrayList<>();
+//        if (id != null) {
+//            list.add(accountManipulator.getStudentAccounts().get(id));
+//            return list;
+//        } else if (building != null){
+//            if (major != null) {
+//                for (User user : building.getCurrentStudents()) {
+//                    if (user.getMajor().equals(major)){
+//                        list.add(user);
+//                    }
+//                }
+//                return list;
+//            } else {
+//                return building.getCurrentStudents();
+//            }
+//        } else if (major != null) {
+//            for (User user : accountManipulator.getStudentAccounts().values()) {
+//                if (user.getMajor().equals(major)) {
+//                    list.add(user);
+//                }
+//            }
+//            return list;
+//        }
+>>>>>>> bb81b69a3de206846fc1175c1afda66dc01acbd1
 
         return list;
     }
