@@ -36,6 +36,7 @@ public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
     List<Building> buildingList;
+    BuildingManipulator buildingManipulator;
 
     //the recyclerview
     RecyclerView recyclerView;
@@ -69,34 +70,34 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //initializing the productlist
-        buildingList = new ArrayList<>();
+        //get current buildings
+        buildingList = buildingManipulator.getBuildingsList();
 
 
         //adding some items to our list
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
 
         //creating recyclerview adapter
         BuildingAdapter adapter = new BuildingAdapter(this, buildingList);

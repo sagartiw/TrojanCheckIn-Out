@@ -17,9 +17,12 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Layouts.Register;
 import com.team13.trojancheckin_out.Layouts.Startup;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 
@@ -29,6 +32,8 @@ public class ScanActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private TextView textView;
     private BarcodeDetector barcodeDetector;
+    private BuildingManipulator buildingManipulator;
+    private AccountManipulator accountManipulator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,14 +86,52 @@ public class ScanActivity extends AppCompatActivity {
                     textView.post(new Runnable() {
                         @Override
                         public void run() {
+                            // this should be a building acronym
+                            String buildingAcronym = qrcode.valueAt(0).displayValue;
 
-                            String holder = qrcode.valueAt(0).displayValue;
+                            // check buildingAcronym against the database to find the building object
+                            Building match = buildingManipulator.getBuilding(buildingAcronym);
+
+                            if (match == null) {
+                                return;
+                            }
+
+                            User user = accountManipulator.currentUser;
+                            // check if user is checking in or out of a building
+                            if (user.isInBuilding()) {
+                                // if the building is the one they are in
+                                if (match == user.getCurrentBuilding()) {
+                                    // user is trying to check out
+                                    match.removeStudent(user);
+                                    user.setCurrentBuilding(null);
+                                    user.setInBuilding(false);
+
+                                }
+                                else {
+                                    // send an error message that they need to check out of their current building before trying to check in somewhere else
+
+                                }
+
+                            }
+                            else { // user is trying to check in
+
+                                // check if there is capacity in the building
+                                if (match.getCurrentCount() + 1 > match.getCapacity()) {
+                                    // return error to the user saying they cannot check into this building because it is full
 
 
-                            // check holder against the database to find the building object
-                            // check if there is capacity in the building
-                            // use the building object to update the capacity of that building
-                            // set in building for curr user to be true so that the check in
+
+                                }
+                                else { // check in the user
+                                    match.addStudent(user);
+                                    // set in building for curr user to be true so that they check in
+                                    user.setCurrentBuilding(match);
+                                    user.setInBuilding(true);
+
+                                }
+
+                            }
+
 
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
                             startActivity(intent);

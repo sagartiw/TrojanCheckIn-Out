@@ -24,12 +24,12 @@ public class BuildingManipulator {
 
     public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings");
 
-    private Map<String, Building> currentBuildings;
+    private static Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
     private File file;
 
     /**
-     * @return a list of the currently established buildings.
+     * @return a map of the currently established buildings.
      */
     public Map<String, Building> getCurrentBuildings() {
         referenceBuildings.addValueEventListener(
@@ -47,6 +47,35 @@ public class BuildingManipulator {
                 });
 
         return this.currentBuildings;
+    }
+
+    /**
+     * @return a list of the currently established buildings.
+     */
+    public List<Building> getBuildingsList() {
+        List<Building> buildingList = new ArrayList<>();
+        referenceBuildings.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            Building building = ds.getValue(Building.class);
+                            buildingList.add(building);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { }
+                });
+
+        return buildingList;
+    }
+
+    /**
+     * @return a list of the currently established buildings.
+     */
+    public Building getBuilding(String acronym) {
+        return currentBuildings.get(acronym);
     }
 
     /**
@@ -71,10 +100,14 @@ public class BuildingManipulator {
                 // <Full Name>|<Abbreviation>|<Capacity>
                 String[] data = line.split("@");
 
-                Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+                Building building = getBuilding(data[1]);
+
+                building.setCapacity(Integer.parseInt(data[2]));
+
+                //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
 
                 // Store in DB
-                referenceBuildings.child(data[1]).setValue(building);
+                //referenceBuildings.child(data[1]).setValue(building);
             }
             scan.close();
         } catch (FileNotFoundException e) {
