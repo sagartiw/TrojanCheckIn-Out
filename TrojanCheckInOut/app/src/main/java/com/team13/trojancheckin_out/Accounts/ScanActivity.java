@@ -99,17 +99,14 @@ public class ScanActivity extends AppCompatActivity {
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
-                            if (match == null) {
-                                return;
-                            }
-
+                            if (match == null) { return; }
                             User user = accountManipulator.currentUser;
                             // check if user is checking in or out of a building
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
                                     // user is trying to check out
-                                    match.removeStudent(user);
+                                    match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                                     user.setCurrentBuilding(null);
                                     user.setInBuilding(false);
                                 }

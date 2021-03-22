@@ -15,7 +15,7 @@ import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenc
  */
 public class Building implements Serializable {
 
-    private String abbreviation;
+    private String abbreviation = "";
     private String name;
     private int capacity;
     private List<User> students = new ArrayList<>();
@@ -101,9 +101,10 @@ public class Building implements Serializable {
      * Updates the building capacity.
      * @param capacity
      */
-    public void setCapacity(int capacity) {
+    public void setCapacity(int capacity, String abb) {
         this.capacity = capacity;
-        referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
+        System.out.println(abb);
+        referenceBuildings.child(abb).child("capacity").setValue(capacity);
     }
 
     /**
@@ -117,9 +118,12 @@ public class Building implements Serializable {
      * @param user
      * @return true if the student has been successfully removed from the building.
      */
-    public Boolean removeStudent(User user) {
+    public Boolean removeStudent(User user, String abb) {
+
+        System.out.println("ASS" + user.getId());
         students.remove(user);
-        referenceBuildings.child(abbreviation).child("students").child(user.getId()).removeValue();
+
+        referenceBuildings.child(abb).child("currentStudents").child(user.getId()).removeValue();
         return true;
     }
 
