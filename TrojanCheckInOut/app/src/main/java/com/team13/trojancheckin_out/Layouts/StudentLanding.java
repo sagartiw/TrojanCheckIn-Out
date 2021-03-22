@@ -14,10 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 
@@ -25,6 +29,7 @@ public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
     private Button CheckOut;
     private Button Scan;
+    private FloatingActionButton soFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,11 @@ public class StudentLanding extends AppCompatActivity {
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
+        soFab = (FloatingActionButton)findViewById(R.id.fab);
 
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+
+        Glide.with(StudentLanding.this).load(storageRef).into(soFab);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
