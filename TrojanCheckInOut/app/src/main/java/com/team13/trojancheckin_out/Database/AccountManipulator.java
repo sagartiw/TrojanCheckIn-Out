@@ -46,7 +46,6 @@ public class AccountManipulator extends User {
                     myCallback.onCallback(studentAccounts);
                 }
 
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
         });
