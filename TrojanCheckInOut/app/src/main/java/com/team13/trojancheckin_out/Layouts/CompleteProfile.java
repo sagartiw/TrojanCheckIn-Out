@@ -254,6 +254,7 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setId(studentID.getText().toString());
 
+                // delete later
                 Building building = new Building();
                 building.setName("SAL");
                 user.setCurrentBuilding(building);
@@ -262,18 +263,8 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
+                Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
 
-//                accountManipulator.getStudentAccounts(new MyCallback() {
-//                    @Override
-//                    public void onCallback(Map<String, User> map) {
-//                        System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
-//                        for (Map.Entry<String, User> u : map.entrySet()) {
-//                            System.out.println("SHIT: " + u.getValue().getName());
-//                        }
-//                    }
-//                });
-
-                Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }

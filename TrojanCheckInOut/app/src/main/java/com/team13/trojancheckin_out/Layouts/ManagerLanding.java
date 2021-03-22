@@ -44,7 +44,7 @@ public class ManagerLanding extends AppCompatActivity {
     private Button Search;
     private User user;
     private TextView txt_path, successText;
-
+    private TextView welcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,9 @@ public class ManagerLanding extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("PrevPageData");
         buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
+        welcome = (TextView) findViewById(R.id.TextView16);
+
+        welcome.setText("welcome " + user.getName());
 
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
