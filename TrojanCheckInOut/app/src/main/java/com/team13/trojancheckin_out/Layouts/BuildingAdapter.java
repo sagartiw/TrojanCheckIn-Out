@@ -45,9 +45,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private ImageButton qrButton;
     private Button cap, studentList;
 
-    public static FirebaseStorage storage = FirebaseStorage.getInstance();
-    public static final DatabaseReference buildingQRCodes = FirebaseDatabase.getInstance().getReference("QR Codes");
-    public static final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    public static final FirebaseStorage storage = FirebaseStorage.getInstance();
+    public static final StorageReference buildingQRCodes = storage.getReference("QR Codes");
+//    public static final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
 
 
@@ -96,27 +96,27 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 TextView buildingName = (TextView) popupView.findViewById(R.id.textView19);
                 buildingName.setText(building.getName());
 
-
                 ImageView qrImage = (ImageView) popupView.findViewById(R.id.imageView8);
 
                 String pathToPicture = building.getQRCode();
+
                 //qrImage.setImageBitmap(BitmapFactory.decodeFile(pathToPicture));
 
                 System.out.println("qr code path = " + pathToPicture);
 
-                Uri filePath = Uri.parse(pathToPicture);
-                Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(mCtx.getContentResolver(), filePath);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                qrImage.setImageBitmap(bitmap);
+//                Uri filePath = Uri.parse(pathToPicture);
+//                Bitmap bitmap = null;
+//                try {
+//                    bitmap = MediaStore.Images.Media.getBitmap(mCtx.getContentResolver(), filePath);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                //qrImage.setImageBitmap(bitmap);
 
+                System.out.println(pathToPicture);
+                StorageReference httpsReference = storage.getReference().child(pathToPicture);
 
-                //StorageReference httpsReference = storage.getReferenceFromUrl(pathToPicture);
-
-                //Glide.with(mCtx).load(httpsReference).into(qrImage);
+                Glide.with(mCtx).load(httpsReference).into(qrImage);
 
                 //qrImage.setImageResource(building.getQRCode());
 
