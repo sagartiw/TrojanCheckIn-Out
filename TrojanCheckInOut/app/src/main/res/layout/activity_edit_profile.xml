@@ -98,6 +98,7 @@
         app:layout_constraintTop_toTopOf="@+id/topRed" />
 
     <ImageView
+        android:id="@+id/pfp"
         android:layout_width="100dp"
         android:layout_height="109dp"
         android:src="@drawable/ic_outline_account_circle_24"

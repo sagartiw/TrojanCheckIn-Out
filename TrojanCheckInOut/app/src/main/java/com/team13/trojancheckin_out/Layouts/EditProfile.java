@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
@@ -21,6 +23,12 @@ public class EditProfile extends AppCompatActivity {
 
     private Button Back3; //id back3
     private User user;
+    private TextView name;
+    private TextView name2;
+    private TextView id;
+    private TextView major;
+    private ImageView pfp;
+    private Button editpic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,17 @@ public class EditProfile extends AppCompatActivity {
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         Back3 = (Button)findViewById(R.id.back3);
+        name = (TextView) findViewById(R.id.name2);
+        name.setText(user.getName());
+
+        id = (TextView) findViewById(R.id.name3);
+        id.setText(user.getId());
+
+        major = (TextView) findViewById(R.id.name4);
+        major.setText(user.getMajor());
+
+        pfp = (ImageView) findViewById(R.id.pfp);
+
 
         Back3.setOnClickListener(new View.OnClickListener() {
             @Override

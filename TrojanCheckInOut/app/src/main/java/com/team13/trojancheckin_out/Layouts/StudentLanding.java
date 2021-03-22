@@ -60,7 +60,7 @@ public class StudentLanding extends AppCompatActivity {
         soFab = (FloatingActionButton)findViewById(R.id.fab);
 
         welcomeMessage = (TextView)findViewById(R.id.welcomeMessage);
-        welcomeMessage.setText("welcome" + user.getName());
+        welcomeMessage.setText("welcome " + user.getName());
         Name = (TextView)findViewById(R.id.name);
         Name.setText(user.getName());
         ID = (TextView)findViewById(R.id.id);
