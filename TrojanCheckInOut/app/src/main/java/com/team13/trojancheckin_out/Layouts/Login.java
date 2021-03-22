@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.MyCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 
 import java.util.Map;
 
@@ -64,7 +64,7 @@ public class Login extends AppCompatActivity {
 //                    }
 //                }
 
-                accountManipulator.getStudentAccounts(new MyCallback() {
+                accountManipulator.getStudentAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
