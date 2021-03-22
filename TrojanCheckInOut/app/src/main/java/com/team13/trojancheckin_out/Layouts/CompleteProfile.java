@@ -73,10 +73,10 @@ public class CompleteProfile extends AppCompatActivity {
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED" + accountManipulator.getStudentAccounts().toString());
-                for (User user : accountManipulator.getStudentAccounts().values()) {
-                    System.out.println("USER: " + user.getName());
-                }
+//                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED" + accountManipulator.getStudentAccounts().toString());
+//                for (User user : accountManipulator.getStudentAccounts().values()) {
+//                    System.out.println("USER: " + user.getName());
+//                }
                 Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
                 startActivity(intent);
             }
