@@ -102,6 +102,9 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.student_history_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                TextView nameText = (TextView) popupView.findViewById(R.id.nameTitle4);
+
+                nameText.setText(student.getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
