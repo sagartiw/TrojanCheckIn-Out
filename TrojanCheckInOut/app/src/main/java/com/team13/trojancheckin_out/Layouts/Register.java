@@ -23,6 +23,7 @@ import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -193,7 +194,7 @@ public class Register extends AppCompatActivity {
                     else{
                         currentUser = user;
                         System.out.println("CREATION OF ACCOUNT");
-                        List<Building> buildingList = new ArrayList<>();
+                        Map<String, String> buildingList = new HashMap<>();
                         User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                                 "Photo", "123", false, null, buildingList,
                                 "Business", "true");
