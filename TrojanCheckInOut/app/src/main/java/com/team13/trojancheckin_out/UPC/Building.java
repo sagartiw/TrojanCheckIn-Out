@@ -21,7 +21,7 @@ import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenc
  */
 public class Building implements Serializable {
 
-    private String abbreviation;
+    private String abbreviation = "";
     private String name;
     private int capacity;
 
@@ -29,7 +29,6 @@ public class Building implements Serializable {
     private String QRCode;
 
    private List<User> students;
-
 
     /**
      * Accesses Building object via a default constructor.
@@ -72,6 +71,7 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
+
     public int getCapacity() { return this.capacity; }
 //    public int getCurrentCount() {
 //
@@ -84,6 +84,19 @@ public class Building implements Serializable {
 //        }
 //        return students.size();
 //    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+    public int getCurrentCount() {
+        if (students == null) {
+            return 0;
+        }
+        return students.size();
+    }
+
+
     /**
      * Updates the building capacity.
      * @param capacity
@@ -128,14 +141,22 @@ public class Building implements Serializable {
     }
 
     /**
+
      * @return percentage of building filled up.
      */
     public int getPercent() {
         double cur = (double) this.getCurrentCount();
         double cap = (double) this.capacity;
-        double perc = (cur/cap)*100;
+        double perc = (cur / cap) * 100;
         int percent = (int) perc;
         return percent;
+    }
+
+    public void setCapacity(int capacity, String abb) {
+        this.capacity = capacity;
+        System.out.println(abb);
+        referenceBuildings.child(abb).child("capacity").setValue(capacity);
+
     }
 
 
@@ -150,9 +171,12 @@ public class Building implements Serializable {
      * @param user
      * @return true if the student has been successfully removed from the building.
      */
-    public Boolean removeStudent(User user) {
+    public Boolean removeStudent(User user, String abb) {
+
+        System.out.println("ASS" + user.getId());
         students.remove(user);
-        referenceBuildings.child(abbreviation).child("students").setValue(user);
+
+        referenceBuildings.child(abb).child("currentStudents").child(user.getId()).removeValue();
         return true;
     }
 

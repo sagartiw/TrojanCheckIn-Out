@@ -87,9 +87,182 @@ public class StudentsList extends AppCompatActivity {
 
         studentList = new ArrayList<>();
 
+
         StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
         recyclerView.setAdapter(adapter);
 
+
+        //adding some items to our list
+      /*
+
+        studentList.add(
+                new User(
+                        "Mindy Diep",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Arian Memari",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Sagar Tiwari",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Kabir Samra",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Annika Oeth",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Elizabeth Moody",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Mindy Diep",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Arian Memari",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Sagar Tiwari",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Kabir Samra",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Annika Oeth",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+
+        studentList.add(
+                new User(
+                        "Elizabeth Moody",
+                        "mindydie@usc.edu",
+                        "hello",
+                        "photo",
+                        "123456789",
+                        true,
+                        null,
+                        null,
+                        "CSBA",
+                        "false"
+                ));
+        */
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
 

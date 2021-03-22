@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Layouts.CompleteProfile;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -107,17 +109,14 @@ public class ScanActivity extends AppCompatActivity {
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
-                            if (match == null) {
-                                return;
-                            }
-
+                            if (match == null) { return; }
                             User user = accountManipulator.currentUser;
                             // check if user is checking in or out of a building
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
                                     // user is trying to check out
-                                    match.removeStudent(user);
+                                    match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                                     user.setCurrentBuilding(null);
                                     user.setInBuilding(false);
                                 }
@@ -146,6 +145,8 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
+                                    Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else { // user is trying to check in
@@ -175,6 +176,9 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
+
+                                    Toast.makeText(ScanActivity.this, "Building is Full!",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                                 else { // check in the user
                                     match.addStudent(user);
