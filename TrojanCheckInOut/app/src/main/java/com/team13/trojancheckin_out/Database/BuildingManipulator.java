@@ -24,7 +24,7 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
  */
 public class BuildingManipulator {
 
-    public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings");
+    public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings'");
 
     private Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
