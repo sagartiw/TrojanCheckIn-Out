@@ -1,8 +1,5 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +21,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,6 +43,7 @@ import java.io.IOException;
 public class EditProfile extends AppCompatActivity {
 
     private Button Back3; //id back3
+    private Button yeetusDeletus; //id back3
     private User user;
     private TextView name;
     private TextView name2;
@@ -172,6 +180,33 @@ public class EditProfile extends AppCompatActivity {
                 });
             }
         });
+
+        //https://stackoverflow.com/questions/37390864/how-to-delete-from-firebase-realtime-database
+        yeetusDeletus = (Button)findViewById(R.id.deleteAccount);
+        yeetusDeletus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                Query applesQuery = ref.child("firebase-test").orderByChild("title").equalTo();
+
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+            }
+        });
+
+
+
 
         pfp.setOnClickListener(new View.OnClickListener() {
             @Override
