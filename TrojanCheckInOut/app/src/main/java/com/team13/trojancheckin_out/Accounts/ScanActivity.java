@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,10 +27,8 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
-import com.team13.trojancheckin_out.Layouts.CompleteProfile;
-
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -39,6 +36,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
@@ -121,9 +119,11 @@ public class ScanActivity extends AppCompatActivity {
 
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
+                            System.out.println("CHECK MATCH: " + match.getAbbreviation());
                             User user = accountManipulator.currentUser;
 
-                            // check if user is checking in or out of a building
+                            // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
+                            //    IM HERE: SAL
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
@@ -196,7 +196,13 @@ public class ScanActivity extends AppCompatActivity {
                                     match.addStudent(user);
                                     // set in building for curr user to be true so that they check in
                                     System.out.println("SCAN ID: " + user.getId());
+                                    System.out.println("MATCH " + match.getAbbreviation());
                                     user.setterCurrentBuilding(match);
+                                    System.out.println("MATCH 2" + match.getAbbreviation());
+
+                                    // Remove from NA if there
+                                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).removeValue();
+
                                     user.setInBuilding(true);
                                 }
                             }

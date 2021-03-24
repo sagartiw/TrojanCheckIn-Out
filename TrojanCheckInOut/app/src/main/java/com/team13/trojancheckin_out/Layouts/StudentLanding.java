@@ -29,6 +29,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
@@ -179,17 +180,18 @@ public class StudentLanding extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        //currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
-                        user.setInBuilding(false);
-                        user.getCurrentBuilding().setAbbreviation("");
-                        referenceUsers.child(user.getId()).child("currentBuilding").child("abbreviation").setValue("NA");
-
                         // Removes from current building DB
                         user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                        // Remove user's current building
+                        user.setInBuilding(false);
+
+                        Building b = new Building("Not in Building", "NA", 500, "");
+                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
 
                         // Add to NA in DB
-                        user.getCurrentBuilding().addStudent(user);
+                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
 
                         currBuilding.setText("NA");
 

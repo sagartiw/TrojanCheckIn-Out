@@ -3,7 +3,6 @@ package com.team13.trojancheckin_out.Accounts;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
@@ -135,9 +134,13 @@ public class User implements Serializable {
 
    public void setterCurrentBuilding(Building currentBuilding) {
        this.currentBuilding = currentBuilding;
-       System.out.println("ID: " + this.getId());
-       System.out.println(("BUILDING: " + currentBuilding.getAbbreviation()));
-       referenceUsers.child(this.getId()).child("currentBuilding").setValue(currentBuilding);
+
+       Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getQRCode());
+//       b.setStudents(currentBuilding.getCurrentStudents());
+
+       System.out.println("FULL OBJECT" +currentBuilding.getName() +  " " + currentBuilding.getAbbreviation() + " " + currentBuilding.getCapacity() + " " + currentBuilding.getQRCode() );
+
+       referenceUsers.child(this.getId()).child("currentBuilding").setValue(b);
    }
 
     public Map<String, String> getHistory() {
