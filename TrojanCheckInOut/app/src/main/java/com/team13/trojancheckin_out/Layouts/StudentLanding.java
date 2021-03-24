@@ -28,6 +28,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
@@ -181,9 +182,16 @@ public class StudentLanding extends AppCompatActivity {
 
                         //currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                         user.setInBuilding(false);
-
                         user.getCurrentBuilding().setAbbreviation("");
-                        currBuilding.setText("USC");
+                        referenceUsers.child(user.getId()).child("currentBuilding").child("abbreviation").setValue("NA");
+
+                        // Removes from current building DB
+                        user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+
+                        // Add to NA in DB
+                        user.getCurrentBuilding().addStudent(user);
+
+                        currBuilding.setText("NA");
 
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);

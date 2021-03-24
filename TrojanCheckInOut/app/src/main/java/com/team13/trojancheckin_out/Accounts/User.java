@@ -73,6 +73,8 @@ public class User implements Serializable {
     }
 
     public void setName(String name) {
+
+        System.out.println("I AM SETTING NAME");
         this.name = name;
     }
 
@@ -101,7 +103,9 @@ public class User implements Serializable {
     }
 
     public String getId() {
+
         return id;
+
     }
 
     public void setId(String id) {
@@ -124,10 +128,17 @@ public class User implements Serializable {
         return currentBuilding;
     }
 
-    public void setCurrentBuilding(Building currentBuilding) {
-        //referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
+   public void setCurrentBuilding(Building currentBuilding) {
+
         this.currentBuilding = currentBuilding;
-    }
+   }
+
+   public void setterCurrentBuilding(Building currentBuilding) {
+       this.currentBuilding = currentBuilding;
+       System.out.println("ID: " + this.getId());
+       System.out.println(("BUILDING: " + currentBuilding.getAbbreviation()));
+       referenceUsers.child(this.getId()).child("currentBuilding").setValue(currentBuilding);
+   }
 
     public Map<String, String> getHistory() {
         return history;

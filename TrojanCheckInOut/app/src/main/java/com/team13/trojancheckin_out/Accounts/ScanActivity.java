@@ -129,7 +129,7 @@ public class ScanActivity extends AppCompatActivity {
                                 if (match == user.getCurrentBuilding()) {
                                     // user is trying to check out
                                     match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
-                                    user.setCurrentBuilding(null);
+                                    user.setterCurrentBuilding(null);
                                     user.setInBuilding(false);
                                 }
                                 else {
@@ -195,8 +195,8 @@ public class ScanActivity extends AppCompatActivity {
                                 else { // check in the user
                                     match.addStudent(user);
                                     // set in building for curr user to be true so that they check in
-
-                                    user.setCurrentBuilding(match);
+                                    System.out.println("SCAN ID: " + user.getId());
+                                    user.setterCurrentBuilding(match);
                                     user.setInBuilding(true);
                                 }
                             }
