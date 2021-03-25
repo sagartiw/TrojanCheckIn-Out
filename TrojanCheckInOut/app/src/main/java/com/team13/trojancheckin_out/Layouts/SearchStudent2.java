@@ -116,7 +116,7 @@ public class SearchStudent2 extends AppCompatActivity {
                             t2 = Integer.parseInt(time2.getText().toString());
                             cond4 = false;
                         }
-                        // IF ANY COND IS EMPTY, SHOW ALL WOULD BE SET FALSE
+                        // IF ALL FIELDS ARE EMPTY (Cond = true), SHOW ALL WOULD BE SET TRUE
                         if (cond1 && cond2 && cond3 && cond4) {
                            showAll = true;
                         }
@@ -411,7 +411,7 @@ public class SearchStudent2 extends AppCompatActivity {
         //get the spinner from the xml.
         Spinner dropdown2 = findViewById(R.id.spinner2);
         //create a list of items for the spinner.
-        String[] items2 = new String[]{"None", "1", "2", "three"};
+        String[] items2 = new String[]{"None", "ANN", "BSR", "DML", "DMT", "ESH", "EVK", "FLT", "GFS", "JFF", "KAP" , "KDC", "LVL", "RTH", "SCA", "SGM", "TCC", "THH", "WPH", "ZHS"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items2);
