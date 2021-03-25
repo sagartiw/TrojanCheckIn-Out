@@ -3,16 +3,22 @@ package com.team13.trojancheckin_out.Layouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -20,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,7 +41,6 @@ import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 
@@ -321,18 +327,65 @@ public class CompleteProfile extends AppCompatActivity {
         profileImage = (ImageButton)findViewById(R.id.imageButton);
 
 
-
-        profileImage.setOnClickListener(new View.OnClickListener(){
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+                CardView tommy = (CardView) popupView.findViewById(R.id.cardView2);
+                CardView hecuba = (CardView) popupView.findViewById(R.id.cardView4);
+                CardView traveller = (CardView) popupView.findViewById(R.id.cardView3);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
 
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                tommy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED TOMMY!");
+                        popupWindow.dismiss();
+                    }
+                });
+
+                hecuba.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED HECUBA!");
+                        popupWindow.dismiss();
+                    }
+                });
+
+                traveller.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED TRAVELLER!");
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+
             }
+
         });
     }
 

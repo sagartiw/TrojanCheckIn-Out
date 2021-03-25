@@ -194,9 +194,11 @@ public class EditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.change_profile_pic, null);
+                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
+                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
+                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
-                Button uploadButton = (Button) popupView.findViewById(R.id.button8);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -210,23 +212,35 @@ public class EditProfile extends AppCompatActivity {
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-                // dismiss the popup window when touched
-                closeButton.setOnClickListener(new View.OnClickListener() {
+                tommy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        System.out.println("CLICKED TOMMY!");
                         popupWindow.dismiss();
                     }
                 });
 
-                uploadButton.setOnClickListener(new View.OnClickListener() {
+                hecuba.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        System.out.println("CLICKED HECUBA!");
+                        popupWindow.dismiss();
+                    }
+                });
 
-                        if (intent.resolveActivity(getPackageManager()) != null) {
-                            // Bring up gallery to select a photo
-                            startActivityForResult(intent, PICK_PHOTO_CODE);
-                        }
+                traveller.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED TRAVELLER!");
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         popupWindow.dismiss();
                     }
                 });
