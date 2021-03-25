@@ -127,6 +127,8 @@ public class ManagerLanding extends AppCompatActivity {
 //
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+        fab.setImageResource(imageRe);
         final PopupMenu menu = new PopupMenu(this, fab);
         menu.getMenu().add("Student View");
         menu.getMenu().add("Sign Out");

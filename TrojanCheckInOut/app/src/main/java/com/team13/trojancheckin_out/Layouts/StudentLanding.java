@@ -3,6 +3,7 @@ package com.team13.trojancheckin_out.Layouts;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -91,10 +92,12 @@ public class StudentLanding extends AppCompatActivity {
         }
 
 
-        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
-
-        System.out.println("This is the user photo in student landing" + user.getPhoto());
-        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
+//        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
+//
+//        System.out.println("This is the user photo in student landing" + user.getPhoto());
+//        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
+        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+        soFab.setImageResource(imageRe);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -333,9 +333,9 @@ public class CompleteProfile extends AppCompatActivity {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
-                CardView tommy = (CardView) popupView.findViewById(R.id.cardView2);
-                CardView hecuba = (CardView) popupView.findViewById(R.id.cardView4);
-                CardView traveller = (CardView) popupView.findViewById(R.id.cardView3);
+                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
+                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
+                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
@@ -354,6 +354,8 @@ public class CompleteProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED TOMMY!");
+                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
+                        user.setPhoto(tommy);
                         popupWindow.dismiss();
                     }
                 });
@@ -362,6 +364,8 @@ public class CompleteProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED HECUBA!");
+                        String hecuba = "@drawable/hecuba";
+                        user.setPhoto(hecuba);
                         popupWindow.dismiss();
                     }
                 });
@@ -370,6 +374,8 @@ public class CompleteProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED TRAVELLER!");
+                        String traveller = "@drawable/traveller";
+                        user.setPhoto(traveller);
                         popupWindow.dismiss();
                     }
                 });

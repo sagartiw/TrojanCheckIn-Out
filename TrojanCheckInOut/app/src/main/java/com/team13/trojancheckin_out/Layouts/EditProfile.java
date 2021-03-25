@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -75,6 +76,9 @@ public class EditProfile extends AppCompatActivity {
         major.setText(user.getMajor());
 
         pfp = (ImageView) findViewById(R.id.pfp);
+        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+        Drawable d =  getResources().getDrawable(imageRe);
+        pfp.setImageDrawable(d);
 
 
         Back3 = (Button)findViewById(R.id.back3);
@@ -216,7 +220,13 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED TOMMY!");
+                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
+                        user.setPhoto(tommy);
+                        referenceUsers.child(user.getId()).child("photo").setValue(tommy);
                         popupWindow.dismiss();
+                        Intent intent = new Intent(v.getContext(), EditProfile.class);
+                        intent.putExtra("PrevPageData", user);
+                        startActivity(intent);
                     }
                 });
 
@@ -224,7 +234,13 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED HECUBA!");
+                        String hecuba = "@drawable/hecuba";
+                        user.setPhoto(hecuba);
                         popupWindow.dismiss();
+                        referenceUsers.child(user.getId()).child("photo").setValue(hecuba);
+                        Intent intent = new Intent(v.getContext(), EditProfile.class);
+                        intent.putExtra("PrevPageData", user);
+                        startActivity(intent);
                     }
                 });
 
@@ -232,7 +248,13 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("CLICKED TRAVELLER!");
+                        String traveller = "@drawable/traveller";
+                        user.setPhoto(traveller);
+                        referenceUsers.child(user.getId()).child("photo").setValue(traveller);
                         popupWindow.dismiss();
+                        Intent intent = new Intent(v.getContext(), EditProfile.class);
+                        intent.putExtra("PrevPageData", user);
+                        startActivity(intent);
                     }
                 });
 
