@@ -203,6 +203,17 @@ public class ScanActivity extends AppCompatActivity {
                                     // Remove from NA if there
                                     referenceBuildings.child("NA").child("currentStudents").child(user.getId()).removeValue();
 
+                                    /*
+                                    // Update count + 1
+                                    buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                                        @Override
+                                        public void onCallback(Map<String, Building> map) {
+                                            int count = map.get(match.getAbbreviation()).getCurrentCount();
+                                            referenceBuildings.child(match.getAbbreviation()).child("currentCount").setValue(count++);
+                                        }
+                                    });
+                                    */
+
                                     user.setInBuilding(true);
                                 }
                             }
