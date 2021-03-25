@@ -1,14 +1,8 @@
 package com.team13.trojancheckin_out.Accounts;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
-import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
-import com.team13.trojancheckin_out.Layouts.BuildingAdapter;
-import com.team13.trojancheckin_out.Layouts.ManagerLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
@@ -65,7 +59,6 @@ public class Manager extends User {
     public Boolean showQRCode(Building building){ return true; }
 
     /**
-     * @param time
      * @param building
      * @param id
      * @param major

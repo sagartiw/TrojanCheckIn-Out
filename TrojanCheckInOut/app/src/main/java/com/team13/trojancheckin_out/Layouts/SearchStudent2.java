@@ -4,16 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,10 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.team13.trojancheckin_out.Accounts.Manager;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 
@@ -35,6 +33,13 @@ public class SearchStudent2 extends AppCompatActivity {
     private Button Search;
     private Button Back;
     private User user;
+
+    private EditText stuID;
+    private Spinner majInput;
+    private Spinner buildInput;
+    private EditText time1;
+    private EditText time2;
+    private Manager manager;
     
     //a list to store all the products
     List<User> studentList;
@@ -50,10 +55,21 @@ public class SearchStudent2 extends AppCompatActivity {
 
         Search = (Button)findViewById(R.id.button7);
 
+        stuID = (EditText)findViewById(R.id.editTextTextPersonName);
+        majInput = (Spinner)findViewById(R.id.spinner);
+        buildInput = (Spinner)findViewById(R.id.spinner2);
+        time1 = (EditText)findViewById(R.id.editTextTime3);
+        time2 = (EditText)findViewById(R.id.editTextTime4);
+
+        int t1 = Integer.parseInt(time1.getText().toString());
+        int t2 = Integer.parseInt(time2.getText().toString());
+        //String maj = majInput.getItemAtPosition()
+
+
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //manager.searchStudents()
             }
         });
 
