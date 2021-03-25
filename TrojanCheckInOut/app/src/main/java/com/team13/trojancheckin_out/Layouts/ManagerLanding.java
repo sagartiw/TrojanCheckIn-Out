@@ -48,23 +48,29 @@ public class ManagerLanding extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_manager_landing);
+
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
         tracker = user;
         buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
         welcome = (TextView) findViewById(R.id.TextView16);
-
         welcome.setText("welcome " + user.getName());
 
         Search.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
                 intent.putExtra("PrevPageData", user);
+
                 startActivity(intent);
+
             }
         });
 
@@ -84,13 +90,10 @@ public class ManagerLanding extends AppCompatActivity {
                     Building b = checkBuilding.getValue();
                     buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
                 }
-
                 //creating recyclerview adapter
                 BuildingAdapter adapter = new BuildingAdapter(ManagerLanding.this, buildingList);
-
                 //setting adapter to recyclerview
                 recyclerView.setAdapter(adapter);
-
             }
         });
 
