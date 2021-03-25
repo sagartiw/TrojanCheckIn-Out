@@ -23,9 +23,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.List;
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder> {
 
@@ -68,12 +72,29 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         System.out.println("CAPACITY: " + building.getCapacity());
         System.out.println("PERCENT: " + building.getPercent());
 
+        // Retrieve currentCount
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                int count = map.get(building.getAbbreviation()).getCurrentCount();
+                System.out.println("COUNT: " + count);
+                double cur = (double) count;
+                System.out.println("CUR: " + cur);
+                double cap = (double) building.getCapacity();
+                System.out.println("CAP: " + cap);
+                double perc = (cur / cap) * 100;
+                System.out.println("PERC: " + perc);
+                int percent = (int) perc;
+                System.out.println("PERCENT: " + percent);
+                holder.textViewCurrent.setText(String.valueOf(count));
+                holder.textViewPercent.setText(String.valueOf(percent) + "%");
+                holder.progressBar.setProgress(percent);
+            }
+        });
+
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
-        holder.textViewCurrent.setText(String.valueOf(building.getCurrentCount()));
         holder.textViewCapacity.setText(String.valueOf(building.getCapacity()));
-        holder.textViewPercent.setText(String.valueOf(building.getPercent()) + "%");
-        holder.progressBar.setProgress((building.getPercent()));
 
         qrButton = holder.imageButton;
         cap = holder.capacity;
@@ -130,6 +151,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
 
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
                 Button submitButton = (Button) popupView.findViewById(R.id.button9);
+                TextView name = (TextView) popupView.findViewById(R.id.textView18);
+                name.setText(building.getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;

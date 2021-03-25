@@ -26,9 +26,11 @@ import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
+import java.util.Map;
+
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
@@ -50,6 +52,7 @@ public class StudentLanding extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private TextView welcomeName;
+    private boolean notIncremented = true;
 
 
     @Override
@@ -183,16 +186,19 @@ public class StudentLanding extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*
                         // Update count - 1
                         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                             @Override
                             public void onCallback(Map<String, Building> map) {
                                 int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
-                                referenceBuildings.child(match.getAbbreviation()).child("currentCount").setValue(count--);
+                                if (notIncremented) {
+                                    count = count-1;
+                                    notIncremented = false;
+                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                }
                             }
                         });
-                        */
+
 
                         // Removes from current building DB
                         user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());

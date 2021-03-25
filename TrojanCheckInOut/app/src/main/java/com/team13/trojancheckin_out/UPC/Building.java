@@ -18,6 +18,7 @@ public class Building implements Serializable {
     private String abbreviation = "";
     private String name;
     private int capacity;
+    private int currentCount;
 
     // Have to use an image builder, using String for now
     private String QRCode;
@@ -121,11 +122,7 @@ public class Building implements Serializable {
      * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
     public int getCurrentCount() {
-        if (students == null) return 0;
-        if (!students.isEmpty()) {
-            return 0;
-        }
-        return students.size();
+        return this.currentCount;
     }
 
     /**

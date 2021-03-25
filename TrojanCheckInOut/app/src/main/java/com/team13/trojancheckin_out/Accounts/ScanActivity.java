@@ -29,6 +29,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -53,6 +54,7 @@ public class ScanActivity extends AppCompatActivity {
     private Map<User, String> sendIt;
     public static String buildingCheck;
     public static String checkInTime = "-1";
+    private boolean notIncremented = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +203,19 @@ public class ScanActivity extends AppCompatActivity {
                                     System.out.println("MATCH " + match.getAbbreviation());
                                     user.setterCurrentBuilding(match);
                                     System.out.println("MATCH 2" + match.getAbbreviation());
+
+                                    // Update count + 1
+                                    buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                                        @Override
+                                        public void onCallback(Map<String, Building> map) {
+                                            int count = map.get(match.getAbbreviation()).getCurrentCount();
+                                            if (notIncremented) {
+                                                count = count+1;
+                                                notIncremented = false;
+                                                referenceBuildings.child(match.getAbbreviation()).child("currentCount").setValue(count);
+                                            }
+                                        }
+                                    });
 
                                     // Remove from NA if there
                                     referenceBuildings.child("NA").child("currentStudents").child(user.getId()).removeValue();

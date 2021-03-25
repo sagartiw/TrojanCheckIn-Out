@@ -25,9 +25,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.Manager;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SearchStudent2 extends AppCompatActivity {
     private Button Search;
@@ -39,7 +45,10 @@ public class SearchStudent2 extends AppCompatActivity {
     private Spinner buildInput;
     private EditText time1;
     private EditText time2;
-    private Manager manager;
+    private AccountManipulator accountManipulator = new AccountManipulator();
+    private BuildingManipulator buildingManipulator = new BuildingManipulator();
+    private Manager manager = new Manager(buildingManipulator, accountManipulator);
+    private List<User> foundStudents = new ArrayList<>();
     
     //a list to store all the products
     List<User> studentList;
@@ -52,24 +61,104 @@ public class SearchStudent2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_student2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
-
         Search = (Button)findViewById(R.id.button7);
-
         stuID = (EditText)findViewById(R.id.editTextTextPersonName);
         majInput = (Spinner)findViewById(R.id.spinner);
         buildInput = (Spinner)findViewById(R.id.spinner2);
         time1 = (EditText)findViewById(R.id.editTextTime3);
         time2 = (EditText)findViewById(R.id.editTextTime4);
 
-        int t1 = Integer.parseInt(time1.getText().toString());
-        int t2 = Integer.parseInt(time2.getText().toString());
-        //String maj = majInput.getItemAtPosition()
-
-
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //manager.searchStudents()
+                //manager.searchStudents(
+                //getting the recyclerview from xml
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(SearchStudent2.this));
+                StudentAdapter adapter = new StudentAdapter(SearchStudent2.this, studentList);
+                recyclerView.setAdapter(adapter);
+
+                studentList = new ArrayList<>();
+
+                buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                    @Override
+                    public void onCallback(Map<String, Building> map) {
+                        int t1 = -1;
+                        int t2 = -1;
+                        String id = null;
+                        String major = null;
+                        Building building = null;
+
+
+                        boolean showAll = false;
+                        boolean cond1 = true, cond2 = true, cond3 = true, cond4 = true;
+
+                        // If student ID is not empty, cond1 is false
+                        // If student ID is empty, cond1 is true
+                        if(!stuID.getText().toString().equals("")) {
+                            id = stuID.getText().toString();
+                            cond1 = false;
+                        }
+                        if(!majInput.getSelectedItem().toString().equals("None")) {
+                            major = majInput.getSelectedItem().toString();
+                            cond2 = false;
+                        }
+                        if(!buildInput.getSelectedItem().toString().equals("None")) {
+                            building = map.get(buildInput.getSelectedItem().toString());
+                            cond2 = false;
+                        }
+                        if(!time1.getText().toString().equals("")) {
+                            t1 = Integer.parseInt(time1.getText().toString());
+                            cond3 = false;
+                        }
+                        if(!time2.getText().toString().equals("")) {
+                            t2 = Integer.parseInt(time2.getText().toString());
+                            cond4 = false;
+                        }
+                        // IF ANY COND IS EMPTY, SHOW ALL WOULD BE SET FALSE
+                        if (cond1 && cond2 && cond3 && cond4) {
+                           showAll = true;
+                        }
+
+                        System.out.println("CONDITIONS: " + cond1 + cond2 + cond3 + cond4);
+
+                        if (showAll) {
+                            accountManipulator.getAllAccounts(new MyUserCallback() {
+                                @Override
+                                public void onCallback(Map<String, User> map) {
+                                    System.out.println("HELLO SHOW ALL!");
+                                    for (Map.Entry<String, User> e : map.entrySet()) {
+                                        User u = e.getValue();
+                                        String name = u.getName();
+                                        String email = u.getEmail();
+                                        String pass = u.getPassword();
+                                        String photo = u.getPhoto();
+                                        String id = u.getId();
+                                        boolean inBuilding = u.isInBuilding();
+                                        Building currentBuilding = u.getCurrentBuilding();
+                                        Map<String, String> history = u.getHistory();
+                                        String major = u.getMajor();
+                                        String isManager = u.isManager();
+
+                                        User user = new User(name, email, pass, photo, id, inBuilding,
+                                                currentBuilding, history, major, isManager);
+                                        System.out.println("HERE USER: " + name);
+                                        studentList.add(user);
+                                    }
+                                }
+                            });
+                        }
+                        else
+                        {
+                            studentList = manager.searchStudents(t1, t2, building, id, major);
+                        }
+
+                        //setting adapter to recyclerview
+                        adapter.notifyDataSetChanged();
+                    }
+
+                });
             }
         });
 
@@ -143,65 +232,31 @@ public class SearchStudent2 extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //initializing the productlist
-        studentList = new ArrayList<>();
+        //studentList = new ArrayList<>();
 
-
-        //adding some items to our list
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+//        accountManipulator.getAllAccounts(new MyUserCallback() {
+//            @Override
+//            public void onCallback(Map<String, User> map) {
+//                for (Map.Entry<String, User> e : map.entrySet()) {
+//                    User u = e.getValue();
+//                    String name = u.getName();
+//                    String email = u.getEmail();
+//                    String pass = u.getPassword();
+//                    String photo = u.getPhoto();
+//                    String id = u.getId();
+//                    boolean inBuilding = u.isInBuilding();
+//                    Building currentBuilding = u.getCurrentBuilding();
+//                    Map<String, String> history = u.getHistory();
+//                    String major = u.getMajor();
+//                    String isManager = u.isManager();
+//
+//                    User user = new User(name, email, pass, photo, id, inBuilding,
+//                            currentBuilding, history, major, isManager);
+//
+//                    studentList.add(user);
+//                }
+//            }
+//        });
 
         //creating recyclerview adapter
         StudentAdapter adapter = new StudentAdapter(this, studentList);
@@ -213,7 +268,7 @@ public class SearchStudent2 extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.spinner);
         //create a list of items for the spinner.
         String[] items = new String[]{
-                "Accounting",
+                "None", "Accounting",
                 "Acting for the Stage, Screen and New Media",
                 "Aerospace Engineering",
                 "American Popular Culture",
@@ -356,7 +411,7 @@ public class SearchStudent2 extends AppCompatActivity {
         //get the spinner from the xml.
         Spinner dropdown2 = findViewById(R.id.spinner2);
         //create a list of items for the spinner.
-        String[] items2 = new String[]{"1", "2", "three"};
+        String[] items2 = new String[]{"None", "1", "2", "three"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items2);
