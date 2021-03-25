@@ -3,6 +3,8 @@ package com.team13.trojancheckin_out.Layouts;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
+import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
@@ -205,6 +208,31 @@ public class StudentLanding extends AppCompatActivity {
                         referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
 
                         currBuilding.setText("NA");
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = cal.get(Calendar.MINUTE);
+
+
+                        String min = Integer.toString(currentMinute);
+                        String hour = Integer.toString(currentHour);
+
+                        if(currentMinute <= 9){
+                            min = "0" + Integer.toString(currentMinute);
+                        }
+
+                        if(currentHour <= 9){
+                            hour = "0" + Integer.toString(currentHour);
+                        }
+
+                        String time = hour + min;
+                        System.out.println("time:" + time);
+                        String checkOutTime = time;
+
+                        System.out.println(checkInTime);
+
+                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
 
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
