@@ -65,6 +65,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         //getting the product of the specified position
         //Building building was the og. i added private member.
         building = buildingList.get(position);
+        System.out.println("CAPACITY: " + building.getCapacity());
+        System.out.println("PERCENT: " + building.getPercent());
 
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
@@ -118,12 +120,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 });
             }
         });
-
-        String h = holder.textViewCurrent.getText().toString();
-        String i = holder.textViewCapacity.getText().toString();
-
-
-
 
         cap.setOnClickListener(new View.OnClickListener() {
             @Override

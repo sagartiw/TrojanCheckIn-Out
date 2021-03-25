@@ -183,6 +183,17 @@ public class StudentLanding extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        /*
+                        // Update count - 1
+                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                            @Override
+                            public void onCallback(Map<String, Building> map) {
+                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                referenceBuildings.child(match.getAbbreviation()).child("currentCount").setValue(count--);
+                            }
+                        });
+                        */
+
                         // Removes from current building DB
                         user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                         System.out.println("CURR: " + user.getCurrentBuilding().getName());
