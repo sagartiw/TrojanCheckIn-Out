@@ -3,15 +3,9 @@ package com.team13.trojancheckin_out.Accounts;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
-
-class TimeStamps {
-    String checkInTime = "";
-    String checkOutTime = "";
-}
 
 /**
  * This class contains the objects that define a user's account. Further, it establishes mechanisms
@@ -73,6 +67,8 @@ public class User implements Serializable {
     }
 
     public void setName(String name) {
+
+        System.out.println("I AM SETTING NAME");
         this.name = name;
     }
 
@@ -101,7 +97,9 @@ public class User implements Serializable {
     }
 
     public String getId() {
+
         return id;
+
     }
 
     public void setId(String id) {
@@ -124,10 +122,21 @@ public class User implements Serializable {
         return currentBuilding;
     }
 
-    public void setCurrentBuilding(Building currentBuilding) {
-        //referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
+   public void setCurrentBuilding(Building currentBuilding) {
+
         this.currentBuilding = currentBuilding;
-    }
+   }
+
+   public void setterCurrentBuilding(Building currentBuilding) {
+       this.currentBuilding = currentBuilding;
+
+       Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getQRCode());
+//       b.setStudents(currentBuilding.getCurrentStudents());
+
+       System.out.println("FULL OBJECT" +currentBuilding.getName() +  " " + currentBuilding.getAbbreviation() + " " + currentBuilding.getCapacity() + " " + currentBuilding.getQRCode() );
+
+       referenceUsers.child(this.getId()).child("currentBuilding").setValue(b);
+   }
 
     public Map<String, String> getHistory() {
         return history;

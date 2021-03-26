@@ -3,6 +3,9 @@ package com.team13.trojancheckin_out.Layouts;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -17,17 +21,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
-import static com.team13.trojancheckin_out.Accounts.ScanActivity.buildingCheck;
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 
@@ -45,6 +53,7 @@ public class StudentLanding extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private TextView welcomeName;
+    private boolean notIncremented = true;
 
 
     @Override
@@ -83,10 +92,12 @@ public class StudentLanding extends AppCompatActivity {
         }
 
 
-        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
-
-        System.out.println("This is the user photo in student landing" + user.getPhoto());
-        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
+//        StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
+//
+//        System.out.println("This is the user photo in student landing" + user.getPhoto());
+//        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
+        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+        soFab.setImageResource(imageRe);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +189,59 @@ public class StudentLanding extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Update count - 1
+                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                            @Override
+                            public void onCallback(Map<String, Building> map) {
+                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                if (notIncremented) {
+                                    count = count-1;
+                                    notIncremented = false;
+                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                }
+                            }
+                        });
 
-                        //currentUser.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+
+                        // Removes from current building DB
+                        user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                        // Remove user's current building
                         user.setInBuilding(false);
 
-                        user.getCurrentBuilding().setAbbreviation("");
-                        currBuilding.setText("USC");
+                        Building b = new Building("Not in Building", "NA", 500, "");
+                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+
+                        // Add to NA in DB
+                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
+
+                        currBuilding.setText("NA");
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = cal.get(Calendar.MINUTE);
+
+
+                        String min = Integer.toString(currentMinute);
+                        String hour = Integer.toString(currentHour);
+
+                        if(currentMinute <= 9){
+                            min = "0" + Integer.toString(currentMinute);
+                        }
+
+                        if(currentHour <= 9){
+                            hour = "0" + Integer.toString(currentHour);
+                        }
+
+                        String time = hour + min;
+                        System.out.println("time:" + time);
+                        String checkOutTime = time;
+
+                        System.out.println(checkInTime);
+
+                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
 
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);

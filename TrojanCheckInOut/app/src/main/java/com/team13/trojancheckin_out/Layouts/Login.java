@@ -104,6 +104,7 @@ public class Login extends AppCompatActivity {
                                 //Student Case
 
                                 currentUser = user;
+                                System.out.println("LOGIN ID: " + currentUser.getId());
 
                                 if (user.isManager().equalsIgnoreCase("false")) {
                                     intent = new Intent(Login.this, StudentLanding.class);
