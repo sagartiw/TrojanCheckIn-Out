@@ -52,6 +52,7 @@ public class StudentsList extends AppCompatActivity {
     private AccountManipulator accountManipulator = new AccountManipulator();
     private TextView buildingName;
     private Building building;
+    private TextView welcome;
 
     //a list to store all the products
     private List<User> studentList;
@@ -70,6 +71,11 @@ public class StudentsList extends AppCompatActivity {
         //NEED TO MAKE THIS OUR ACTUAL BUILDING OBJECT
         buildingName.setText(building.getAbbreviation());
 
+        // make welcome message empty
+        welcome = (TextView) findViewById(R.id.textView30);
+
+        welcome.setText(" ");
+
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,199 +88,39 @@ public class StudentsList extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this, LinearLayoutManager.VERTICAL, false));
+
         System.out.println("CHANGE");
 
         studentList = new ArrayList<>();
 
+        // get students list - idk why this doesnt work
+        //studentList = building.getCurrentStudents();
 
         StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
         recyclerView.setAdapter(adapter);
 
 
-        //adding some items to our list
-      /*
 
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-        */
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
+
+
+
 
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
                 for (Map.Entry<String, User> e : map.entrySet()) {
                     User user = e.getValue();
-                    if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
-                        studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
-                        System.out.println("USER NAME: " + user.getName());
+                    if (user.isInBuilding()) {
+                        if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
+                            studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
+                            System.out.println("USER NAME: " + user.getName());
+                        }
                     }
+
                 }
                 //getting the recyclerview from xml
 //                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
@@ -315,176 +161,6 @@ public class StudentsList extends AppCompatActivity {
 //                }
 //            }
 //        });
-
-
-//        //adding some items to our list
-//        studentList.add(
-//                new User(
-//                        "Mindy Diep",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Arian Memari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Sagar Tiwari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Kabir Samra",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Annika Oeth",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Elizabeth Moody",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Mindy Diep",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Arian Memari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Sagar Tiwari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Kabir Samra",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Annika Oeth",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Elizabeth Moody",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);

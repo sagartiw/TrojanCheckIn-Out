@@ -152,7 +152,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
                 Button submitButton = (Button) popupView.findViewById(R.id.button9);
                 TextView name = (TextView) popupView.findViewById(R.id.textView18);
-                name.setText(building.getName());
+                name.setText(buildingList.get(position).getName());
+                //name.setText(building.getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
