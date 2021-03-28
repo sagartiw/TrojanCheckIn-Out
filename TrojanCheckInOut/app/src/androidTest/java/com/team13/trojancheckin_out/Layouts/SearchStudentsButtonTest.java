@@ -15,7 +15,6 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,20 +26,22 @@ import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class SearchStudentsButtonTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void searchStudentsButtonTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -92,30 +93,33 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        7),
+                                3),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        materialButton3.perform(click());
 
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.textView23), withText("Search Students"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
+        textView.check(matches(withText("Search Students")));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+                allOf(withId(R.id.button7), withText("SEARCH    "),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.textView18), withText("Major"),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        button2.check(matches(isDisplayed()));
-
+        textView2.check(matches(withText("Major")));
 
     }
 

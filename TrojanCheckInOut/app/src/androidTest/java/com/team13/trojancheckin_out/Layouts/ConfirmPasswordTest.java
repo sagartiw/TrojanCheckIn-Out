@@ -15,7 +15,6 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -34,56 +32,56 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class ConfirmPasswordTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void confirmPasswordTest() {
         ViewInteraction materialButton = onView(
-                allOf(withId(R.id.login), withText("LOGIN"),
+                allOf(withId(R.id.register), withText("REGISTER"),
                         childAtPosition(
                                 allOf(withId(R.id.ConstraintLayout),
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                3),
+                                4),
                         isDisplayed()));
         materialButton.perform(click());
 
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.editTextTextEmailAddress2),
+                allOf(withId(R.id.editTextTextEmailAddress),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                6),
+                                5),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("aoeth@usc.edu"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("test@usc.edu"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.editTextTextPassword3),
+                allOf(withId(R.id.editTextTextPassword),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                8),
                         isDisplayed()));
         appCompatEditText2.perform(replaceText("a"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.editTextTextPassword3), withText("a"),
+                allOf(withId(R.id.editTextTextPassword2),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                9),
                         isDisplayed()));
-        appCompatEditText3.perform(pressImeActionButton());
+        appCompatEditText3.perform(replaceText("abc"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.login), withText("LOGIN"),
+                allOf(withId(R.id.signOut), withText("REGISTER"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -93,30 +91,22 @@ public class LoginManagerViewTest {
         materialButton2.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.textView20), withText("Password Error!"),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        textView.check(matches(withText("Password Error!")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.textView26), withText("Please ensure that your password and confirm password fields match."),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
+        textView2.check(matches(withText("Please ensure that your password and confirm password fields match.")));
 
-        ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.textView26), withText("Please ensure that your password and confirm password fields match."),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
-
-
+        textView3.check(matches(withText("Please ensure that your password and confirm password fields match.")));
     }
 
     private static Matcher<View> childAtPosition(

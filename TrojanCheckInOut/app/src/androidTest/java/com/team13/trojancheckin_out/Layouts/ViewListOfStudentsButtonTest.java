@@ -15,7 +15,6 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,21 +25,24 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class ViewListOfStudentsButtonTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void viewListOfStudentsButtonTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -92,31 +94,32 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.profileButton), withText("See List of Students"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                9),
+                        hasSibling(allOf( withId(R.id.buildName), withText("BSR"), childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0) ) ),
+                        isDisplayed()));
+        materialButton3.perform(click());
+
         ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
+                allOf(withId(R.id.textView32), withText("BSR"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        textView.check(matches(withText("BSR")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
+                allOf(withId(R.id.textView31), withText("Buildings >"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
-
-
+        textView2.check(matches(withText("Buildings >")));
     }
 
     private static Matcher<View> childAtPosition(

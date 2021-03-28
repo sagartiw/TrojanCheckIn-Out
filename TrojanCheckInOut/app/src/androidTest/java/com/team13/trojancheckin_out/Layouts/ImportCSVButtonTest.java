@@ -1,14 +1,24 @@
 package com.team13.trojancheckin_out.Layouts;
 
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+
+import static androidx.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
+import static androidx.test.espresso.action.ViewActions.*;
+import static androidx.test.espresso.assertion.ViewAssertions.*;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
 
 import com.team13.trojancheckin_out.Accounts.R;
 
@@ -20,27 +30,19 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
-import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class ImportCSVButtonTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void importCSVButtonTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -72,16 +74,6 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         appCompatEditText2.perform(replaceText("a"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.editTextTextPassword3), withText("a"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatEditText3.perform(pressImeActionButton());
-
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -92,29 +84,38 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.button4), withText("IMPORT CSV"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        7),
+                                2),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        materialButton3.perform(click());
 
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.textView20), withText("Import CSV"),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
+        textView.check(matches(withText("Import CSV")));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+                allOf(withId(R.id.button8), withText("   Upload file"),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.button8), withText("   Upload file"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.cardView),
+                                        0),
+                                0),
                         isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        materialButton4.perform(click());
+
 
 
     }

@@ -15,7 +15,6 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +22,6 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -34,13 +32,13 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class SignOutManagerTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void signOutManagerTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -60,7 +58,7 @@ public class LoginManagerViewTest {
                                         0),
                                 6),
                         isDisplayed()));
-        appCompatEditText.perform(replaceText("aoeth@usc.edu"), closeSoftKeyboard());
+        appCompatEditText.perform(replaceText("ksa@usc.edu"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.editTextTextPassword3),
@@ -70,17 +68,7 @@ public class LoginManagerViewTest {
                                         0),
                                 4),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("a"), closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.editTextTextPassword3), withText("a"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatEditText3.perform(pressImeActionButton());
+        appCompatEditText2.perform(replaceText("k"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
@@ -92,29 +80,39 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction floatingActionButton = onView(
+                allOf(withId(R.id.fab),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        floatingActionButton.perform(click());
+
+        ViewInteraction materialTextView = onView(
+                allOf(withId(R.id.title), withText("Sign Out"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.textView), withText("trojan"),
+                        withParent(allOf(withId(R.id.ConstraintLayout),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        textView.check(matches(withText("trojan")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.textView2), withText("check in/out"),
+                        withParent(allOf(withId(R.id.ConstraintLayout),
+                                withParent(withId(android.R.id.content)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        textView2.check(matches(withText("check in/out")));
 
 
     }

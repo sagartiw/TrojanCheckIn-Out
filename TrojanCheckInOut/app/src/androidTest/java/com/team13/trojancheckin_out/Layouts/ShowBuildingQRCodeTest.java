@@ -15,7 +15,6 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,21 +25,24 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasSibling;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginManagerViewTest {
+public class ShowBuildingQRCodeTest {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void loginManagerViewTest() {
+    public void showBuildingQRCodeTest() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -92,29 +94,86 @@ public class LoginManagerViewTest {
                         isDisplayed()));
         materialButton2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.TextView16), withText("welcome annika oeth"),
-                        withParent(withParent(withId(android.R.id.content))),
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.imageButton4),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                8),
+                        hasSibling(allOf( withId(R.id.buildName), withText("BSR"), childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0) ) ),
                         isDisplayed()));
-        textView.check(matches(withText("welcome annika oeth")));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction imageView = onView(
+                allOf(withId(R.id.imageView8),
+                        withParent(withParent(withId(R.id.cardView))),
+                        isDisplayed()));
+        imageView.check(matches(isDisplayed()));
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.textView19), withText("Birnkrant Residential College"),
+                        withParent(withParent(withId(R.id.cardView))),
+                        isDisplayed()));
+        textView.check(matches(withText("Birnkrant Residential College")));
+
+        ViewInteraction imageView2 = onView(
+                allOf(withId(R.id.imageView8),
+                        withParent(withParent(withId(R.id.cardView))),
+                        isDisplayed()));
+        imageView2.check(matches(isDisplayed()));
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.button6), withText("X"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.cardView),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialButton3.perform(click());
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.imageButton4),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                8),
+                        hasSibling(allOf( withId(R.id.buildName), withText("ANN"), childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0) ) ),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction imageView3 = onView(
+                allOf(withId(R.id.imageView8),
+                        withParent(withParent(withId(R.id.cardView))),
+                        isDisplayed()));
+        imageView3.check(matches(isDisplayed()));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.textView17), withText("Buildings"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.textView19), withText("Wallis Annenberg Hall"),
+                        withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        textView2.check(matches(withText("Buildings")));
+        textView2.check(matches(withText("Wallis Annenberg Hall")));
 
-        ViewInteraction button = onView(
-                allOf(withId(R.id.button4), withText("IMPORT CSV"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
 
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.button6), withText("X"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.cardView),
+                                        0),
+                                0),
                         isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        materialButton4.perform(click());
 
 
     }
