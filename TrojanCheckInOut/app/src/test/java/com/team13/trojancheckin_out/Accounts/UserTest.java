@@ -6,6 +6,14 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.reference
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 public class UserTest extends TestCase {
 
     public void setUp() throws Exception {
@@ -70,9 +78,18 @@ public class UserTest extends TestCase {
     }
 
 
-    public void testCheckOutManual() {
-    }
+    public void testBuilding() {
 
-    public void testChangePassword() {
+        User liza = new User("Liza", "moodye@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        Building SAL = new Building("SAL", "sal", 75, "qrCode/path");
+        liza.setCurrentBuilding(SAL);
+        liza.setInBuilding(true);
+        assertEquals(SAL, liza.getCurrentBuilding());
+        assertTrue(liza.isInBuilding());
+        liza.setCurrentBuilding(null);
+        liza.setInBuilding(false);
+        assertEquals(null, liza.getCurrentBuilding());
+        assertFalse(liza.isInBuilding());
+        assertTrue(liza.checkOutManual());
     }
 }

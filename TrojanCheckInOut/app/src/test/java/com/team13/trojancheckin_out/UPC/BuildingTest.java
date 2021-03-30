@@ -78,6 +78,9 @@ public class BuildingTest extends TestCase {
     }
 
     public void testGetPercent() {
+        int per = b.getPercent();
+        assertEquals(per, b.getPercent());
+        //b.addStudent();
     }
 
 

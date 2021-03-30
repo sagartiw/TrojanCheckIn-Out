@@ -7,22 +7,16 @@ public class AccountManipulatorTest extends TestCase {
     private AccountManipulator accountManipulator;
     private BuildingManipulator buildingManipulator;
 
-    public void testGetAllAccounts() {
-    }
+    public void testAccountAccess() {
 
-    public void testGetStudentAccounts() {
-    }
 
-    public void testGetManagerAccounts() {
     }
 
     public void testVerifyEmail() {
         String email = "moodye@usc.edu";
-        if (accountManipulator.verifyEmail(email)){
-            System.out.println("email verified");
-        }
-        else System.out.println("not verigied");
         assertTrue(accountManipulator.verifyEmail(email));
+        email = "moodye@gmail.com";
+        assertFalse(accountManipulator.verifyEmail(email));
 
 
     }
