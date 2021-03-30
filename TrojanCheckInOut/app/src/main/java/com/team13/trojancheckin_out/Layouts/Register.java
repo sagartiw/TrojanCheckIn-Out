@@ -71,6 +71,8 @@ public class Register extends AppCompatActivity {
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");
 
+                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
+
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
                     Button closeButton = (Button) popupView.findViewById(R.id.button12);

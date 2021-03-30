@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
@@ -44,6 +45,7 @@ public class ManagerLanding extends AppCompatActivity {
     private TextView txt_path, successText;
     private TextView welcome;
     public static User tracker;
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
 
     @Override
@@ -131,6 +133,7 @@ public class ManagerLanding extends AppCompatActivity {
         fab.setImageResource(imageRe);
         final PopupMenu menu = new PopupMenu(this, fab);
         menu.getMenu().add("Student View");
+        menu.getMenu().add("Edit Profile");
         menu.getMenu().add("Sign Out");
         menu.getMenu().add("Delete Account");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -139,6 +142,11 @@ public class ManagerLanding extends AppCompatActivity {
                 Log.d("menu title: ", item.getTitle().toString());
                 if(item.getTitle().toString().equals("Student View")){
                     Intent intent = new Intent(ManagerLanding.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
+                if(item.getTitle().toString().equals("Edit Profile")){
+                    Intent intent = new Intent(ManagerLanding.this, EditProfile.class);
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
@@ -151,6 +159,8 @@ public class ManagerLanding extends AppCompatActivity {
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.delete_account_popup, null);
                     Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                    Button submitButton = (Button) popupView.findViewById(R.id.button10);
+
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -169,6 +179,25 @@ public class ManagerLanding extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             popupWindow.dismiss();
+                        }
+                    });
+
+                    // delete account when submit is pressed
+                    submitButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // call delete account
+                            accountManipulator.deleteAccount(user);
+
+                            popupWindow.dismiss();
+
+                            // go back to startup page
+                            Intent intent = new Intent(v.getContext(), Startup.class);
+                            //intent.putExtra("PrevPageData", user);
+                            v.getContext().startActivity(intent);
+
+//                            Intent intent = new Intent(ManagerLanding.this, Startup.class);
+//                            startActivity(intent);
                         }
                     });
                 }
