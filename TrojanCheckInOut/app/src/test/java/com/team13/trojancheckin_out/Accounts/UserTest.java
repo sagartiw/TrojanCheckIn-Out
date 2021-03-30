@@ -14,14 +14,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Map;
+
 public class UserTest extends TestCase {
-
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public void tearDown() throws Exception {
-    }
 
     public void testGetUserFunctionality() {
         String name = "Liza";
@@ -91,5 +86,67 @@ public class UserTest extends TestCase {
         assertEquals(null, liza.getCurrentBuilding());
         assertFalse(liza.isInBuilding());
         assertTrue(liza.checkOutManual());
+
     }
+
+    public void testUpdateStudentHistory() {
+
+        User liza = new User("Liza", "moodye@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        Building SAL = new Building("SAL", "sal", 75, "qrCode/path");
+        Building doheny = new Building("Doheny Library", "d", 75, "qrCode/path");
+        Building EVK = new Building("Everybody's Kitchen", "EVK", 75, "qrCode/path");
+        Building tutorCenter = new Building("Tutor Campus Center", "TCC", 140, "qrCode/path");
+        Map<String, String> history = liza.getHistory();
+        history.put(SAL.getName(), SAL.getAbbreviation());
+        history.put(doheny.getName(), doheny.getAbbreviation());
+        history.put(tutorCenter.getName(), tutorCenter.getAbbreviation());
+        history.put(EVK.getName(), EVK.getAbbreviation());
+        assertTrue(history.containsKey(SAL.getName()));
+        assertTrue(history.containsKey(doheny.getName()));
+        assertTrue(history.containsKey(EVK.getName()));
+        assertTrue(history.containsKey(tutorCenter.getName()));
+    }
+
+    public void testManagerStatus(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        assertEquals("no", user.isManager());
+
+    }
+
+    public void testChangeManagerStatus(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        assertEquals("no", user.isManager());
+        user.setManager("yes");
+        assertEquals("yes", user.isManager());
+    }
+    public void testChangePassword(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        assertEquals("1234", user.getPassword());
+        user.setPassword("4321");
+        assertEquals("4321", user.getPassword());
+    }
+
+    public void testReturnEmail(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        assertEquals("user@usc.edu", user.getEmail());
+
+    }
+    public void testChangeEmail(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        user.setEmail("newUser@usc.edu");
+        assertEquals("newUser@usc.edu", user.getEmail());
+    }
+    public void testReturnMajor(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        assertEquals("CSBA", user.getMajor());
+
+    }
+    public void testUpdateMajor(){
+        User user = new User("User", "user@usc.edu", "1234", "userpath/photo", "1234567890", false, null, null, "CSBA", "no");
+        user.setMajor("computer science");
+        assertEquals("computer science", user.getMajor());
+    }
+
+
+
 }
