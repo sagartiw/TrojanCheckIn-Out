@@ -186,7 +186,7 @@ public class CompleteProfileManagerTest {
         appCompatEditText9.perform(pressImeActionButton());
 
         ViewInteraction materialRadioButton = onView(
-                allOf(withId(R.id.radioButton3), withText("Manager"),
+                allOf(withId(R.id.radioButton2), withText("Manager"),
                         childAtPosition(
                                 allOf(withId(R.id.radioGroup),
                                         childAtPosition(
@@ -225,10 +225,10 @@ public class CompleteProfileManagerTest {
         textView5.check(matches(withText("Art")));
 
         ViewInteraction textView6 = onView(
-                allOf(withId(R.id.id), withText("1234567891"),
+                allOf(withId(R.id.id), withText("1234567661"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView6.check(matches(withText("1234567891")));
+        textView6.check(matches(withText("1234567661")));
 
     }
 
