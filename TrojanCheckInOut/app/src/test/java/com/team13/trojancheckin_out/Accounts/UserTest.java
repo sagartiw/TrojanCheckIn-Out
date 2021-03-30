@@ -1,6 +1,10 @@
 package com.team13.trojancheckin_out.Accounts;
 
 import junit.framework.TestCase;
+import com.team13.trojancheckin_out.UPC.Building;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class UserTest extends TestCase {
 
@@ -11,77 +15,60 @@ public class UserTest extends TestCase {
     public void tearDown() throws Exception {
     }
 
-    public void testTestGetName() {
+    public void testGetUserFunctionality() {
+        String name = "Liza";
+        String email = "moodye@usc.edu" ;
+        String password = "1234";
+        String photo = "photo/path";
+        String id = "1234567890";
+        boolean inBuilding = false;
+        Building cb = null;
+        String major = "computer science";
+        User liza = new User(name, email, password, photo, id, inBuilding, cb, null, major, "");
+        assertEquals(name, liza.getName());
+        assertEquals(email, liza.getEmail());
+        assertEquals(password, liza.getPassword());
+        assertEquals(photo, liza.getPhoto());
+        assertEquals(major, liza.getMajor());
+        assertEquals(id, liza.getId());
+        assertFalse(liza.isInBuilding());
     }
 
-    public void testTestSetName() {
+    public void testSetUserFunctionality() {
+        String name = "Liza";
+        String email = "moodye@usc.edu" ;
+        String password = "1234";
+        String photo = "photo/path";
+        String id = "1234567890";
+        boolean inBuilding = false;
+        Building cb = null;
+        String major = "computer science";
+        User liza = new User(name, email, password, photo, id, inBuilding, cb, null, major, "");
+        name = "Liza Moody";
+        email = "moodye1@usc.edu";
+        major = "CSBA";
+        password = "12345";
+        photo = "liza/photo/path";
+        id = "0987654321";
+        inBuilding = true;
+        liza.setName(name);
+        liza.setEmail(email);
+        liza.setMajor(major);
+        liza.setPassword(password);
+        liza.setId(id);
+        liza.setPhoto(photo);
+        liza.setInBuilding(inBuilding);
+
+        assertEquals(name, liza.getName());
+        assertEquals(email, liza.getEmail());
+        assertEquals(password, liza.getPassword());
+        assertEquals(photo, liza.getPhoto());
+        assertEquals(major, liza.getMajor());
+        assertEquals(id, liza.getId());
+        assertTrue(liza.isInBuilding());
+
     }
 
-    public void testGetEmail() {
-    }
-
-    public void testSetEmail() {
-    }
-
-    public void testGetPassword() {
-    }
-
-    public void testSetPassword() {
-    }
-
-    public void testGetPhoto() {
-    }
-
-    public void testSetPhoto() {
-    }
-
-    public void testGetId() {
-    }
-
-    public void testSetId() {
-    }
-
-    public void testSetStringId() {
-    }
-
-    public void testIsInBuilding() {
-    }
-
-    public void testSetInBuilding() {
-    }
-
-    public void testGetCurrentBuilding() {
-    }
-
-    public void testSetCurrentBuilding() {
-    }
-
-    public void testGetHistory() {
-    }
-
-    public void testSetHistory() {
-    }
-
-    public void testGetMajor() {
-    }
-
-    public void testSetMajor() {
-    }
-
-    public void testIsManager() {
-    }
-
-    public void testSetManager() {
-    }
-
-    public void testShowProfile() {
-    }
-
-    public void testUpdateProfilePicture() {
-    }
-
-    public void testScanQRCode() {
-    }
 
     public void testCheckOutManual() {
     }

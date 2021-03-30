@@ -47,8 +47,8 @@ public class BuildingTest extends TestCase {
     public void testGetQRCode() {
         b.setQRCode("gfsQR");
         assertEquals("gfsQR", b.getQRCode());
-       // b.setQRCode(1);
-       // assertEquals(1, b.getQRCode());
+        b.setQRCode("users/path/qrcode");
+        assertEquals("users/path/qrcode", b.getQRCode());
     }
 
     public void testSetQRCode() {

@@ -2,10 +2,10 @@ package com.team13.trojancheckin_out.Database;
 
 import junit.framework.TestCase;
 
+
 public class AccountManipulatorTest extends TestCase {
     private AccountManipulator accountManipulator;
     private BuildingManipulator buildingManipulator;
-
 
     public void testGetAllAccounts() {
     }
@@ -23,6 +23,8 @@ public class AccountManipulatorTest extends TestCase {
         }
         else System.out.println("not verigied");
         assertTrue(accountManipulator.verifyEmail(email));
+
+
     }
 
     public void testCreateAccount() {
