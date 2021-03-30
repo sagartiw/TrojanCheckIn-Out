@@ -16,6 +16,7 @@ import com.team13.trojancheckin_out.Accounts.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,13 +38,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class SearchStudentsFunctionalityTest {
+public class SearchStudentsFunctionalityTestHelp {
 
     @Rule
     public ActivityTestRule<Startup> mActivityTestRule = new ActivityTestRule<>(Startup.class);
 
     @Test
-    public void searchStudentsViewProfileTest() {
+    public void searchStudentsFunctionalityTestHelp() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
@@ -54,7 +55,6 @@ public class SearchStudentsFunctionalityTest {
                                 3),
                         isDisplayed()));
         materialButton.perform(click());
-
 
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.editTextTextEmailAddress2),
@@ -76,7 +76,7 @@ public class SearchStudentsFunctionalityTest {
                         isDisplayed()));
         appCompatEditText2.perform(replaceText("a"), closeSoftKeyboard());
 
-        ViewInteraction materialButton3 = onView(
+        ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.login), withText("LOGIN"),
                         childAtPosition(
                                 childAtPosition(
@@ -84,9 +84,9 @@ public class SearchStudentsFunctionalityTest {
                                         0),
                                 0),
                         isDisplayed()));
-        materialButton3.perform(click());
+        materialButton2.perform(click());
 
-        ViewInteraction materialButton4 = onView(
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.button5), withText("SEARCH STUDENTS"),
                         childAtPosition(
                                 childAtPosition(
@@ -94,15 +94,15 @@ public class SearchStudentsFunctionalityTest {
                                         7),
                                 3),
                         isDisplayed()));
-        materialButton4.perform(click());
+        materialButton3.perform(click());
 
         ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.spinner),
+                allOf(withId(R.id.spinner2),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                10),
+                                11),
                         isDisplayed()));
         appCompatSpinner.perform(click());
 
@@ -110,8 +110,18 @@ public class SearchStudentsFunctionalityTest {
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
-                .atPosition(45);
+                .atPosition(12);
         appCompatCheckedTextView.perform(click());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton4.perform(click());
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.button7), withText("search    "),
@@ -134,6 +144,108 @@ public class SearchStudentsFunctionalityTest {
         materialButton6.perform(click());
 
         ViewInteraction materialButton7 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton7.perform(click());
+
+        ViewInteraction materialButton8 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton8.perform(click());
+
+        ViewInteraction appCompatSpinner2 = onView(
+                allOf(withId(R.id.spinner),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                10),
+                        isDisplayed()));
+        appCompatSpinner2.perform(click());
+
+        DataInteraction appCompatCheckedTextView2 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(0);
+        appCompatCheckedTextView2.perform(click());
+
+        ViewInteraction materialButton9 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton9.perform(click());
+
+        ViewInteraction appCompatSpinner3 = onView(
+                allOf(withId(R.id.spinner),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                10),
+                        isDisplayed()));
+        appCompatSpinner3.perform(click());
+
+        DataInteraction appCompatCheckedTextView3 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(45);
+        appCompatCheckedTextView3.perform(click());
+
+        ViewInteraction appCompatSpinner4 = onView(
+                allOf(withId(R.id.spinner2),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                11),
+                        isDisplayed()));
+        appCompatSpinner4.perform(click());
+
+        DataInteraction appCompatCheckedTextView4 = onData(anything())
+                .inAdapterView(childAtPosition(
+                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
+                        0))
+                .atPosition(0);
+        appCompatCheckedTextView4.perform(click());
+
+        ViewInteraction materialButton10 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton10.perform(click());
+
+        ViewInteraction materialButton11 = onView(
+                allOf(withId(R.id.button7), withText("search    "),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                14),
+                        isDisplayed()));
+        materialButton11.perform(click());
+
+
+        ViewInteraction materialButton12 = onView(
                 allOf(withId(R.id.profileButton), withText("PROFILE"),
                         childAtPosition(
                                 childAtPosition(
@@ -141,35 +253,19 @@ public class SearchStudentsFunctionalityTest {
                                         0),
                                 2),
                         isDisplayed()));
-        materialButton7.perform(click());
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.name6), withText("annika oeth"),
-                        withParent(withParent(withId(R.id.cardView))),
-                        isDisplayed()));
-        textView.check(matches(withText("annika oeth")));
+        materialButton12.perform(click());
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.id5), withText("2794040392"),
-                        withParent(withParent(withId(R.id.cardView))),
-                        isDisplayed()));
-        textView2.check(matches(withText("2794040392")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.id6), withText("Computer Science"),
-                        withParent(withParent(withId(R.id.cardView))),
-                        isDisplayed()));
-        textView3.check(matches(withText("Computer Science")));
-
-
-        ViewInteraction textView4 = onView(
                 allOf(withId(R.id.buildingName2), withText("LVL"),
                         withParent(withParent(withId(R.id.cardView))),
                         isDisplayed()));
-        textView4.check(matches(withText("LVL")));
+        textView2.check(matches(withText("LVL")));
 
-
-
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.name6), withText("annika oeth"),
+                        withParent(withParent(withId(R.id.cardView))),
+                        isDisplayed()));
+        textView3.check(matches(withText("annika oeth")));
     }
 
     private static Matcher<View> childAtPosition(
