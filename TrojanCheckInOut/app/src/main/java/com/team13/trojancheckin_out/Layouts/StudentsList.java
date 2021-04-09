@@ -1,10 +1,7 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.animation.BidirectionalTypeConverter;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,26 +11,52 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.currentBuildings;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import static com.team13.trojancheckin_out.Layouts.ManagerLanding.tracker;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class StudentsList extends AppCompatActivity {
 
     private Button Back;
+    private RecyclerView recyclerView;
+    private AccountManipulator accountManipulator = new AccountManipulator();
+    private TextView buildingName;
+    private Building building;
+    private TextView welcome;
 
     //a list to store all the products
-    List<User> studentList;
+    private List<User> studentList;
 
-    //the recyclerview
-    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,197 +65,103 @@ public class StudentsList extends AppCompatActivity {
 
         Back = (Button)findViewById(R.id.backer2);
 
+        buildingName = (TextView) findViewById(R.id.textView32);
+        building = (Building) getIntent().getSerializableExtra("PrevPageData");
+
+        //NEED TO MAKE THIS OUR ACTUAL BUILDING OBJECT
+        buildingName.setText(building.getAbbreviation());
+
+        // make welcome message empty
+        welcome = (TextView) findViewById(R.id.textView30);
+
+        welcome.setText(" ");
+
+
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentsList.this, ManagerLanding.class);
+                intent.putExtra("PrevPageData", tracker);
                 startActivity(intent);
             }
         });
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+        recyclerView.setHasFixedSize(true);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this, LinearLayoutManager.VERTICAL, false));
+
+        System.out.println("CHANGE");
+
+        studentList = new ArrayList<>();
+
+        // get students list - idk why this doesnt work
+        //studentList = building.getCurrentStudents();
+
+        StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+        recyclerView.setAdapter(adapter);
+
+
+
+        //creating recyclerview adapter
+        //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
+
+
+
+
+        accountManipulator.getAllAccounts(new MyUserCallback() {
+            @Override
+            public void onCallback(Map<String, User> map) {
+                for (Map.Entry<String, User> e : map.entrySet()) {
+                    User user = e.getValue();
+                    if (user.isInBuilding()) {
+                        if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
+                            studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
+                            System.out.println("USER NAME: " + user.getName());
+                        }
+                    }
+
+                }
+                //getting the recyclerview from xml
+//                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
+//                recyclerView.setHasFixedSize(true);
+//                recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this));
+//                StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+//                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                System.out.println("NOTIFY! " + adapter.getItemCount());
+
+            }
+        });
+
+        /*
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        */
+        //studentList = currentBuildings.get(buildingName).getCurrentStudents();
 
-        //initializing the productlist
-        studentList = new ArrayList<>();
+//        DatabaseReference r = referenceBuildings.child(building.getAbbreviation()).child("currentStudents");
+//        for (DataSnapshot ds : r.get().getResult().getChildren()) {
+//            User user = ds.getValue(User.class);
+//            studentList.add(user);
+//        }
 
 
-        //adding some items to our list
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
+//        //trying to add cards
+//        accountManipulator.getAllAccounts(new MyUserCallback() {
+//            @Override
+//            public void onCallback(Map<String, User> map) {
+//                for (Map.Entry<String, User> checkUser : map.entrySet()) {
+//                    System.out.println(checkUser.getValue());
+//                    if (checkUser.getValue().getCurrentBuilding().equals("BSR")) {
+//                        studentList.add(checkUser.getValue());
+//                    }
+//                }
+//            }
+//        });
 
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Mindy Diep",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Arian Memari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Sagar Tiwari",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Kabir Samra",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Annika Oeth",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        studentList.add(
-                new User(
-                        "Elizabeth Moody",
-                        "mindydie@usc.edu",
-                        "hello",
-                        "photo",
-                        "123456789",
-                        true,
-                        null,
-                        null,
-                        "CSBA",
-                        "false"
-                ));
-
-        //creating recyclerview adapter
-        StudentAdapter adapter = new StudentAdapter(this, studentList);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
         final PopupMenu menu = new PopupMenu(this, fab);

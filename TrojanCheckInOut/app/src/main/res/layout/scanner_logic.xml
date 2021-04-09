@@ -10,7 +10,7 @@
         android:id="@+id/camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="620dp"
+        android:layout_marginTop="276dp"
         android:backgroundTint="#990000"
         android:text="Camera Permission"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +30,7 @@
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/camera"
+        app:layout_constraintVertical_bias="0.148"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

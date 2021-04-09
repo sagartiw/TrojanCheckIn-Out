@@ -9,6 +9,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +24,15 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
  */
 public class BuildingManipulator {
 
-    public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings");
+    public static final DatabaseReference referenceBuildings = rootNode.getReference("Buildings_2");
 
-    private Map<String, Building> currentBuildings;
+    public static Map<String, Building> currentBuildings;
     private List<String> currentQRCodes;
     private File file;
+    private Map<String,User> studentList;
 
     /**
-     * @return a list of the currently established buildings.
+     * @return a map of the currently established buildings.
      */
     public void getCurrentBuildings(MyBuildingCallback myBuildingCallback) {
         currentBuildings = new HashMap<>();
@@ -49,6 +51,38 @@ public class BuildingManipulator {
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
+    }
+
+//    public void getStudentsInBuilding(MyBuildingCallback myBuildingCallback, Building b) {
+//        studentList = new HashMap<String, User>();
+//
+//        referenceUsers.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    User user = ds.getValue(User.class);
+//                    studentList.add(user);
+//                }
+//
+//                myBuildingCallback.onCallback(studentList);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) { }
+//        });
+//    }
+
+    /**
+     * @return a list of the currently established buildings.
+     */
+    public Building getBuilding(String acronym) {
+        System.out.println("IM HERE: " + acronym);
+
+        //System.out.println("a : " + currentBuildings.get(acronym).getAbbreviation());
+
+        if (currentBuildings == null ) return new Building();
+
+        return currentBuildings.get(acronym);
     }
 
     /**
@@ -73,11 +107,10 @@ public class BuildingManipulator {
                 // <Full Name>|<Abbreviation>|<Capacity>
                 String[] data = line.split("@");
 
-                referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
-                //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
+                Building building = getBuilding(data[1]);
+                building.setCapacity(Integer.parseInt(data[2]));
 
-                // Store in DB
-                //referenceBuildings.child(data[1]).setValue(building);
+                referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
             }
             scan.close();
         } catch (FileNotFoundException e) {

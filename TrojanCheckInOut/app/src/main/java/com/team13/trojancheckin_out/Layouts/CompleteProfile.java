@@ -1,35 +1,46 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 
@@ -47,6 +58,8 @@ public class CompleteProfile extends AppCompatActivity {
     private ImageButton profileImage;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+    private FirebaseAuth mAuth;
+    private FirebaseUser curr;
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
@@ -196,10 +209,7 @@ public class CompleteProfile extends AppCompatActivity {
                 "Visual and Performing Arts Studies",
                 "Writing for Screen and Television",
         };
-<<<<<<< HEAD
 
-=======
->>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
 
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
@@ -210,7 +220,7 @@ public class CompleteProfile extends AppCompatActivity {
 
         Register = (Button)findViewById(R.id.register3);
 
-        // Grab current data for the user
+        // Grab currrent data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
@@ -238,9 +248,8 @@ public class CompleteProfile extends AppCompatActivity {
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
-<<<<<<< HEAD
                 user.setManager("false");
-=======
+
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 if (radioChosen == -1) {
@@ -259,23 +268,26 @@ public class CompleteProfile extends AppCompatActivity {
                     }
                 }
 
->>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
                 user.setId(studentID.getText().toString());
 
-                Building building = new Building();
-                building.setName("SAL");
-                user.setCurrentBuilding(building);
-                user.getHistory().add(building);
 
+                // delete later
+                /*
+                Building building = new Building();
+                building.setName("USC Campus");
+                //user.setCurrentBuilding(building);
+                user.getHistory().put("USC", "1234 0123");
+                // delete later
+                //Building building = new Building();
+
+                building.setName("USC");
+                user.setCurrentBuilding(building);
+                */
+
+                user.getHistory().put("SLH", "0123 2344");
 
                 // Push user to DB
                 accountManipulator.createAccount(user);
-<<<<<<< HEAD
-//                System.out.println("BEFORE STUDENT ACCOUNTS IS ACCESSED" + accountManipulator.getStudentAccounts().toString());
-//                for (User user : accountManipulator.getStudentAccounts().values()) {
-//                    System.out.println("USER: " + user.getName());
-//                }
-=======
 
 //                accountManipulator.getStudentAccounts(new MyCallback() {
 //                    @Override
@@ -287,8 +299,10 @@ public class CompleteProfile extends AppCompatActivity {
 //                    }
 //                });
 
->>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
-                Intent intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+
+                Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
+
+
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
@@ -307,20 +321,101 @@ public class CompleteProfile extends AppCompatActivity {
 
 
 
+        mAuth = FirebaseAuth.getInstance();
+        curr = mAuth.getCurrentUser();
+
+        if(curr == null){
+            mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        //Log.w(TAG, "signInAnonymously:failure", task.getException());
+                        Toast.makeText(CompleteProfile.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         profileImage = (ImageButton)findViewById(R.id.imageButton);
 
-        profileImage.setOnClickListener(new View.OnClickListener(){
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
+                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
+                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
 
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                tommy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED TOMMY!");
+                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
+                        user.setPhoto(tommy);
+                        popupWindow.dismiss();
+                    }
+                });
+
+                hecuba.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED HECUBA!");
+                        String hecuba = "@drawable/hecuba";
+                        user.setPhoto(hecuba);
+                        popupWindow.dismiss();
+                    }
+                });
+
+                traveller.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("CLICKED TRAVELLER!");
+                        String traveller = "@drawable/traveller";
+                        user.setPhoto(traveller);
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+
             }
+
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     public Bitmap loadFromUri(Uri photoUri) {

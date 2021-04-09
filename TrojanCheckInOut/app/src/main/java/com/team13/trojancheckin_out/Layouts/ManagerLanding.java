@@ -1,13 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,50 +15,65 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
-<<<<<<< HEAD
-=======
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
->>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
+import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class ManagerLanding extends AppCompatActivity {
 
     //a list to store all the products
-    List<Building> buildingList;
-
-    //the recyclerview
-    RecyclerView recyclerView;
-
+    private List<Building> buildingList;
+    private RecyclerView recyclerView;
     private Button Search;
     private User user;
-<<<<<<< HEAD
-=======
-    private TextView txt_path, successText;
 
->>>>>>> 7fc335daec752a962f124b432cc9e8e45eb2e024
+    private TextView txt_path, successText;
+    private TextView welcome;
+    public static User tracker;
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_manager_landing);
 
-        user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        user = (User) getIntent().getSerializableExtra("PrevPageData");
+        tracker = user;
+        buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
+        welcome = (TextView) findViewById(R.id.TextView16);
+        welcome.setText("welcome " + user.getName());
 
         Search.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManagerLanding.this, SearchStudent2.class);
                 intent.putExtra("PrevPageData", user);
+
                 startActivity(intent);
+
             }
         });
 
@@ -75,44 +83,61 @@ public class ManagerLanding extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //initializing the productlist
+        //get current buildings
         buildingList = new ArrayList<>();
 
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                    Building b = checkBuilding.getValue();
+                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
+                }
+                //creating recyclerview adapter
+                BuildingAdapter adapter = new BuildingAdapter(ManagerLanding.this, buildingList);
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
-        //adding some items to our list
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+        ///Thread.wait(1000);
 
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        //creating recyclerview adapter
-        BuildingAdapter adapter = new BuildingAdapter(this, buildingList);
-
-        //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+//        System.out.println("I am after " + buildingList.size());
+//
+//
+//        // adding some items to our list
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+        fab.setImageResource(imageRe);
         final PopupMenu menu = new PopupMenu(this, fab);
         menu.getMenu().add("Student View");
+        menu.getMenu().add("Edit Profile");
         menu.getMenu().add("Sign Out");
         menu.getMenu().add("Delete Account");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -121,6 +146,11 @@ public class ManagerLanding extends AppCompatActivity {
                 Log.d("menu title: ", item.getTitle().toString());
                 if(item.getTitle().toString().equals("Student View")){
                     Intent intent = new Intent(ManagerLanding.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
+                if(item.getTitle().toString().equals("Edit Profile")){
+                    Intent intent = new Intent(ManagerLanding.this, EditProfile.class);
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
@@ -133,6 +163,8 @@ public class ManagerLanding extends AppCompatActivity {
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.delete_account_popup, null);
                     Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                    Button submitButton = (Button) popupView.findViewById(R.id.button10);
+
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -151,6 +183,25 @@ public class ManagerLanding extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             popupWindow.dismiss();
+                        }
+                    });
+
+                    // delete account when submit is pressed
+                    submitButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // call delete account
+                            accountManipulator.deleteAccount(user);
+
+                            popupWindow.dismiss();
+
+                            // go back to startup page
+                            Intent intent = new Intent(v.getContext(), Startup.class);
+                            //intent.putExtra("PrevPageData", user);
+                            v.getContext().startActivity(intent);
+
+//                            Intent intent = new Intent(ManagerLanding.this, Startup.class);
+//                            startActivity(intent);
                         }
                     });
                 }
@@ -224,7 +275,7 @@ public class ManagerLanding extends AppCompatActivity {
                     String path = dataPath.replace("/document/raw:", "");
                     txt_path.setText(path);
                     successText.setText("Upload successful!");
-                    BuildingManipulator buildingManipulator = new BuildingManipulator();
+                    //BuildingManipulator buildingManipulator = new BuildingManipulator();
                     File file = new File(path);
                     buildingManipulator.processCSV(file);
                 }

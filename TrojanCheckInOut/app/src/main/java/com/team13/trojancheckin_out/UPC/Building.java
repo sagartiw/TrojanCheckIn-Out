@@ -15,13 +15,15 @@ import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenc
  */
 public class Building implements Serializable {
 
-    private String abbreviation;
+    private String abbreviation = "";
     private String name;
     private int capacity;
-    private List<User> students;
+    private int currentCount;
 
     // Have to use an image builder, using String for now
     private String QRCode;
+
+   private List<User> students = new ArrayList<>();
 
     /**
      * Accesses Building object via a default constructor.
@@ -39,9 +41,15 @@ public class Building implements Serializable {
         this.name = name;
         this.abbreviation = abbreviation;
         this.capacity = capacity;
-        this.students = new ArrayList<User>();
         this.QRCode = QRCode;
     }
+
+    /**
+     * @return the abbreviation of the name of the current building.
+     */
+    public String getAbbreviation() { return this.abbreviation; }
+
+    public void setAbbreviation(String a) { this.abbreviation = a; }
 
     /**
      * @return the name of the current building.
@@ -49,47 +57,34 @@ public class Building implements Serializable {
     public String getName() { return this.name; }
 
     /**
-     * @return the abbreviation of the name of the current building.
-     */
-    public String getAbbreviation() { return this.abbreviation; }
-
-    /**
-     * @return the number of students currently in the building.
-     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
-     */
-    public int getCurrentCount() { return 10;}
-
-    /**
-     * @return percentage of building filled up.
-     */
-    public int getPercent() {
-        double cur = (double) this.getCurrentCount();
-        double cap = (double) this.capacity;
-        double perc = (cur/cap)*100;
-        int percent = (int) perc;
-        return percent;
-    }
-
-    /**
-     * @return the building's QRCode.
-     */
-    public String getQRCode() { return this.QRCode; }
-
-    /**
-     * @return the building's capacity.
-     */
-    public int getCapacity() { return this.capacity; }
-
-    /**
      * Sets the name of the building
      * @param name
      */
     public void setName(String name) { this.name = name; }
 
+
     /**
-     * @return the building's list of admitted students.
+     * @return the building's capacity.
      */
-    public List<User> getCurrentStudents() { return this.students; }
+
+    //public int getCapacity() { return this.capacity; }
+//    public int getCurrentCount() {
+//
+//        if(students == null){
+//            return 0;
+//        }
+//
+//        if (!students.isEmpty()) {
+//            return 0;
+//        }
+//        return students.size();
+//    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+
 
     /**
      * Updates the building capacity.
@@ -100,13 +95,73 @@ public class Building implements Serializable {
         //referenceBuildings.child(abbreviation).child("capacity").setValue(capacity);
     }
 
+
+    /**
+     * @return the building's QRCode.
+     */
+    public String getQRCode() { return this.QRCode; }
+
+
+    public void setQRCode(String code) { this.QRCode = code; }
+
+    /**
+     * @return the building's list of admitted students.
+     */
+    public List<User> getCurrentStudents() {
+        if (students == null) return null;
+        System.out.println("HERE: " + this.students.size());
+        return this.students;
+    }
+
+
+    public void setStudents(List<User> students) { this.students = students; }
+
+
+    /**
+     * @return the number of students currently in the building.
+     * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
+     */
+    public int getCurrentCount() {
+        return this.currentCount;
+    }
+
+    /**
+
+     * @return percentage of building filled up.
+     */
+    public int getPercent() {
+        double cur = (double) this.getCurrentCount();
+        double cap = (double) this.capacity;
+        double perc = (cur / cap) * 100;
+        int percent = (int) perc;
+        return percent;
+    }
+
+    public void setCapacity(int capacity, String abb) {
+        this.capacity = capacity;
+        System.out.println(abb);
+        referenceBuildings.child(abb).child("capacity").setValue(capacity);
+
+    }
+
+
+    /**
+     *  checks if a student is in a building
+     *  */
+    public Boolean isInBuilding(User user) {
+        return students.contains(user);
+    }
+
     /**
      * @param user
      * @return true if the student has been successfully removed from the building.
      */
-    public Boolean removeStudent(User user) {
+    public Boolean removeStudent(User user, String abb) {
+
+        System.out.println("ASS" + user.getId());
         students.remove(user);
-        referenceBuildings.child(abbreviation).child("students").setValue(user);
+
+        referenceBuildings.child(abb).child("currentStudents").child(user.getId()).removeValue();
         return true;
     }
 
@@ -116,7 +171,7 @@ public class Building implements Serializable {
      */
     public Boolean addStudent(User user) {
         students.add(user);
-        referenceBuildings.child(name).child("students").setValue(user);
+        referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).setValue(user);
         return true;
     }
 }

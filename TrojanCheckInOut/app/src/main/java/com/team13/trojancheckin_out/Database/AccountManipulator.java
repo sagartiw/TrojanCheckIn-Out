@@ -21,6 +21,7 @@ public class AccountManipulator extends User {
     public static final FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
+    public static User currentUser;
     private static Map<String, User> studentAccounts;
     private static Map<String, User> managerAccounts;
     private static Map<String, User> allAccounts;
@@ -37,6 +38,7 @@ public class AccountManipulator extends User {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     User user = ds.getValue(User.class);
+                    System.out.println("USER ID: " + user.getId());
                     allAccounts.put(user.getId(), user);
                 }
 
@@ -71,19 +73,16 @@ public class AccountManipulator extends User {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) { }
-
-
         });
-
     }
 
     /**
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
+     * @param myUserCallback
      */
     public void getManagerAccounts(MyUserCallback myUserCallback) {
         studentAccounts = new HashMap<>();
         managerAccounts = new HashMap<>();
-
         referenceUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,10 +92,9 @@ public class AccountManipulator extends User {
                         studentAccounts.put(user.getId(), user);
                     }
                 }
-
+//
                 myUserCallback.onCallback(studentAccounts);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
@@ -115,6 +113,7 @@ public class AccountManipulator extends User {
      */
     public Boolean createAccount(User user) {
         referenceUsers.child(user.getId()).setValue(user);
+        currentUser = user;
         return true;
     }
 
@@ -123,6 +122,8 @@ public class AccountManipulator extends User {
      * @return true if the user account has been successfully deleted.
      */
     public Boolean deleteAccount(User user) {
+        currentUser = null;
+
         referenceUsers.child(user.getId()).removeValue();
         if (user.isManager().equalsIgnoreCase("true")) {
             managerAccounts.remove(user.getId());
@@ -136,7 +137,41 @@ public class AccountManipulator extends User {
      * @return true if the user has successfully logged in.
      */
     public Boolean login() {
+
         //gets authorization
+        /*
+        @Override
+        public void onStart() {
+            super.onStart();
+            // Check if user is signed in (non-null) and update UI accordingly.
+            FirebaseUser currentUser = rootNode.getCurrentUser();
+            if(currentUser != null){
+                reload();
+            }
+        }
+
+
+        rootNode.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // nformation
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = rootNode.getCurrentUser();
+                            updateUI(user);
+                        }
+                        else {
+                            //sign in failed
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+
+         */
         return true;
     }
 

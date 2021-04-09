@@ -120,7 +120,7 @@
         tools:context="net.simplifiedlearning.recyclerviewexample.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView2"
+            android:id="@+id/recyclerView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
