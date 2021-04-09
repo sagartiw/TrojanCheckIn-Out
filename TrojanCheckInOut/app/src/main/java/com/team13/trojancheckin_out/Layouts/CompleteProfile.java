@@ -3,23 +3,16 @@ package com.team13.trojancheckin_out.Layouts;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.ImageDecoder;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -28,11 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -249,8 +239,10 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setMajor(major);
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
+                boolean checkConditions = true;
                 if (radioChosen == -1) {
                     Toast.makeText(CompleteProfile.this, "Please select account type!", Toast.LENGTH_SHORT).show();
+                    checkConditions = false;
                 }
                 else {
 
@@ -263,6 +255,11 @@ public class CompleteProfile extends AppCompatActivity {
                     } else if(chosen.getId() == managerButton.getId()){
                         user.setManager("true");
                     }
+                }
+
+                if (studentID.getText().toString().length() != 10) {
+                    Toast.makeText(CompleteProfile.this, "All student IDs must be 10 digits!", Toast.LENGTH_SHORT).show();
+                    checkConditions = false;
                 }
 
                 user.setId(studentID.getText().toString());
@@ -281,14 +278,17 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setCurrentBuilding(building);
                 */
 
-                user.getHistory().put("SLH", "0123 2344");
+                if (checkConditions) {
+                    user.getHistory().put("SLH", "0123 2344");
 
-                // Push user to DB
-                accountManipulator.createAccount(user);
-                Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    // Push user to DB
+                    accountManipulator.createAccount(user);
+                    Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
 
-                intent.putExtra("PrevPageData", user);
-                startActivity(intent);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -308,92 +308,96 @@ public class CompleteProfile extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         curr = mAuth.getCurrentUser();
 
-        if(curr == null){
-            mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        //Log.w(TAG, "signInAnonymously:failure", task.getException());
-                        Toast.makeText(CompleteProfile.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
+//        profileImage = (ImageButton)findViewById(R.id.imageButton);
+//
+//
+//        profileImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // inflate the layout of the popup window
+//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+//                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
+//                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
+//                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
+//                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+//
+//                // create the popup window
+//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                boolean focusable = true; // lets taps outside the popup also dismiss it
+//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                popupWindow.setElevation(20);
+//
+//                // show the popup window
+//                // which view you pass in doesn't matter, it is only used for the window token
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+//
+//                tommy.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED TOMMY!");
+//                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
+//                        user.setPhoto(tommy);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//                hecuba.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED HECUBA!");
+//                        String hecuba = "@drawable/hecuba";
+//                        user.setPhoto(hecuba);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//                traveller.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED TRAVELLER!");
+//                        String traveller = "@drawable/traveller";
+//                        user.setPhoto(traveller);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//
+//                // dismiss the popup window when touched
+//                closeButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//
+//            }
+//
+//        });
 
         profileImage = (ImageButton)findViewById(R.id.imageButton);
 
-
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // inflate the layout of the popup window
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
-                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
-                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
-                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
-                Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                popupWindow.setElevation(20);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                // show the popup window
-                // which view you pass in doesn't matter, it is only used for the window token
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                tommy.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("CLICKED TOMMY!");
-                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
-                        user.setPhoto(tommy);
-                        popupWindow.dismiss();
-                    }
-                });
-
-                hecuba.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("CLICKED HECUBA!");
-                        String hecuba = "@drawable/hecuba";
-                        user.setPhoto(hecuba);
-                        popupWindow.dismiss();
-                    }
-                });
-
-                traveller.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("CLICKED TRAVELLER!");
-                        String traveller = "@drawable/traveller";
-                        user.setPhoto(traveller);
-                        popupWindow.dismiss();
-                    }
-                });
-
-
-                // dismiss the popup window when touched
-                closeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-
-
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(intent, PICK_PHOTO_CODE);
+                }
             }
-
         });
     }
+
+
+
+
+
 
     @Override
     public void onStart() {

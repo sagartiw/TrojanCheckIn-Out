@@ -174,7 +174,7 @@
         android:layout_height="50dp"
         android:backgroundTint="@color/red"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textColorHighlight="#80990000"
         android:textColorLink="@color/red"
         android:textCursorDrawable="@drawable/color_cursor"
