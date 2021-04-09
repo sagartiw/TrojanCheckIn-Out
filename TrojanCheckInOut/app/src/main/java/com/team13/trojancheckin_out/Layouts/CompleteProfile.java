@@ -433,7 +433,7 @@ public class CompleteProfile extends AppCompatActivity {
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
 
-            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
+            StorageReference selectedFile = storageRef.child(user.getId() + "/Profile Pictures/" + photoUri.getLastPathSegment());
             UploadTask uploadTask = selectedFile.putFile(photoUri);
 
             user = (User) getIntent().getSerializableExtra("PrevPageData");
