@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +22,6 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +71,8 @@ public class Register extends AppCompatActivity {
                         !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())) {
                     System.out.println("EMAIL ERROR!");
 
+                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
+
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
                     Button closeButton = (Button) popupView.findViewById(R.id.button12);
@@ -101,6 +100,10 @@ public class Register extends AppCompatActivity {
                 //ALERT 2: check if passwords match
                 else if (!password.getText().toString().equals(completePassword.getText().toString())
                             || password.getText().toString().matches("")) {
+                    Toast.makeText(Register.this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (password.getText().toString().equals("") && email.getText().toString().equals("") && completePassword.getText().toString().equals("")) {
                     System.out.println("PASSWORD ERROR!");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -127,6 +130,7 @@ public class Register extends AppCompatActivity {
                         }
                     });
                 }
+
                 else{
                     System.out.println("BEFORE THE ACCOUNT SEARCH");
                     accountManipulator.getStudentAccounts(new MyUserCallback() {
