@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -75,10 +74,15 @@ public class EditProfile extends AppCompatActivity {
         major = (TextView) findViewById(R.id.name4);
         major.setText(user.getMajor());
 
-        pfp = (ImageView) findViewById(R.id.pfp);
-        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
-        Drawable d =  getResources().getDrawable(imageRe);
-        pfp.setImageDrawable(d);
+//        //error... we need to change lines 79-85 to firebase storage access
+//        pfp = (ImageView) findViewById(R.id.pfp);
+//        int imageRe = -1;
+//        imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+//        if(imageRe != -1){
+//            Drawable d =  getResources().getDrawable(imageRe);
+//            pfp.setImageDrawable(d);
+//        }
+
 
 
         Back3 = (Button)findViewById(R.id.back3);

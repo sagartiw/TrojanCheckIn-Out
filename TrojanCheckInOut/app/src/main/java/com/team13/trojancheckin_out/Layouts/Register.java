@@ -106,10 +106,20 @@ public class Register extends AppCompatActivity {
                         }
                     });
                 }
-                //ALERT 2: check if passwords match
-                else if (!password.getText().toString().equals(completePassword.getText().toString())
-                            || password.getText().toString().matches("")) {
+                // Check if fields are filled
+                else if (password.getText().toString().matches("") || completePassword.getText().toString().matches("")) {
                     Toast.makeText(Register.this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
+                }
+
+                // Password matching
+                else if (!password.getText().toString().equals(completePassword.getText().toString())) {
+                    Toast.makeText(Register.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+                }
+
+                // Check password size >= 4
+                else if (password.getText().toString().length() < 4) {
+                    System.out.println("I FUCKED UP SIZE");
+                    Toast.makeText(Register.this, "Password must be greater than 4 characters!", Toast.LENGTH_SHORT).show();
                 }
 
                 else if (password.getText().toString().equals("") && email.getText().toString().equals("") && completePassword.getText().toString().equals("")) {
