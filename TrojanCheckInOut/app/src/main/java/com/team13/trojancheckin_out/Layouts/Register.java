@@ -64,9 +64,8 @@ public class Register extends AppCompatActivity {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
-                        System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
                         for (Map.Entry<String, User> u : map.entrySet()) {
-                            System.out.println("SHIT: " + u.getValue().getName());
+                            System.out.println("SEARCH: " + u.getValue().getName());
                         }
                     }
                 });
@@ -75,8 +74,6 @@ public class Register extends AppCompatActivity {
                 if (!email.getText().toString().contains("@usc.edu")) {
                     System.out.println("EMAIL ERROR!");
 
-                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
-
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
                     Button closeButton = (Button) popupView.findViewById(R.id.button12);
@@ -101,43 +98,9 @@ public class Register extends AppCompatActivity {
                         }
                     });
                 }
-                // Check if fields are filled
-                else if (password.getText().toString().matches("") || completePassword.getText().toString().matches("")) {
-                    System.out.println("EMAIL ERROR!");
-
-                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
-
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.registration_popup, null);
-                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    popupWindow.setElevation(20);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    closeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-                    //Toast.makeText(Register.this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
-                }
-
                 // Password matching
                 else if (!password.getText().toString().equals(completePassword.getText().toString())) {
-                    System.out.println("EMAIL ERROR!");
-
-                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
+                    System.out.println("PASSWORD MATCHING ERROR!");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
@@ -164,11 +127,9 @@ public class Register extends AppCompatActivity {
                     });
                     //Toast.makeText(Register.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
                 }
-
                 // Check password size >= 4
                 else if (password.getText().toString().length() < 4) {
-
-                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
+                    System.out.println("PASSWORD LENGTH ERROR!");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
@@ -196,10 +157,9 @@ public class Register extends AppCompatActivity {
                     //System.out.println("I FUCKED UP SIZE");
                     //Toast.makeText(Register.this, "Password must be greater than 4 characters!", Toast.LENGTH_SHORT).show();
                 }
-                else if (password.getText().toString().equals("") && email.getText().toString().equals("") && completePassword.getText().toString().equals("")) {
-                    System.out.println("EMAIL ERROR!");
-
-                    // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
+                // Check if fields are filled
+                else if (password.getText().toString().equals("") || email.getText().toString().equals("") || completePassword.getText().toString().equals("")) {
+                    System.out.println("BLANK FIELD ERROR!");
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.registration_popup, null);
@@ -229,17 +189,16 @@ public class Register extends AppCompatActivity {
                     accountManipulator.getAllAccounts(new MyUserCallback() {
                         @Override
                         public void onCallback(Map<String, User> map) {
-                            System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
                             boolean doesExist = false;
                             for (Map.Entry<String, User> u : map.entrySet()) {
-                                System.out.println("SHIT: " + u.getValue().getName());
+                                System.out.println("SEARCH: " + u.getValue().getName());
                                 if(u.getValue().getEmail().equals(email.getText().toString())){
                                     doesExist = true;
                                     break;
                                 }
                             }
                             if(doesExist){
-                                System.out.println("LOGIN ERROR!");
+                                System.out.println("DUPLICATE ERROR!");
                                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                                 View popupView = inflater.inflate(R.layout.account_exists_popup, null);
                                 Button closeButton = (Button) popupView.findViewById(R.id.button12);
@@ -276,17 +235,11 @@ public class Register extends AppCompatActivity {
                                 //Toast.makeText(Register.this, "Account Already Exists!", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                System.out.println("point 3");
-                                System.out.println("BEFORE THE ACCOUNT SEARCH");
                                 System.out.println("CREATION OF ACCOUNT");
                                 Map<String, String> buildingList = new HashMap<>();
                                 User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                                         "Photo", "123", false, null, buildingList,
                                         "Business", "true", false);
-//                                String name, String email, String password, String photo, String id,
-//                                boolean inBuilding, Building currentBuilding, Map<String, String> history,
-//                                        String major, String isManager, boolean deleted
-
                                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                                 intent.putExtra("PrevPageData", user);
                                 startActivity(intent);
