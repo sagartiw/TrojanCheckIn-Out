@@ -1,6 +1,7 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -27,6 +28,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
@@ -34,9 +36,11 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class CompleteProfile extends AppCompatActivity {
 
+    private java.util.UUID UUID;
     private Button Register;
     private Button Back;
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -49,6 +53,7 @@ public class CompleteProfile extends AppCompatActivity {
     private ImageButton profileImage;
     private ImageButton uploadProfImage;
     private ImageView viewPFP;
+    private Uri filePath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth;
@@ -324,16 +329,16 @@ public class CompleteProfile extends AppCompatActivity {
 //////////////
 
         profileImage = (ImageButton) findViewById(R.id.imageButton);
-        uploadProfImage = (ImageButton) findViewById(R.id.imageButton3);
         viewPFP = (ImageView) findViewById(R.id.pfp);
 
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                super.onCreate(savedInstanceState);
                 chooseImage();
             }
         });
-        uploadProfImage.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage();
@@ -545,7 +550,7 @@ public class CompleteProfile extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(activity_edit_profile.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CompleteProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
 
@@ -553,7 +558,7 @@ public class CompleteProfile extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(activity_edit_profile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CompleteProfile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
 
