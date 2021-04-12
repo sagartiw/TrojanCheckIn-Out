@@ -9,6 +9,34 @@
     tools:context="com.team13.trojancheckin_out.Layouts.SearchStudent2">
 
     <TextView
+        android:id="@+id/textView35"
+        android:layout_width="18dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/montserrat"
+        android:text="to"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <EditText
+        android:id="@+id/editTextDate2"
+        android:layout_width="116dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:background="#FFFFFF"
+        android:ems="6"
+        android:inputType="date"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <TextView
         android:id="@+id/textView34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +50,20 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
     <TextView
+        android:id="@+id/textView37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/montserrat"
+        android:text='Input Dates as " ddMMyyyy"  EX: "1/1/2021" is "01012021"'
+        android:textColor="#990000"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +72,20 @@
         android:fontFamily="@font/montserrat"
         android:text="Time"
         android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Date"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView37"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
@@ -304,5 +360,22 @@
         app:layout_constraintEnd_toEndOf="@+id/button7"
         app:layout_constraintTop_toTopOf="@+id/button7"
         app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="116dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFFFFF"
+        android:ems="6"
+        android:inputType="date"
+        android:textColorHighlight="#80990000"
+        android:textColorLink="@color/red"
+        android:textCursorDrawable="@drawable/color_cursor"
+        app:layout_constraintEnd_toStartOf="@+id/editTextDate2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

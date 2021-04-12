@@ -29,6 +29,7 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
@@ -223,10 +224,11 @@ public class StudentLanding extends AppCompatActivity {
                         cal.setTimeZone(TimeZone.getTimeZone("PST"));
                         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                         int currentMinute = cal.get(Calendar.MINUTE);
-
+                        //int currentDate = cal.get(Calendar.DATE);
 
                         String min = Integer.toString(currentMinute);
                         String hour = Integer.toString(currentHour);
+                       //String date = Integer.toString(currentDate);
 
                         if(currentMinute <= 9){
                             min = "0" + Integer.toString(currentMinute);
@@ -236,7 +238,8 @@ public class StudentLanding extends AppCompatActivity {
                             hour = "0" + Integer.toString(currentHour);
                         }
 
-                        String time = hour + min;
+                        String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                        String time = hour + min + currentDate1;
                         System.out.println("time:" + time);
                         String checkOutTime = time;
 
@@ -281,6 +284,7 @@ public class StudentLanding extends AppCompatActivity {
                         Intent intent = new Intent(v.getContext(), Startup.class);
                         //intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
+
                     }
                 });
 

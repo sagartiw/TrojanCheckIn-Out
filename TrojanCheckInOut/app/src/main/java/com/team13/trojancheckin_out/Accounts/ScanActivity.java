@@ -34,6 +34,7 @@ import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -225,10 +226,12 @@ public class ScanActivity extends AppCompatActivity {
                                     cal.setTimeZone(TimeZone.getTimeZone("PST"));
                                     int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                                     int currentMinute = cal.get(Calendar.MINUTE);
-
+                                    int currentDate = cal.get(Calendar.DATE);
+                                    String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
 
                                     String min = Integer.toString(currentMinute);
                                     String hour = Integer.toString(currentHour);
+                                    String date = Integer.toString(currentDate);
 
                                     if(currentMinute <= 9){
                                         min = "0" + Integer.toString(currentMinute);
@@ -238,7 +241,7 @@ public class ScanActivity extends AppCompatActivity {
                                         hour = "0" + Integer.toString(currentHour);
                                     }
 
-                                    String time = hour + min;
+                                    String time = hour + min + currentDate1;
 
                                     System.out.println("time:" + time);
                                     checkInTime = time;

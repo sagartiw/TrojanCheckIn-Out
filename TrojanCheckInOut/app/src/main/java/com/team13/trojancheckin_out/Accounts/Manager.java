@@ -64,7 +64,7 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major) {
+    public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major, int startDate, int endDate) {
         // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
 
         List<User> list = new ArrayList<>();

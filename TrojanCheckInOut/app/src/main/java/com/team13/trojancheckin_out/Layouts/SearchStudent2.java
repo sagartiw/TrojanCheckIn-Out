@@ -1,19 +1,13 @@
 package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +39,8 @@ public class SearchStudent2 extends AppCompatActivity {
     private Spinner buildInput;
     private EditText time1;
     private EditText time2;
+    private EditText date1;
+    private EditText date2;
     private AccountManipulator accountManipulator = new AccountManipulator();
     private BuildingManipulator buildingManipulator = new BuildingManipulator();
     private Manager manager = new Manager(buildingManipulator, accountManipulator);
@@ -67,6 +63,8 @@ public class SearchStudent2 extends AppCompatActivity {
         buildInput = (Spinner)findViewById(R.id.spinner2);
         time1 = (EditText)findViewById(R.id.editTextTime3);
         time2 = (EditText)findViewById(R.id.editTextTime4);
+        date1 = (EditText)findViewById(R.id.editTextDate);
+        date2 = (EditText)findViewById(R.id.editTextDate2);
 
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +84,15 @@ public class SearchStudent2 extends AppCompatActivity {
                     public void onCallback(Map<String, Building> map) {
                         int t1 = -1;
                         int t2 = -1;
+                        int d1 = -1;
+                        int d2 = -1;
                         String id = null;
                         String major = null;
                         Building building = null;
 
 
                         boolean showAll = false;
-                        boolean cond1 = true, cond2 = true, cond3 = true, cond4 = true;
+                        boolean cond1 = true, cond2 = true, cond3 = true, cond4 = true, cond5 = true, cond6 = true;
 
                         // If student ID is not empty, cond1 is false
                         // If student ID is empty, cond1 is true
@@ -116,12 +116,20 @@ public class SearchStudent2 extends AppCompatActivity {
                             t2 = Integer.parseInt(time2.getText().toString());
                             cond4 = false;
                         }
+                        if(!date1.getText().toString().equals("")) {
+                            d1 = Integer.parseInt(date1.getText().toString());
+                            cond5 = false;
+                        }
+                        if(!date2.getText().toString().equals("")) {
+                            d2 = Integer.parseInt(date2.getText().toString());
+                            cond6 = false;
+                        }
                         // IF ALL FIELDS ARE EMPTY (Cond = true), SHOW ALL WOULD BE SET TRUE
                         if (cond1 && cond2 && cond3 && cond4) {
                            showAll = true;
                         }
 
-                        System.out.println("CONDITIONS: " + cond1 + cond2 + cond3 + cond4);
+                        System.out.println("CONDITIONS: " + cond1 + cond2 + cond3 + cond4 + cond5 + cond6);
 
                         if (showAll) {
                             accountManipulator.getAllAccounts(new MyUserCallback() {
@@ -152,7 +160,7 @@ public class SearchStudent2 extends AppCompatActivity {
                         }
                         else
                         {
-                            studentList = manager.searchStudents(t1, t2, building, id, major);
+                            studentList = manager.searchStudents(t1, t2, building, id, major, d1, d2); //date1, date2
                         }
 
                         //setting adapter to recyclerview
