@@ -126,12 +126,17 @@ public class AccountManipulator extends User {
     public Boolean deleteAccount(User user) {
         currentUser = null;
 
-        referenceUsers.child(user.getId()).removeValue();
+        referenceUsers.child(user.getId()).child("deleted").setValue(true);
+
+        //referenceUsers.child(user.getId()).removeValue();
         if (user.isManager().equalsIgnoreCase("true")) {
-            managerAccounts.remove(user.getId());
+            //managerAccounts.remove(user.getId());
+
         } else {
-            studentAccounts.remove(user.getId());
+            //studentAccounts.remove(user.getId());
+
         }
+
         return true;
     }
 

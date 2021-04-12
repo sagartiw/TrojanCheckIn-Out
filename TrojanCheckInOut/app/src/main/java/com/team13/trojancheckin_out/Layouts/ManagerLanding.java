@@ -135,10 +135,11 @@ public class ManagerLanding extends AppCompatActivity {
         int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
         fab.setImageResource(imageRe);
         final PopupMenu menu = new PopupMenu(this, fab);
-        menu.getMenu().add("Student View");
         menu.getMenu().add("Edit Profile");
+        menu.getMenu().add("Student View");
+
         menu.getMenu().add("Sign Out");
-        menu.getMenu().add("Delete Account");
+        //menu.getMenu().add("Delete Account");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
@@ -157,53 +158,53 @@ public class ManagerLanding extends AppCompatActivity {
                     Intent intent = new Intent(ManagerLanding.this, Startup.class);
                     startActivity(intent);
                 }
-                if(item.getTitle().toString().equals("Delete Account")){
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
-                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-                    Button submitButton = (Button) popupView.findViewById(R.id.button10);
-
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    popupWindow.setElevation(20);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    closeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-
-                    // delete account when submit is pressed
-                    submitButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // call delete account
-                            accountManipulator.deleteAccount(user);
-
-                            popupWindow.dismiss();
-
-                            // go back to startup page
-                            Intent intent = new Intent(v.getContext(), Startup.class);
-                            //intent.putExtra("PrevPageData", user);
-                            v.getContext().startActivity(intent);
-
-//                            Intent intent = new Intent(ManagerLanding.this, Startup.class);
-//                            startActivity(intent);
-                        }
-                    });
-                }
+//                if(item.getTitle().toString().equals("Delete Account")){
+//                    // inflate the layout of the popup window
+//                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
+//                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+//                    Button submitButton = (Button) popupView.findViewById(R.id.button10);
+//
+//
+//                    // create the popup window
+//                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    boolean focusable = true; // lets taps outside the popup also dismiss it
+//                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    popupWindow.setElevation(20);
+//
+//                    // show the popup window
+//                    // which view you pass in doesn't matter, it is only used for the window token
+//                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//
+//                    // dismiss the popup window when touched
+//                    closeButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            popupWindow.dismiss();
+//                        }
+//                    });
+//
+//                    // delete account when submit is pressed
+//                    submitButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            // call delete account
+//                            accountManipulator.deleteAccount(user);
+//
+//                            //popupWindow.dismiss();
+//
+//                            // go back to startup page
+//                            Intent intent = new Intent(v.getContext(), Startup.class);
+//                            //intent.putExtra("PrevPageData", user);
+//                            v.getContext().startActivity(intent);
+//
+////                            Intent intent = new Intent(ManagerLanding.this, Startup.class);
+////                            startActivity(intent);
+//                        }
+//                    });
+//                }
                 return true; }
         });
 
