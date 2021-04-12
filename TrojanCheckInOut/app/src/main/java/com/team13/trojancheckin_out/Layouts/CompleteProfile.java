@@ -534,8 +534,11 @@ public class CompleteProfile extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
+            StorageReference selectedFile = storageRef.child("Profile Pictures/");
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+
+            //"profile pics/ or images/" for ref?"
+            StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
             ref.putFile(filePath)
 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
