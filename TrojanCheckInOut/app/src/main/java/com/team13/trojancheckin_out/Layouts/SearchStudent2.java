@@ -140,9 +140,10 @@ public class SearchStudent2 extends AppCompatActivity {
                                         Map<String, String> history = u.getHistory();
                                         String major = u.getMajor();
                                         String isManager = u.isManager();
+                                        boolean deleted = u.isDeleted();
 
                                         User user = new User(name, email, pass, photo, id, inBuilding,
-                                                currentBuilding, history, major, isManager);
+                                                currentBuilding, history, major, isManager, deleted);
                                         System.out.println("HERE USER: " + name);
                                         studentList.add(user);
                                     }
@@ -175,9 +176,11 @@ public class SearchStudent2 extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu menu = new PopupMenu(this, fab);
+        menu.getMenu().add("Edit Profile");
+
         menu.getMenu().add("Student View");
         menu.getMenu().add("Sign Out");
-        menu.getMenu().add("Delete Account");
+        //menu.getMenu().add("Delete Account");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
@@ -186,36 +189,41 @@ public class SearchStudent2 extends AppCompatActivity {
                     Intent intent = new Intent(SearchStudent2.this, StudentLanding.class);
                     startActivity(intent);
                 }
+                if(item.getTitle().toString().equals("Edit Profile")){
+                    Intent intent = new Intent(SearchStudent2.this, EditProfile.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
                 if(item.getTitle().toString().equals("Sign Out")){
                     Intent intent = new Intent(SearchStudent2.this, Startup.class);
                     startActivity(intent);
                 }
-                if(item.getTitle().toString().equals("Delete Account")){
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
-                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    popupWindow.setElevation(20);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    closeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-                }
+//                if(item.getTitle().toString().equals("Delete Account")){
+//                    // inflate the layout of the popup window
+//                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
+//                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+//
+//                    // create the popup window
+//                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    boolean focusable = true; // lets taps outside the popup also dismiss it
+//                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    popupWindow.setElevation(20);
+//
+//                    // show the popup window
+//                    // which view you pass in doesn't matter, it is only used for the window token
+//                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//
+//                    // dismiss the popup window when touched
+//                    closeButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            popupWindow.dismiss();
+//                        }
+//                    });
+//                }
                 return true; }
         });
 

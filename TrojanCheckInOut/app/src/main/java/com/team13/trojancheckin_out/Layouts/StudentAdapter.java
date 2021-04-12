@@ -58,6 +58,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         //binding the data with the viewholder views
         holder.fullName.setText(student.getName());
         holder.studentID.setText(String.valueOf(student.getId()));
+        if (student.isDeleted()) {
+            holder.deleted.setText("deleted");
+        }
+        else {
+            holder.deleted.setText("active");
+        }
+
+
         holder.currentBuilding.setText("Current Building: " + student.getCurrentBuilding().getAbbreviation());
 
         profileButton = holder.profileButton;
@@ -186,7 +194,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     class StudentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView fullName, studentID, currentBuilding;
+        TextView fullName, studentID, currentBuilding, deleted;
         Button profileButton, historyButton;
 
         public StudentViewHolder(View itemView) {
@@ -194,6 +202,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
             fullName = itemView.findViewById(R.id.fullName);
             studentID = itemView.findViewById(R.id.studentID);
+            deleted = itemView.findViewById(R.id.deleted);
+
             currentBuilding = itemView.findViewById(R.id.currentBuilding);
             profileButton = itemView.findViewById(R.id.profileButton);
             historyButton = itemView.findViewById(R.id.historyButton);

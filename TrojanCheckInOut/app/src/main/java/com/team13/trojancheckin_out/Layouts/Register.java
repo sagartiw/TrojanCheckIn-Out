@@ -212,7 +212,7 @@ public class Register extends AppCompatActivity {
                         Map<String, String> buildingList = new HashMap<>();
                         User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                                 "Photo", "123", false, null, buildingList,
-                                "Business", "true");
+                                "Business", "true", false);
                         Intent intent = new Intent(Register.this, CompleteProfile.class);
                         intent.putExtra("PrevPageData", user);
                         startActivity(intent);
