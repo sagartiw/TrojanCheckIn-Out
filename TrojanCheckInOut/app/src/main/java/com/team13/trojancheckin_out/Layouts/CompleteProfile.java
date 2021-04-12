@@ -58,6 +58,8 @@ public class CompleteProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_complete_profile);
 
         //get the spinner from the xml.
@@ -207,12 +209,12 @@ public class CompleteProfile extends AppCompatActivity {
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
-        Register = (Button)findViewById(R.id.register3);
+        Register = (Button) findViewById(R.id.register3);
 
         // Grab currrent data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
-        radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         radioGroup.clearCheck();
 
@@ -220,7 +222,7 @@ public class CompleteProfile extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // Get the selected Radio Button
-                RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
             }
         });
 
@@ -243,16 +245,15 @@ public class CompleteProfile extends AppCompatActivity {
                 if (radioChosen == -1) {
                     Toast.makeText(CompleteProfile.this, "Please select account type!", Toast.LENGTH_SHORT).show();
                     checkConditions = false;
-                }
-                else {
+                } else {
 
-                    RadioButton chosen = (RadioButton)radioGroup.findViewById(radioChosen);
+                    RadioButton chosen = (RadioButton) radioGroup.findViewById(radioChosen);
                     studentButton = radioGroup.findViewById(R.id.radioButton3);
                     managerButton = radioGroup.findViewById(R.id.radioButton2);
 
-                    if(chosen.getId() == studentButton.getId()){
+                    if (chosen.getId() == studentButton.getId()) {
                         user.setManager("false");
-                    } else if(chosen.getId() == managerButton.getId()){
+                    } else if (chosen.getId() == managerButton.getId()) {
                         user.setManager("true");
                     }
                 }
@@ -286,10 +287,9 @@ public class CompleteProfile extends AppCompatActivity {
                     // Push user to DB
                     accountManipulator.createAccount(user);
                     Intent intent;
-                    if(user.isManager().equals("true")) {
+                    if (user.isManager().equals("true")) {
                         intent = new Intent(CompleteProfile.this, ManagerLanding.class);
-                    }
-                    else {
+                    } else {
                         intent = new Intent(CompleteProfile.this, StudentLanding.class);
                     }
 
@@ -300,7 +300,7 @@ public class CompleteProfile extends AppCompatActivity {
             }
         });
 
-        Back = (Button)findViewById(R.id.back3);
+        Back = (Button) findViewById(R.id.back3);
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,9 +312,30 @@ public class CompleteProfile extends AppCompatActivity {
         });
 
 
-
         mAuth = FirebaseAuth.getInstance();
         curr = mAuth.getCurrentUser();
+
+//////////////
+
+        profileImage = (ImageButton) findViewById(R.id.imageButton);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
+
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
+            }
+        });
+
+
+
+
 
 //        profileImage = (ImageButton)findViewById(R.id.imageButton);
 //
@@ -386,7 +407,7 @@ public class CompleteProfile extends AppCompatActivity {
 //
 //        });
 
-        profileImage = (ImageButton)findViewById(R.id.imageButton);
+        /*profileImage = (ImageButton)findViewById(R.id.imageButton);
 
         profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -402,19 +423,17 @@ public class CompleteProfile extends AppCompatActivity {
         });
     }
 
+*/
 
 
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//    }
 
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
-
-    public Bitmap loadFromUri(Uri photoUri) {
+    /*public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
         try {
             // check version of Android on device
@@ -430,12 +449,12 @@ public class CompleteProfile extends AppCompatActivity {
             e.printStackTrace();
         }
         return image;
-    }
+    }*/
 
-    @SuppressLint("MissingSuperCall")
+/*    @SuppressLint("MissingSuperCall")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+        if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
 
             String filepath = photoUri.getPath();
@@ -464,6 +483,69 @@ public class CompleteProfile extends AppCompatActivity {
             });
 
         }
+    }*/
+
     }
 
+    //select image
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    //Upload local image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage() {
+
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+    }
 }
