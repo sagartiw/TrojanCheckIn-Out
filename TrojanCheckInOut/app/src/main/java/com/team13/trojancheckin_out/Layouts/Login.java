@@ -105,8 +105,15 @@ public class Login extends AppCompatActivity {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-                                //Student Case
 
+                                // check if account is deleted
+                                if (user.isDeleted()) {
+                                    // create specific popup??
+                                    continue;
+                                }
+
+
+                                //Student Case
                                 currentUser = user;
                                 System.out.println("LOGIN ID: " + currentUser.getId());
 

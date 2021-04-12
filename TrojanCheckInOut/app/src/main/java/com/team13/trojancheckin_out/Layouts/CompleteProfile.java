@@ -267,6 +267,8 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setId(studentID.getText().toString());
 
+                user.setDeleted(false);
+
 
                 // delete later
                 /*
@@ -285,7 +287,13 @@ public class CompleteProfile extends AppCompatActivity {
                     user.getHistory().put("SLH", "0123 2344");
                     // Push user to DB
                     accountManipulator.createAccount(user);
-                    Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    Intent intent;
+                    if(user.isManager().equals("true")) {
+                        intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+                    }
+                    else {
+                        intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    }
 
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
@@ -434,9 +442,10 @@ public class CompleteProfile extends AppCompatActivity {
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
 
-            StorageReference selectedFile = storageRef.child(user.getId() + "/Profile Pictures/" + photoUri.getLastPathSegment());
+            StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            System.out.println("HELLO TEAM");
             UploadTask uploadTask = selectedFile.putFile(photoUri);
-
+            System.out.println("HELLO TEAM 2");
             user = (User) getIntent().getSerializableExtra("PrevPageData");
 
             user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());

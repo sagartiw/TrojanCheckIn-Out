@@ -283,7 +283,11 @@ public class Register extends AppCompatActivity {
                                 Map<String, String> buildingList = new HashMap<>();
                                 User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
                                         "Photo", "123", false, null, buildingList,
-                                        "Business", "true");
+                                        "Business", "true", false);
+//                                String name, String email, String password, String photo, String id,
+//                                boolean inBuilding, Building currentBuilding, Map<String, String> history,
+//                                        String major, String isManager, boolean deleted
+
                                 Intent intent = new Intent(Register.this, CompleteProfile.class);
                                 intent.putExtra("PrevPageData", user);
                                 startActivity(intent);

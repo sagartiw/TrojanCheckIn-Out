@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 import java.io.IOException;
 
@@ -49,6 +51,9 @@ public class EditProfile extends AppCompatActivity {
     private Button editpic;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+
+    private AccountManipulator accountManipulator = new AccountManipulator();
+
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
     private int x;
@@ -186,7 +191,12 @@ public class EditProfile extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        referenceUsers.child(user.getId()).removeValue();
+                        //referenceUsers.child(user.getId()).removeValue();
+                        // call delete account
+                        accountManipulator.deleteAccount(user);
+
+                        //popupWindow.dismiss();
+
                         Intent intent = new Intent(v.getContext(), Startup.class);
                         v.getContext().startActivity(intent);
 
@@ -197,6 +207,11 @@ public class EditProfile extends AppCompatActivity {
         });
 
         ImageButton changePic = (ImageButton) findViewById(R.id.imageButton3);
+        ImageView pfp = (ImageView) findViewById(R.id.pfp);
+        StorageReference pfp2 = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
+
+        System.out.println("This is the user photo in student landing" + user.getPhoto());
+        Glide.with(getApplicationContext()).load(pfp2).into(pfp);
 //        changePic.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -314,7 +329,7 @@ public class EditProfile extends AppCompatActivity {
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
 
-            StorageReference selectedFile = storageRef.child(user.getId() + "/Profile Pictures/" + photoUri.getLastPathSegment());
+            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
             UploadTask uploadTask = selectedFile.putFile(photoUri);
 
             user = (User) getIntent().getSerializableExtra("PrevPageData");
