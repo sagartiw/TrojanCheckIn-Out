@@ -167,7 +167,6 @@ public class Register extends AppCompatActivity {
 
                 // Check password size >= 4
                 else if (password.getText().toString().length() < 4) {
-                    System.out.println("EMAIL ERROR!");
 
                     // TODO: ADD A CHECK TO SEE IF THE EMAIL GIVEN ALREADY BELONGS TO A USER/CHECK AND IF THE ACCOUNT EXISTS TRANSFER THEM TO THE LOGIN PAGE
 
