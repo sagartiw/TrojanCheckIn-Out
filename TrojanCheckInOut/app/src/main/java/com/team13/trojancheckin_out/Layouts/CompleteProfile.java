@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -47,6 +48,7 @@ public class CompleteProfile extends AppCompatActivity {
     private RadioButton managerButton;
     private ImageButton profileImage;
     private ImageButton uploadProfImage;
+    private ImageView viewPFP;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth;
@@ -323,15 +325,14 @@ public class CompleteProfile extends AppCompatActivity {
 
         profileImage = (ImageButton) findViewById(R.id.imageButton);
         uploadProfImage = (ImageButton) findViewById(R.id.imageButton3);
+        viewPFP = (ImageView) findViewById(R.id.pfp);
+
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }
         });
-
-
-
         uploadProfImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -516,7 +517,8 @@ public class CompleteProfile extends AppCompatActivity {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+                viewPFP.setImageBitmap(bitmap);
             }
             catch (IOException e)
             {
@@ -540,7 +542,7 @@ public class CompleteProfile extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity_edit_profile.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
 
@@ -548,7 +550,7 @@ public class CompleteProfile extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity_edit_profile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
 
