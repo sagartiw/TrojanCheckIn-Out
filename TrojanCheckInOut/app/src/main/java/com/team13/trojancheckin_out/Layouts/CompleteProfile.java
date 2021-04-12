@@ -200,6 +200,7 @@ public class CompleteProfile extends AppCompatActivity {
                 "Writing for Screen and Television",
         };
 
+
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -237,6 +238,8 @@ public class CompleteProfile extends AppCompatActivity {
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
+                user.setManager("false");
+
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 boolean checkConditions = true;
@@ -282,7 +285,6 @@ public class CompleteProfile extends AppCompatActivity {
 
                 if (checkConditions) {
                     user.getHistory().put("SLH", "0123 2344");
-
                     // Push user to DB
                     accountManipulator.createAccount(user);
                     Intent intent;
@@ -296,7 +298,6 @@ public class CompleteProfile extends AppCompatActivity {
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
-
             }
         });
 

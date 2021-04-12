@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
@@ -42,11 +43,11 @@ public class ManagerLanding extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button Search;
     private User user;
+
     private TextView txt_path, successText;
     private TextView welcome;
     public static User tracker;
     private AccountManipulator accountManipulator = new AccountManipulator();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

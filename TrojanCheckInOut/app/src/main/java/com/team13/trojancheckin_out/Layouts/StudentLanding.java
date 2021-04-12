@@ -64,6 +64,7 @@ public class StudentLanding extends AppCompatActivity {
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+
         soFab = (FloatingActionButton)findViewById(R.id.fab);
         welcomeName = (TextView)findViewById(R.id.welcomeMessage);
         System.out.println("NAME: " + user.getName());

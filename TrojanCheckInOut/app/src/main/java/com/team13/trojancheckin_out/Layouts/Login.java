@@ -88,6 +88,10 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
+                email = (EditText) findViewById(R.id.editTextTextEmailAddress2);
+                password = (EditText) findViewById(R.id.editTextTextPassword3);
+
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
