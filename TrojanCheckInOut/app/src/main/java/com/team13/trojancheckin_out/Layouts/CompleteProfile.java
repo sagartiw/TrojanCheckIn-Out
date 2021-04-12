@@ -46,6 +46,7 @@ public class CompleteProfile extends AppCompatActivity {
     private RadioButton studentButton;
     private RadioButton managerButton;
     private ImageButton profileImage;
+    private ImageButton uploadProfImage;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth;
@@ -272,9 +273,12 @@ public class CompleteProfile extends AppCompatActivity {
                 /*
                 Building building = new Building();
                 building.setName("USC Campus");
+
                 //user.setCurrentBuilding(building);
                 user.getHistory().put("USC", "1234 0123");
+
                 // delete later
+
                 //Building building = new Building();
 
                 building.setName("USC");
@@ -318,6 +322,7 @@ public class CompleteProfile extends AppCompatActivity {
 //////////////
 
         profileImage = (ImageButton) findViewById(R.id.imageButton);
+        uploadProfImage = (ImageButton) findViewById(R.id.imageButton3);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -326,7 +331,8 @@ public class CompleteProfile extends AppCompatActivity {
         });
 
 
-        btnUpload.setOnClickListener(new View.OnClickListener() {
+
+        uploadProfImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage();
@@ -416,6 +422,7 @@ public class CompleteProfile extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 if (intent.resolveActivity(getPackageManager()) != null) {
+
                     // Bring up gallery to select a photo
                     startActivityForResult(intent, PICK_PHOTO_CODE);
                 }
@@ -429,6 +436,7 @@ public class CompleteProfile extends AppCompatActivity {
 //    @Override
 //    public void onStart() {
 //        super.onStart();
+
 //        // Check if user is signed in (non-null) and update UI accordingly.
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
 //    }
@@ -436,12 +444,15 @@ public class CompleteProfile extends AppCompatActivity {
     /*public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
         try {
+
             // check version of Android on device
             if(Build.VERSION.SDK_INT > 27){
+
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
             } else {
+
                 // support older versions of Android by using getBitmap
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
             }
@@ -524,6 +535,7 @@ public class CompleteProfile extends AppCompatActivity {
 
             StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
             ref.putFile(filePath)
+
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -531,6 +543,7 @@ public class CompleteProfile extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
+
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -538,6 +551,7 @@ public class CompleteProfile extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
+
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
