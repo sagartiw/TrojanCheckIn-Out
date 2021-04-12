@@ -59,7 +59,9 @@ public class CompleteProfile extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser curr;
     //https://firebase.google.com/docs/storage/android/upload-files
-    public final static int PICK_PHOTO_CODE = 1046;
+    //public final static int PICK_PHOTO_CODE = 1046;
+    public final static int PICK_PHOTO_CODE = 71;
+
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
 
@@ -334,16 +336,20 @@ public class CompleteProfile extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                super.onCreate(savedInstanceState);
+                System.out.println("Clicked add profile pick");
                 chooseImage();
-            }
-        });
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                System.out.println("about to upload image");
                 uploadImage();
             }
         });
+        /*
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked upload image");
+                uploadImage();
+            }
+        });*/
 
 
 
@@ -479,6 +485,7 @@ public class CompleteProfile extends AppCompatActivity {
 
             StorageReference selectedFile = storageRef.child("Profile Pictures/");
             System.out.println("HELLO TEAM");
+
             UploadTask uploadTask = selectedFile.putFile(photoUri);
             System.out.println("HELLO TEAM 2");
             user = (User) getIntent().getSerializableExtra("PrevPageData");
@@ -509,20 +516,19 @@ public class CompleteProfile extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PHOTO_CODE);
     }
 
     //Upload local image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
                 viewPFP.setImageBitmap(bitmap);
             }
             catch (IOException e)
