@@ -264,6 +264,8 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setId(studentID.getText().toString());
 
+                user.setDeleted(false);
+
 
                 // delete later
                 /*
@@ -283,7 +285,13 @@ public class CompleteProfile extends AppCompatActivity {
 
                     // Push user to DB
                     accountManipulator.createAccount(user);
-                    Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    Intent intent;
+                    if(user.isManager().equals("true")) {
+                        intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+                    }
+                    else {
+                        intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    }
 
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);

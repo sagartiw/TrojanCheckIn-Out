@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 import java.io.IOException;
 
@@ -50,6 +51,9 @@ public class EditProfile extends AppCompatActivity {
     private Button editpic;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+
+    private AccountManipulator accountManipulator = new AccountManipulator();
+
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
     private int x;
@@ -187,7 +191,12 @@ public class EditProfile extends AppCompatActivity {
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        referenceUsers.child(user.getId()).removeValue();
+                        //referenceUsers.child(user.getId()).removeValue();
+                        // call delete account
+                        accountManipulator.deleteAccount(user);
+
+                        //popupWindow.dismiss();
+
                         Intent intent = new Intent(v.getContext(), Startup.class);
                         v.getContext().startActivity(intent);
 

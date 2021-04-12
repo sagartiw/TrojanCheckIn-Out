@@ -26,6 +26,8 @@ public class User implements Serializable {
     private String major;
     private String isManager;
 
+    private boolean deleted;
+
     /**
      * User object via a default constructor.
      */
@@ -43,10 +45,11 @@ public class User implements Serializable {
      * @param history
      * @param major
      * @param isManager
+     * @param deleted
      */
     public User (String name, String email, String password, String photo, String id,
                  boolean inBuilding, Building currentBuilding, Map<String, String> history,
-                 String major, String isManager) {
+                 String major, String isManager, boolean deleted) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -57,6 +60,7 @@ public class User implements Serializable {
         this.history = history;
         this.major = major;
         this.isManager = isManager;
+        this.deleted = deleted;
     }
 
     /**
@@ -161,6 +165,14 @@ public class User implements Serializable {
 
     public void setManager(String isManager) {
         this.isManager = isManager;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     /**

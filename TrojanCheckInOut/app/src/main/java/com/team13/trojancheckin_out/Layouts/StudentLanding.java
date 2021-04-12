@@ -99,15 +99,15 @@ public class StudentLanding extends AppCompatActivity {
 //        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
 //        soFab.setImageResource(imageRe);
 
-        SignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentUser = null;
-                Intent intent = new Intent(StudentLanding.this, Startup.class);
-                intent.putExtra("PrevPageData", user);
-                startActivity(intent);
-            }
-        });
+//        SignOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                currentUser = null;
+//                Intent intent = new Intent(StudentLanding.this, Startup.class);
+//                intent.putExtra("PrevPageData", user);
+//                startActivity(intent);
+//            }
+//        });
 
 
         Scan.setOnClickListener(new View.OnClickListener() {
@@ -251,8 +251,8 @@ public class StudentLanding extends AppCompatActivity {
             }
         });
 
-        Button signout = (Button) findViewById(R.id.signOut);
-        signout.setOnClickListener(new View.OnClickListener() {
+        //Button signout = (Button) findViewById(R.id.signOut);
+        SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
@@ -278,7 +278,7 @@ public class StudentLanding extends AppCompatActivity {
                     public void onClick(View v) {
                         currentUser = null;
                         Intent intent = new Intent(v.getContext(), Startup.class);
-                        intent.putExtra("PrevPageData", user);
+                        //intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
                     }
                 });
