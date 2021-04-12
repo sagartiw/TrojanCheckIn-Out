@@ -402,11 +402,6 @@ public class CompleteProfile extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
     @Override
     public void onStart() {
         super.onStart();
