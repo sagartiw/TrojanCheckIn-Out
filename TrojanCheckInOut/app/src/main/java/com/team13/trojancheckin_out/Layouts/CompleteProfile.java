@@ -71,6 +71,8 @@ public class CompleteProfile extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         setContentView(R.layout.activity_complete_profile);
+        viewPFP = (ImageView) findViewById(R.id.imageView3);
+        System.out.println("viewpfp: " + viewPFP);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);
@@ -331,8 +333,8 @@ public class CompleteProfile extends AppCompatActivity {
 //////////////
 
         profileImage = (ImageButton) findViewById(R.id.imageButton);
-        viewPFP = (ImageView) findViewById(R.id.pfp);
-
+      //  viewPFP = (ImageView) findViewById(R.id.pfp);
+        System.out.println("View pfp initial: " + viewPFP);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -522,14 +524,19 @@ public class CompleteProfile extends AppCompatActivity {
     //Upload local image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("start onActivityResult photo codes");
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
             filePath = data.getData();
+            System.out.println("filepath oAR: " + filePath);
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                System.out.println("pre viewPFP bitmap: " + bitmap + " viewPfp: " + viewPFP);
                 viewPFP.setImageBitmap(bitmap);
+                System.out.println("post viewPFP bitmap");
+
             }
             catch (IOException e)
             {
@@ -539,6 +546,7 @@ public class CompleteProfile extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        System.out.println("filepath in Upload img: " + filePath);
 
         if(filePath != null)
         {
@@ -577,5 +585,6 @@ public class CompleteProfile extends AppCompatActivity {
                         }
                     });
         }
+        System.out.println("Finished upload");
     }
 }
