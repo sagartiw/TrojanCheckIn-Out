@@ -515,10 +515,12 @@ public class CompleteProfile extends AppCompatActivity {
 
     //select image
     private void chooseImage() {
+        System.out.println("starting choose image");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PHOTO_CODE);
+        System.out.println("finish choose image");
     }
 
     //Upload local image
@@ -536,6 +538,9 @@ public class CompleteProfile extends AppCompatActivity {
                 System.out.println("pre viewPFP bitmap: " + bitmap + " viewPfp: " + viewPFP);
                 viewPFP.setImageBitmap(bitmap);
                 System.out.println("post viewPFP bitmap");
+                System.out.println("finish choose image start activity");
+                uploadImage();
+
 
             }
             catch (IOException e)
@@ -558,6 +563,7 @@ public class CompleteProfile extends AppCompatActivity {
 
             //"profile pics/ or images/" for ref?"
             StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            System.out.println("storage ref: " + ref + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             ref.putFile(filePath)
 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
