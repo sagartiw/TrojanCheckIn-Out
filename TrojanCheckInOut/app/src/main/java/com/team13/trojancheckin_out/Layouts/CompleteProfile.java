@@ -518,7 +518,7 @@ public class CompleteProfile extends AppCompatActivity {
                 && data != null && data.getData() != null )
         {
             filePath = data.getData();
-            System.out.println("filepath oAR: " + filePath);
+            System.out.println("filepath oAR: " + filePath + ", data: " + data + ", getdata: " +data.getData());
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 viewPFP.setImageBitmap(bitmap);
@@ -540,7 +540,9 @@ public class CompleteProfile extends AppCompatActivity {
             progressDialog.show();
            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
             //"profile pics/ or images/" for ref?"
-            StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageRef.child("Profile Pictures/");
+
             System.out.println("upload image function");
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
