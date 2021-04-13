@@ -541,7 +541,7 @@ public class CompleteProfile extends AppCompatActivity {
            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
             //"profile pics/ or images/" for ref?"
             //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
-            StorageReference ref = storageRef.child("Profile Pictures/");
+            StorageReference ref = storageRef.child("Profile Pictures/" + UUID.randomUUID().toString());
 
             System.out.println("upload image function");
             ref.putFile(filePath)
