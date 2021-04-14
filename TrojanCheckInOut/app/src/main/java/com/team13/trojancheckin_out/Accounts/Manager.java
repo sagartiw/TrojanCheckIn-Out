@@ -120,9 +120,8 @@ public class Manager extends User {
 
         List<User> list = new ArrayList<>();
 
-<<<<<<< HEAD
         //Case 1: ONLY inputting id. If other things are filled, ID supercedes everything
-=======
+
         // Name Comparator
         Collections.sort(list, new Comparator<User>() {
             @Override
@@ -131,7 +130,6 @@ public class Manager extends User {
             }
         });
 
->>>>>>> a98ce71fb95c732868e9b4626b05e803727f21fb
         if (id != null) {
             System.out.println("MAN WHAT");
             accountManipulator.getAllAccounts(new MyUserCallback() {
