@@ -120,13 +120,19 @@ public class Manager extends User {
 
         List<User> list = new ArrayList<>();
 
-        // Name Comparator
-        Collections.sort(list, new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return o2.getName().compareTo(o1.getName());
-            }
-        });
+//        // Name Comparator
+//        Collections.sort(list, new Comparator<User>() {
+//            @Override
+//            public int compare(User o1, User o2) {
+//                return o2.getName().compareTo(o1.getName());
+//            }
+//        });
+//
+//        Collections.sort(list, (s1, s2) -> {
+//
+//        });
+
+        //Collections.sort(list, (User u1, User u2) -> u1.getName().compareTo(u2.getName());
 
         if (id != null) {
             System.out.println("MAN WHAT");
@@ -141,6 +147,7 @@ public class Manager extends User {
                 }
             });
 
+            System.out.println("Return list 1");
             return list;
         }
         //First case was for id search only. this next set is if a building is chosen
@@ -165,6 +172,12 @@ public class Manager extends User {
                         list.add(user);
                     }
                 }
+
+                if (!list.isEmpty()) {
+                    System.out.println("Name formatting: " + list.get(0).getName());
+                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                }
+                System.out.println("Return list 2");
                 return list;
             }
 
@@ -182,6 +195,12 @@ public class Manager extends User {
                         list.add(user);
                     }
                 }
+
+                if (!list.isEmpty()) {
+                    System.out.println("Name formatting: " + list.get(0).getName());
+                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                }
+                System.out.println("Return list 3");
                 return list;
             }
             else if (major == null && startTime != -1 && endTime != -1) {
@@ -246,6 +265,11 @@ public class Manager extends User {
                         }
                     }
                 });
+                if (!list.isEmpty()) {
+                    System.out.println("Name formatting: " + list.get(0).getName());
+                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                }
+                System.out.println("Return list 4");
                 return list;
             } else {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
@@ -264,6 +288,11 @@ public class Manager extends User {
                         }
                     }
                 });
+                if (!list.isEmpty()) {
+                    System.out.println("Name formatting: " + list.get(0).getName());
+                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                }
+                System.out.println("Return list 5");
                 return list;
             }
         }
@@ -298,6 +327,11 @@ public class Manager extends User {
                     }
                 }
             });
+            if (!list.isEmpty()) {
+                System.out.println("Name formatting: " + list.get(0).getName());
+                Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+            }
+            System.out.println("Return list 6");
             return list;
         }
 
@@ -315,6 +349,12 @@ public class Manager extends User {
                             list.add(use);
                         }
                     }
+                    System.out.println("LIST: " + list);
+                    if (!list.isEmpty()) {
+                        System.out.println("Name formatting: " + list.get(0).getName());
+                        Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                    }
+                    System.out.println("Return list 7");
                 }
             });
             return list;
@@ -322,6 +362,11 @@ public class Manager extends User {
 
         System.out.println("PLSSS" + lName + fName);
         // There is something wrong (both times aren't filled, id filleed with other shit. etc)
+        if (!list.isEmpty()) {
+            System.out.println("Name formatting: " + list.get(0).getName());
+            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+        }
+        System.out.println("Return list 8");
         return list;
     }
 }

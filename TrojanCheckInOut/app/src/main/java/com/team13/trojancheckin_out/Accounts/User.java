@@ -70,6 +70,10 @@ public class User implements Serializable {
         return name;
     }
 
+    public String getLastName() {
+        String[] nameComp = name.split(", ");
+        return nameComp[0];
+    }
     public void setName(String name) {
 
         System.out.println("I AM SETTING NAME");
