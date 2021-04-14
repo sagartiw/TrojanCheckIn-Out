@@ -31,8 +31,17 @@ import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -53,6 +62,7 @@ public class CompleteProfile extends AppCompatActivity {
     //https://firebase.google.com/docs/storage/android/upload-files
     public final static int PICK_PHOTO_CODE = 1046;
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
+    private BuildingManipulator buildingManipulator = new BuildingManipulator();
 
 
     @Override
@@ -236,10 +246,12 @@ public class CompleteProfile extends AppCompatActivity {
                 studentID = (EditText) findViewById(R.id.editTextTextPersonName4);
 
                 // Add data from this current page to complete the user object
-                user.setName(fName.getText().toString() + " " + lName.getText().toString());
+                user.setName(lName.getText().toString() + ", " + fName.getText().toString());
                 user.setMajor(major);
                 user.setManager("false");
 
+                Building currentBuilding = new Building("Not in Building", "NA", 500, "");
+                user.setCurrentBuilding(currentBuilding);
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 boolean checkConditions = true;
@@ -269,6 +281,7 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setDeleted(false);
 
+                Building match = buildingManipulator.getBuilding("NA");
 
                 // delete later
                 /*
@@ -287,6 +300,9 @@ public class CompleteProfile extends AppCompatActivity {
                     user.getHistory().put("SLH", "0123 2344");
                     // Push user to DB
                     accountManipulator.createAccount(user);
+                    System.out.println("STEP ONE");
+                    // Add user to building
+                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
                     Intent intent;
                     if(user.isManager().equals("true")) {
                         intent = new Intent(CompleteProfile.this, ManagerLanding.class);

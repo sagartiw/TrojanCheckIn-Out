@@ -7,6 +7,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -59,13 +60,53 @@ public class Manager extends User {
     public Boolean showQRCode(Building building){ return true; }
 
     /**
+     * @param user
+     * @param fName
+     * @param lName
+     * @param list
+     * @return the searched name in the list of users
+     */
+    public User searchName(User user, String fName, String lName, List<User> list) {
+        if (lName == null && fName == null) {
+            return null;
+        }
+
+        // Checking name parameters: name[0] = last, name[1] = first
+        String[] name = user.getName().split(", ");
+
+        if (lName != null && fName == null) {
+            if (lName.contains(name[0])) {
+                return user;
+            }
+        } else if (lName == null && fName != null) {
+            if (fName.contains(name[1])) {
+                return user;
+            }
+        } else {
+            if (fName.contains(name[1]) && lName.contains(name[0])) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param building
      * @param id
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(int startTime, int endTime, Building building, String id, String major, int startDate, int endDate) {
+    public List<User> searchStudents(String fName, String lName, int startTime, int endTime, Building building, String id, String major, int startDate, int endDate) {
         // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
+
+//        // Order based on name
+//        List<String> orderedList = new ArrayList<>();
+//        for (Map.Entry<String, User> user : map.entrySet()) {
+//            String[] lastName = user.getValue().getName().split(", ");
+//            orderedList.add(lastName[0]);
+//        }
+//        Collections.sort(orderedList);
 
         List<User> list = new ArrayList<>();
 
@@ -81,27 +122,62 @@ public class Manager extends User {
                 }
             });
             return list;
-        } //First case was for id search only. this next set is if a building is chosen
+        }
+
+        //First case was for id search only. this next set is if a building is chosen
         else if (building != null) {
-            //major and times filled
+
+            // Major and times filled
             if (major != null && startTime != -1 && endTime != -1) {
                 for (User user : building.getCurrentStudents()) {
                     String s = user.getHistory().get(building.getAbbreviation());
                     String[] ts = s.split(" ");
+
                     if (user.getMajor().equals(major) && Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
+
+                        // Check name
+                        if (searchName(user, fName, lName, list) != null) {
+                            list.add(searchName(user, fName, lName, list));
+                            continue;
+                        }
+
                         list.add(user);
                     }
                 }
                 return list;
             }
-            //major only
+
+            // Major only
             else if (major != null && startTime == -1 && endTime == -1) {
                 for (User user : building.getCurrentStudents()) {
                     if (user.getMajor().equals(major)){
+
+                        // Check name
+                        if (searchName(user, fName, lName, list) != null) {
+                            list.add(searchName(user, fName, lName, list));
+                            continue;
+                        }
+
                         list.add(user);
                     }
                 }
                 return list;
+            }
+            else if (major == null && startTime != -1 && endTime != -1) {
+                for (User user : building.getCurrentStudents()) {
+                    String s = user.getHistory().get(building.getAbbreviation());
+                    String[] ts = s.split(" ");
+                    if (Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
+
+                        // Check name
+                        if (searchName(user, fName, lName, list) != null) {
+                            list.add(searchName(user, fName, lName, list));
+                            continue;
+                        }
+
+                        list.add(user);
+                    }
+                }
             }
             //everything but building is null
             else {
@@ -115,12 +191,18 @@ public class Manager extends User {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> user : map.entrySet()) {
                             String s = user.getValue().getHistory().get(building.getAbbreviation());
-                            System.out.println(s);
                             String[] ts = s.split(" ");
                             int timeEnder;
                             if (s.length() <= 5){ timeEnder = 2359; }
                             else{ timeEnder = Integer.parseInt(ts[1]);}
                             if (user.getValue().getMajor().equals(major) && ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime))) {
+
+                                // Check name
+                                if (searchName(user.getValue(), fName, lName, list) != null) {
+                                    list.add(searchName(user.getValue(), fName, lName, list));
+                                    continue;
+                                }
+
                                 list.add(user.getValue());
                             }
                         }
@@ -133,6 +215,13 @@ public class Manager extends User {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> user : map.entrySet()) {
                             if (user.getValue().getMajor().equals(major)) {
+
+                                // Check name
+                                if (searchName(user.getValue(), fName, lName, list) != null) {
+                                    list.add(searchName(user.getValue(), fName, lName, list));
+                                    continue;
+                                }
+
                                 list.add(user.getValue());
                             }
                         }
@@ -140,7 +229,9 @@ public class Manager extends User {
                 });
                 return list;
             }
-        } //only time is a condition
+        }
+
+        // Only time is a condition
         else if (startTime != -1 && endTime != -1){
             accountManipulator.getAllAccounts(new MyUserCallback() {
                 @Override
@@ -153,48 +244,23 @@ public class Manager extends User {
                             if (s.length() <= 5){ timeEnder = 2359; }
                             else{ timeEnder = Integer.parseInt(ts[1]);}
                             if ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime)) {
+
+                                // Check name
+                                if (searchName(user.getValue(), fName, lName, list) != null) {
+                                    list.add(searchName(user.getValue(), fName, lName, list));
+                                    continue;
+                                }
+
                                 list.add(user.getValue());
                             }
                         }
-//                        String b = user.getValue().getCurrentBuilding().getAbbreviation();
-//                        String s = user.getValue().getHistory().get(b);
-//                        user.getValue().get
                     }
                 }
             });
             return list;
-        } // there is something wrong (both times aren't filled, id filleed with other shit. etc)
+        }
+
+        // There is something wrong (both times aren't filled, id filleed with other shit. etc)
         return list;
     }
 }
-
-
-
- //       else if(startTime != -1 && endTime != -1){
-//                accountManipulator.getAllAccounts(new MyUserCallback() {
-//                    @Override
-//                    public void onCallback(Map<String, User> map) {
-//
-//                        for(Map.Entry<String, User> user : map.entrySet()){
-//                            String s = user.getValue().getHistory();
-//                        }
-////                        map.get(user.getId()).getHistory();
-////                        for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
-////                            String[] comp = e.getValue().split(" ");
-////                            String [] components = new String[2];
-////                            components[0] = comp[0];
-////                            if(comp.length < 2)
-////                            {
-////                                components[1] = " ";
-////                            }
-////                            else
-////                            {
-////                                components[1] = comp[1];
-////                            }
-////                            History history = new History(e.getKey(), "In: " + components[0], "Out: " + components[1]);
-////                            System.out.println("HISTORY: " + e.getKey() + components[0] + components[1]);
-////                            historyList.add(history);
-////                        }
-//                    }
-//                });
-//            }
