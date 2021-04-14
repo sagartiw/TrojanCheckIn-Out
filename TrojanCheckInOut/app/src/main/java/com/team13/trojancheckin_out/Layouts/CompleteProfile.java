@@ -35,6 +35,7 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -517,7 +518,7 @@ public class CompleteProfile extends AppCompatActivity {
         if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
-            filePath = data.getData();
+            //filePath = data.getData();
             System.out.println("filepath oAR: " + filePath + ", data: " + data + ", getdata: " +data.getData());
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
@@ -541,9 +542,10 @@ public class CompleteProfile extends AppCompatActivity {
            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
             //"profile pics/ or images/" for ref?"
             //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
-            StorageReference ref = storageRef.child("Profile Pictures/" + UUID.randomUUID().toString());
+            StorageReference ref = storageRef.child("Profile Pictures/" + filePath.getLastPathSegment());
 
             System.out.println("upload image function");
+            filePath = Uri.fromFile(new File(filePath.getPath()));
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
