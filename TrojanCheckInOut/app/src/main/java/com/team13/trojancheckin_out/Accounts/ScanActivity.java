@@ -35,6 +35,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,7 +125,9 @@ public class ScanActivity extends AppCompatActivity {
 
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
-                            System.out.println("CHECK MATCH: " + match.getAbbreviation());
+                            if(match.getAbbreviation() != null){
+                                System.out.println("CHECK MATCH: " + match.getAbbreviation());
+                            }
                             User user = accountManipulator.currentUser;
 
                             // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
@@ -135,7 +138,35 @@ public class ScanActivity extends AppCompatActivity {
                                     // user is trying to check out
                                     match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                                     user.setterCurrentBuilding(null);
+                                    user.setterInBuilding(false);
+
+                                    // Update count - 1
+                                    buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                                        @Override
+                                        public void onCallback(Map<String, Building> map) {
+                                            int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                            if (notIncremented) {
+                                                count = count-1;
+                                                notIncremented = false;
+                                                referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                            }
+                                        }
+                                    });
+                                    System.out.println("updated count" + referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").get().toString());
+
+                                    // Removes from current building DB
+                                    user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                                    System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                                    // Remove user's current building
                                     user.setInBuilding(false);
+                                    System.out.println("removed");
+                                    Building b = new Building("Not in Building", "NA", 500, "");
+                                    referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+                                    System.out.println("b" + b.getName().toString());
+
+                                    // Add to NA in DB
+                                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
@@ -227,11 +258,18 @@ public class ScanActivity extends AppCompatActivity {
                                     int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                                     int currentMinute = cal.get(Calendar.MINUTE);
                                     int currentDate = cal.get(Calendar.DATE);
-                                    String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                                    Date dater = cal.getTime();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                                    System.out.println("current min is "+ currentMinute);
+                                    System.out.println("current hour is "+ currentHour);
+                                    System.out.println("current date is "+ currentDate);
+                                    //String currentDate1 = SimpleDateFormat.getDateInstance().format("yyyy-MM-dd");
 
+                                    System.out.println("currentDate is "+ sdf.format(dater).toString());
                                     String min = Integer.toString(currentMinute);
                                     String hour = Integer.toString(currentHour);
-                                    String date = Integer.toString(currentDate);
+                                    //String date = Integer.toString(currentDate);
+                                    String date = sdf.format(dater).toString();
 
                                     if(currentMinute <= 9){
                                         min = "0" + Integer.toString(currentMinute);
@@ -241,12 +279,12 @@ public class ScanActivity extends AppCompatActivity {
                                         hour = "0" + Integer.toString(currentHour);
                                     }
 
-                                    String time = hour + min + currentDate1;
+                                    String time = hour + min + date;
 
                                     System.out.println("time:" + time);
                                     checkInTime = time;
                                     referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
-                                    user.setInBuilding(true);
+                                    user.setterInBuilding(true);
 
                                     // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                                 }

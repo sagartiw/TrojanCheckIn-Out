@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,10 +28,15 @@ import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
@@ -43,6 +50,7 @@ public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
     private Button CheckOut;
     private Button Scan;
+    private Button History;
     private User user;
     private FloatingActionButton soFab;
     private TextView welcomeMessage;
@@ -54,6 +62,9 @@ public class StudentLanding extends AppCompatActivity {
     StorageReference storageRef = storage.getReference();
     private TextView welcomeName;
     private boolean notIncremented = true;
+    private RecyclerView recyclerView;
+    private List<History> historyList;
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
 
     @Override
@@ -64,6 +75,7 @@ public class StudentLanding extends AppCompatActivity {
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
+        History = (Button)findViewById(R.id.checkOut2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
         soFab = (FloatingActionButton)findViewById(R.id.fab);
@@ -81,15 +93,18 @@ public class StudentLanding extends AppCompatActivity {
         Major.setText(user.getMajor());
         currBuilding = (TextView)findViewById(R.id.buildingName);
 
+        System.out.println("TESTER : " + user.getCurrentBuilding().getAbbreviation());
+        System.out.println("TESTER : " + user.isInBuilding());
+        if(user.getCurrentBuilding().getName().toString().equals("NA")){
+            currBuilding.setText("NA");
+            user.setterInBuilding(false);
+        }
 
         if(user.isInBuilding() == true){
 
             currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
-
-            Scan.setEnabled(false);
         } else {
             currBuilding.setText("USC");
-            CheckOut.setEnabled(false);
         }
 
 
@@ -118,6 +133,7 @@ public class StudentLanding extends AppCompatActivity {
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
+
             }
         });
 
@@ -225,6 +241,8 @@ public class StudentLanding extends AppCompatActivity {
                         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                         int currentMinute = cal.get(Calendar.MINUTE);
                         //int currentDate = cal.get(Calendar.DATE);
+                        Date dater = cal.getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
                         String min = Integer.toString(currentMinute);
                         String hour = Integer.toString(currentHour);
@@ -238,8 +256,9 @@ public class StudentLanding extends AppCompatActivity {
                             hour = "0" + Integer.toString(currentHour);
                         }
 
-                        String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
-                        String time = hour + min + currentDate1;
+                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                        String date = sdf.format(dater).toString();
+                        String time = hour + min + date;
                         System.out.println("time:" + time);
                         String checkOutTime = time;
 
@@ -250,6 +269,79 @@ public class StudentLanding extends AppCompatActivity {
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
+                    }
+                });
+            }
+        });
+
+        History.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                System.out.println("HERE!!!!");
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.student_history_popup, null);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                TextView nameText = (TextView) popupView.findViewById(R.id.nameTitle4);
+
+                nameText.setText(user.getName());
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                //getting the recyclerview from xml
+                recyclerView = (RecyclerView) popupView.findViewById(R.id.recyclerView2);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+                //get current buildings
+                historyList = new ArrayList<>();
+
+                //creating recyclerview adapter
+                HistoryAdapter adapter = new HistoryAdapter(view.getContext(), historyList);
+
+                //setting adapter to recyclerview
+                recyclerView.setAdapter(adapter);
+
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        map.get(user.getId()).getHistory();
+                        for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
+                            String[] comp = e.getValue().split(" ");
+                            String [] components = new String[2];
+                            components[0] = comp[0];
+                            if(comp.length < 2)
+                            {
+                                components[1] = " ";
+                            }
+                            else
+                            {
+                                components[1] = comp[1];
+                            }
+                            History history = new History(e.getKey(), "In: " + components[0], "Out: " + components[1]);
+                            System.out.println("HISTORY: " + e.getKey() + components[0] + components[1]);
+                            historyList.add(history);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
                     }
                 });
             }
@@ -281,10 +373,12 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         currentUser = null;
-                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        //Intent intent = new Intent(v.getContext(), Startup.class);
                         //intent.putExtra("PrevPageData", user);
-                        v.getContext().startActivity(intent);
-
+                        //v.getContext().startActivity(intent);
+                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finishAndRemoveTask();
+                        finishAffinity();
                     }
                 });
 

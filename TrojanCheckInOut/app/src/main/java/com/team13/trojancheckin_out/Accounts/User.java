@@ -122,6 +122,11 @@ public class User implements Serializable {
         this.inBuilding = inBuilding;
     }
 
+    public void setterInBuilding(boolean inBuilding) {
+        this.inBuilding = inBuilding;
+        referenceUsers.child(this.getId()).child("inBuilding").setValue(inBuilding);
+    }
+
     public Building getCurrentBuilding() {
         return currentBuilding;
     }

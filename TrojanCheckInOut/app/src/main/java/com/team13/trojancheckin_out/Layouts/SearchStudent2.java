@@ -139,7 +139,7 @@ public class SearchStudent2 extends AppCompatActivity {
                             cond6 = false;
                         }
                         // IF ALL FIELDS ARE EMPTY (Cond = true), SHOW ALL WOULD BE SET TRUE
-                        if (cond1 && cond2 && cond3 && cond4) {
+                        if (cond1 && cond2 && cond3 && cond4 && cond5 && cond6) {
                            showAll = true;
                         }
 
@@ -166,7 +166,7 @@ public class SearchStudent2 extends AppCompatActivity {
 
                                         User user = new User(name, email, pass, photo, id, inBuilding,
                                                 currentBuilding, history, major, isManager, deleted);
-                                        System.out.println("HERE USER: " + name);
+                                        System.out.println("HERE USER: " + name + " " + currentBuilding);
                                         studentList.add(user);
                                     }
                                 }

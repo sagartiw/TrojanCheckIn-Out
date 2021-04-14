@@ -2,6 +2,7 @@ package com.team13.trojancheckin_out.Accounts;
 
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -67,6 +68,7 @@ public class Manager extends User {
      * @return the searched name in the list of users
      */
     public User searchName(User user, String fName, String lName, List<User> list) {
+        System.out.println("SEARCH NAME: " + user.getName() + " " + fName + " " + lName + " " + list);
         if (lName == null && fName == null) {
             return null;
         }
@@ -76,14 +78,17 @@ public class Manager extends User {
 
         if (lName != null && fName == null) {
             if (lName.contains(name[0])) {
+                System.out.println("LAST NAME: " + lName);
                 return user;
             }
         } else if (lName == null && fName != null) {
             if (fName.contains(name[1])) {
+                System.out.println("FIRST NAME: " + fName);
                 return user;
             }
         } else {
             if (fName.contains(name[1]) && lName.contains(name[0])) {
+                System.out.println("NAME MATCH: " + fName + lName);
                 return user;
             }
         }
@@ -107,10 +112,12 @@ public class Manager extends User {
 //            orderedList.add(lastName[0]);
 //        }
 //        Collections.sort(orderedList);
+        System.out.println("WHAT THE HECk");
 
         List<User> list = new ArrayList<>();
 
         if (id != null) {
+            System.out.println("MAN WHAT");
             accountManipulator.getAllAccounts(new MyUserCallback() {
                 @Override
                 public void onCallback(Map<String, User> map) {
@@ -123,10 +130,9 @@ public class Manager extends User {
             });
             return list;
         }
-
         //First case was for id search only. this next set is if a building is chosen
         else if (building != null) {
-
+            System.out.println("HERE IS NAME2");
             // Major and times filled
             if (major != null && startTime != -1 && endTime != -1) {
                 for (User user : building.getCurrentStudents()) {
@@ -183,10 +189,28 @@ public class Manager extends User {
             }
             //everything but building is null
             else {
-                return building.getCurrentStudents();
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> e : map.entrySet()) {
+                            User user = e.getValue();
+                            System.out.println("E NAME: " + user.getName());
+                            if (user.isInBuilding()) {
+                                System.out.println("EEE: " + user.getName());
+                                if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                    System.out.println("COCK!");
+                                    list.add(new User(user.getName(), user.getEmail(), user.getPassword(), user.getPhoto(), user.getId(), user.isInBuilding(), user.getCurrentBuilding(), user.getHistory(), user.getMajor(), user.isManager(), user.isDeleted()));
+                                    System.out.println("USER NAME: " + user.getName());
+                                }
+                            }
+
+                        }
+                    }
+                });
             }
         } //major is the dominating condition
         else if (major != null) {
+            System.out.println("HERE IS NAME1");
             if (startTime != -1 && endTime != -1) {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
@@ -204,7 +228,6 @@ public class Manager extends User {
                                     list.add(searchName(user.getValue(), fName, lName, list));
                                     continue;
                                 }
-
                                 list.add(user.getValue());
                             }
                         }
@@ -217,14 +240,13 @@ public class Manager extends User {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> user : map.entrySet()) {
                             if (user.getValue().getMajor().equals(major)) {
-
+                                System.out.println("YOOOO");
                                 // Check name
                                 if (searchName(user.getValue(), fName, lName, list) != null) {
+                                    System.out.println("ANYTHING?" + user.getValue().getName());
                                     list.add(searchName(user.getValue(), fName, lName, list));
                                     continue;
                                 }
-
-                                list.add(user.getValue());
                             }
                         }
                     }
@@ -235,6 +257,7 @@ public class Manager extends User {
 
         // Only time is a condition
         else if (startTime != -1 && endTime != -1){
+            System.out.println("TIME ONLY CASE");
             accountManipulator.getAllAccounts(new MyUserCallback() {
                 @Override
                 public void onCallback(Map<String, User> map) {
@@ -247,10 +270,13 @@ public class Manager extends User {
                             else{ timeEnder = Integer.parseInt(ts[1]);}
                             if ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime)) {
 
-                                // Check name
-                                if (searchName(user.getValue(), fName, lName, list) != null) {
-                                    list.add(searchName(user.getValue(), fName, lName, list));
-                                    continue;
+                                // Check name if exists
+                                if (lName != null && fName != null || lName != null && fName == null || lName == null && fName != null) {
+                                    if (searchName(user.getValue(), fName, lName, list) != null) {
+                                        System.out.println("NAME EXISTS");
+                                        list.add(searchName(user.getValue(), fName, lName, list));
+                                        continue;
+                                    }
                                 }
 
                                 list.add(user.getValue());
@@ -262,6 +288,26 @@ public class Manager extends User {
             return list;
         }
 
+        // Only name is a condition
+        else if (lName != null && fName != null || lName != null && fName == null || lName == null && fName != null){
+            System.out.println("HERE IS NAMEEEE");
+            accountManipulator.getAllAccounts(new MyUserCallback() {
+                @Override
+                public void onCallback(Map<String, User> map) {
+                    for (Map.Entry<String, User> user : map.entrySet()) {
+                        System.out.println("USER HUH " + user.getValue().getName());
+                        User use = searchName(user.getValue(), fName, lName, list);
+                        if(use != null)
+                        {
+                            list.add(use);
+                        }
+                    }
+                }
+            });
+            return list;
+        }
+
+        System.out.println("PLSSS" + lName + fName);
         // There is something wrong (both times aren't filled, id filleed with other shit. etc)
         return list;
     }
