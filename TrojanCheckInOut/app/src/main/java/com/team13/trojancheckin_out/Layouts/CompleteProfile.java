@@ -332,7 +332,7 @@ public class CompleteProfile extends AppCompatActivity {
             mAuth.signInAnonymously();
         }
         profileImage = (ImageButton) findViewById(R.id.imageButton);
-      //  viewPFP = (ImageView) findViewById(R.id.pfp);
+        //  viewPFP = (ImageView) findViewById(R.id.pfp);
         System.out.println("View pfp initial: " + viewPFP);
 
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -439,12 +439,12 @@ public class CompleteProfile extends AppCompatActivity {
         });
     }
 */
-    //@Override
-  //  public void onStart() {
-  //      super.onStart();
-  //      Check if user is signed in (non-null) and update UI accordingly.
-   //   FirebaseUser currentUser = mAuth.getCurrentUser();
- //   }
+        //@Override
+        //  public void onStart() {
+        //      super.onStart();
+        //      Check if user is signed in (non-null) and update UI accordingly.
+        //   FirebaseUser currentUser = mAuth.getCurrentUser();
+        //   }
     /*public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
         try {
@@ -539,7 +539,7 @@ public class CompleteProfile extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-           // StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
             //"profile pics/ or images/" for ref?"
             //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
             StorageReference ref = storageRef.child("Profile Pictures/" + filePath.getLastPathSegment());

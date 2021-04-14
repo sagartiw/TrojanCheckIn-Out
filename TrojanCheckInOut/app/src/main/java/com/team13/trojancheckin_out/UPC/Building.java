@@ -15,7 +15,7 @@ import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenc
  */
 public class Building implements Serializable {
 
-    private String abbreviation = "";
+    private String abbreviation;
     private String name;
     private int capacity;
     private int currentCount;
@@ -23,8 +23,14 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
+<<<<<<< HEAD
+   private List<User> students;
+
+
+=======
    private List<User> students = new ArrayList<>();
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Accesses Building object via a default constructor.
      */
@@ -66,8 +72,12 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
+<<<<<<< HEAD
+    public int getCapacity() { return this.capacity; }
+=======
 
     //public int getCapacity() { return this.capacity; }
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 //    public int getCurrentCount() {
 //
 //        if(students == null){
@@ -79,6 +89,8 @@ public class Building implements Serializable {
 //        }
 //        return students.size();
 //    }
+<<<<<<< HEAD
+=======
 
     public int getCapacity() {
         return this.capacity;
@@ -86,6 +98,7 @@ public class Building implements Serializable {
 
 
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Updates the building capacity.
      * @param capacity
@@ -126,22 +139,18 @@ public class Building implements Serializable {
     }
 
     /**
+<<<<<<< HEAD
+=======
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
      * @return percentage of building filled up.
      */
     public int getPercent() {
         double cur = (double) this.getCurrentCount();
         double cap = (double) this.capacity;
-        double perc = (cur / cap) * 100;
+        double perc = (cur/cap)*100;
         int percent = (int) perc;
         return percent;
-    }
-
-    public void setCapacity(int capacity, String abb) {
-        this.capacity = capacity;
-        System.out.println(abb);
-        referenceBuildings.child(abb).child("capacity").setValue(capacity);
-
     }
 
 
@@ -156,12 +165,9 @@ public class Building implements Serializable {
      * @param user
      * @return true if the student has been successfully removed from the building.
      */
-    public Boolean removeStudent(User user, String abb) {
-
-        System.out.println("ASS" + user.getId());
+    public Boolean removeStudent(User user) {
         students.remove(user);
-
-        referenceBuildings.child(abb).child("currentStudents").child(user.getId()).removeValue();
+        referenceBuildings.child(abbreviation).child("students").setValue(user);
         return true;
     }
 

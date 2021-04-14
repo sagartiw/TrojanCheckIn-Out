@@ -33,10 +33,13 @@ import java.util.Map;
 
 import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+<<<<<<< HEAD
+=======
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
@@ -78,12 +81,17 @@ public class StudentLanding extends AppCompatActivity {
         Major = (TextView)findViewById(R.id.id2);
         Major.setText(user.getMajor());
         currBuilding = (TextView)findViewById(R.id.buildingName);
+<<<<<<< HEAD
+        if(user.isInBuilding() == true){
+            Major.setText(user.getCurrentBuilding().getName());
+=======
 
 
         if(user.isInBuilding() == true){
 
             currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
             Scan.setEnabled(false);
         } else {
             currBuilding.setText("USC");
@@ -109,6 +117,14 @@ public class StudentLanding extends AppCompatActivity {
 //            }
 //        });
 
+        CheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentLanding.this, Startup.class);
+                intent.putExtra("PrevPageData", user);
+                startActivity(intent);
+            }
+        });
 
         Scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,10 +176,6 @@ public class StudentLanding extends AppCompatActivity {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.check_out_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button12);
-                Button nameButton = (Button) popupView.findViewById(R.id.button8);
-                Button submit = (Button) popupView.findViewById(R.id.button10);
-
-                nameButton.setText(user.getCurrentBuilding().getName());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -185,6 +197,8 @@ public class StudentLanding extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+<<<<<<< HEAD
+=======
 
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -248,6 +262,7 @@ public class StudentLanding extends AppCompatActivity {
                         v.getContext().startActivity(intent);
                     }
                 });
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
             }
         });
 

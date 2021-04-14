@@ -21,8 +21,16 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
+<<<<<<< HEAD
+import com.team13.trojancheckin_out.UPC.Building;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+=======
 
 import java.util.HashMap;
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;

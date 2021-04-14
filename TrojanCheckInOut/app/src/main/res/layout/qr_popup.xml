@@ -37,10 +37,9 @@
 
             <TextView
                 android:id="@+id/textView19"
-                android:layout_width="333dp"
+                android:layout_width="316dp"
                 android:layout_height="72dp"
-                android:layout_marginBottom="4dp"
-                android:elevation="1dp"
+                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Salvatori Computer Science Center"
                 android:textAlignment="center"
@@ -48,21 +47,20 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.47"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_conversion_absoluteHeight="30dp"
                 tools:layout_conversion_absoluteWidth="234dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/imageView8"
-                android:layout_width="314dp"
-                android:layout_height="389dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.59"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/circle" />
+                app:srcCompat="@drawable/qr_code" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

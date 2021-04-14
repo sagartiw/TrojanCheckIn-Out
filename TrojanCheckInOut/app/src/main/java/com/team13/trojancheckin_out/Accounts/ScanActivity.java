@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +28,10 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+<<<<<<< HEAD
+=======
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -121,9 +123,16 @@ public class ScanActivity extends AppCompatActivity {
 
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
+<<<<<<< HEAD
+                            if (match == null) {
+                                return;
+                            }
+
+=======
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             System.out.println("CHECK MATCH: " + match.getAbbreviation());
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                             User user = accountManipulator.currentUser;
 
                             // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
@@ -132,8 +141,13 @@ public class ScanActivity extends AppCompatActivity {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
                                     // user is trying to check out
+<<<<<<< HEAD
+                                    match.removeStudent(user);
+                                    user.setCurrentBuilding(null);
+=======
                                     match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                                     user.setterCurrentBuilding(null);
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                                     user.setInBuilding(false);
                                 }
                                 else {
@@ -161,8 +175,11 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
+<<<<<<< HEAD
+=======
                                     Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
                                             Toast.LENGTH_SHORT).show();
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                                 }
                             }
                             else { // user is trying to check in
@@ -192,9 +209,12 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
+<<<<<<< HEAD
+=======
 
                                     Toast.makeText(ScanActivity.this, "Building is Full!",
                                             Toast.LENGTH_SHORT).show();
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                                 }
                                 else { // check in the user
                                     match.addStudent(user);
