@@ -141,6 +141,8 @@ public class Manager extends User {
                             continue;
                         }
 
+                        // Check date
+
                         list.add(user);
                     }
                 }
