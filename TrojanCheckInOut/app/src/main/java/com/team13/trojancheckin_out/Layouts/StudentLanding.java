@@ -85,11 +85,8 @@ public class StudentLanding extends AppCompatActivity {
         if(user.isInBuilding() == true){
 
             currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
-
-            Scan.setEnabled(false);
         } else {
             currBuilding.setText("USC");
-            CheckOut.setEnabled(false);
         }
 
 
@@ -281,9 +278,10 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         currentUser = null;
-                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        //Intent intent = new Intent(v.getContext(), Startup.class);
                         //intent.putExtra("PrevPageData", user);
-                        v.getContext().startActivity(intent);
+                        //v.getContext().startActivity(intent);
+                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
                     }
                 });

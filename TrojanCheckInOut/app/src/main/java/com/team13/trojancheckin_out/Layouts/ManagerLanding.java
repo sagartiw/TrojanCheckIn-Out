@@ -156,8 +156,9 @@ public class ManagerLanding extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if(item.getTitle().toString().equals("Sign Out")){
-                    Intent intent = new Intent(ManagerLanding.this, Startup.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(ManagerLanding.this, Startup.class);
+                    //startActivity(intent);
+                    startActivity(new Intent(ManagerLanding.this, Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
 //                if(item.getTitle().toString().equals("Delete Account")){
 //                    // inflate the layout of the popup window
