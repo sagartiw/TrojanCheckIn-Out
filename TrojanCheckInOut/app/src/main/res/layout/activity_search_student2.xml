@@ -12,21 +12,20 @@
         android:id="@+id/textView35"
         android:layout_width="18dp"
         android:layout_height="30dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:text="to"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <EditText
         android:id="@+id/editTextDate2"
-        android:layout_width="116dp"
+        android:layout_width="170dp"
         android:layout_height="23dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="22dp"
         android:background="#FFFFFF"
         android:ems="6"
         android:inputType="date"
@@ -40,28 +39,27 @@
         android:id="@+id/textView34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text='Please Input Times as Military Notation    EX: "0623" is 6:23'
         android:textColor="#990000"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
     <TextView
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text='Input Dates as " ddMMyyyy"  EX: "1/1/2021" is "01012021"'
         android:textColor="#990000"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
-        app:layout_constraintStart_toEndOf="@+id/button7"
-        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTime3" />
 
     <TextView
         android:id="@+id/textView21"
@@ -79,15 +77,15 @@
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Date"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/textView37"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTime3" />
 
     <TextView
         android:id="@+id/textView22"
@@ -106,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:text="Building"
         android:textColor="#707070"
@@ -117,9 +115,8 @@
     <Button
         android:id="@+id/backer"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
         android:text="&lt; back"
@@ -180,7 +177,7 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="395dp"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="#FFFFFF"
@@ -191,14 +188,13 @@
         android:textColorLink="@color/red"
         android:textCursorDrawable="@drawable/color_cursor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <Spinner
         android:id="@+id/spinner"
         style="@android:style/Widget.Spinner.DropDown"
-        android:layout_width="395dp"
+        android:layout_width="370dp"
         android:layout_height="42dp"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/red"
@@ -209,7 +205,7 @@
     <Spinner
         android:id="@+id/spinner2"
         style="@android:style/Widget.Spinner.DropDown"
-        android:layout_width="395dp"
+        android:layout_width="370dp"
         android:layout_height="42dp"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/red"
@@ -250,7 +246,7 @@
         android:textSize="10sp"
         app:cornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime3"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
         app:strokeColor="@color/red" />
 
     <TextView
@@ -258,7 +254,7 @@
         android:layout_width="90dp"
         android:layout_height="23dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Results"
         android:textColor="#707070"
@@ -268,7 +264,7 @@
 
     <RelativeLayout
         android:layout_width="390dp"
-        android:layout_height="310dp"
+        android:layout_height="180dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -287,12 +283,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
         android:text="Student ID"
         android:textColor="#707070"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lName2" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat"
+        android:text="First Name"
+        android:textColor="#707070"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Last Name"
+        android:textColor="#707070"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/lName2"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
@@ -313,7 +334,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="Search Students"
         android:textColor="#707070"
@@ -363,19 +384,43 @@
 
     <EditText
         android:id="@+id/editTextDate"
-        android:layout_width="116dp"
+        android:layout_width="170dp"
         android:layout_height="23dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="4dp"
         android:background="#FFFFFF"
         android:ems="6"
         android:inputType="date"
         android:textColorHighlight="#80990000"
         android:textColorLink="@color/red"
         android:textCursorDrawable="@drawable/color_cursor"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDate2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+    <EditText
+        android:id="@+id/lName2"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="22dp"
+        android:background="@color/white"
+        android:backgroundTint="#FFFFFF"
+        android:ems="6"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:backgroundTint="#FFFFFF"
+        android:ems="6"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

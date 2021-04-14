@@ -41,6 +41,8 @@ public class SearchStudent2 extends AppCompatActivity {
     private EditText time2;
     private EditText date1;
     private EditText date2;
+    private EditText fName1;
+    private EditText lName1;
     private AccountManipulator accountManipulator = new AccountManipulator();
     private BuildingManipulator buildingManipulator = new BuildingManipulator();
     private Manager manager = new Manager(buildingManipulator, accountManipulator);
@@ -65,6 +67,8 @@ public class SearchStudent2 extends AppCompatActivity {
         time2 = (EditText)findViewById(R.id.editTextTime4);
         date1 = (EditText)findViewById(R.id.editTextDate);
         date2 = (EditText)findViewById(R.id.editTextDate2);
+        fName1 = (EditText)findViewById(R.id.firstName);
+        lName1 = (EditText)findViewById(R.id.lName2);
 
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +93,12 @@ public class SearchStudent2 extends AppCompatActivity {
                         String id = null;
                         String major = null;
                         Building building = null;
+                        String fName = null;
+                        String lName = null;
 
 
                         boolean showAll = false;
-                        boolean cond1 = true, cond2 = true, cond3 = true, cond4 = true, cond5 = true, cond6 = true;
+                        boolean cond1 = true, cond2 = true, cond3 = true, cond4 = true, cond5 = true, cond6 = true, cond7 = true, cond8 = true;
 
                         // If student ID is not empty, cond1 is false
                         // If student ID is empty, cond1 is true
@@ -122,6 +128,14 @@ public class SearchStudent2 extends AppCompatActivity {
                         }
                         if(!date2.getText().toString().equals("")) {
                             d2 = Integer.parseInt(date2.getText().toString());
+                            cond6 = false;
+                        }
+                        if(!fName1.getText().toString().equals("")) {
+                            fName = fName1.getText().toString();
+                            cond6 = false;
+                        }
+                        if(!lName1.getText().toString().equals("")) {
+                            lName = lName1.getText().toString();
                             cond6 = false;
                         }
                         // IF ALL FIELDS ARE EMPTY (Cond = true), SHOW ALL WOULD BE SET TRUE
@@ -160,7 +174,7 @@ public class SearchStudent2 extends AppCompatActivity {
                         }
                         else
                         {
-                            studentList = manager.searchStudents(t1, t2, building, id, major, d1, d2); //date1, date2
+                            studentList = manager.searchStudents(fName, lName, t1, t2, building, id, major, d1, d2); //date1, date2
                         }
 
                         //setting adapter to recyclerview
