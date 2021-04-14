@@ -9,6 +9,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,7 @@ public class Manager extends User {
      * @return the searched name in the list of users
      */
     public User searchName(User user, String fName, String lName, List<User> list) {
+
         System.out.println("SEARCH NAME: " + user.getName() + " " + fName + " " + lName + " " + list);
         if (lName == null && fName == null) {
             return null;
@@ -77,17 +79,18 @@ public class Manager extends User {
         String[] name = user.getName().split(", ");
 
         if (lName != null && fName == null) {
-            if (lName.contains(name[0])) {
+            System.out.println("lName: " + lName.toLowerCase() + " name[0]: " + name[0] + " Condition: " + name[0].toLowerCase().contains(lName.toLowerCase()));
+            if (name[0].toLowerCase().contains(lName.toLowerCase())) {
                 System.out.println("LAST NAME: " + lName);
                 return user;
             }
         } else if (lName == null && fName != null) {
-            if (fName.contains(name[1])) {
+            if (name[1].toLowerCase().contains(fName.toLowerCase())) {
                 System.out.println("FIRST NAME: " + fName);
                 return user;
             }
         } else {
-            if (fName.contains(name[1]) && lName.contains(name[0])) {
+            if (name[1].toLowerCase().contains(fName.toLowerCase()) && name[0].toLowerCase().contains(lName.toLowerCase())) {
                 System.out.println("NAME MATCH: " + fName + lName);
                 return user;
             }
@@ -112,11 +115,23 @@ public class Manager extends User {
 //            orderedList.add(lastName[0]);
 //        }
 //        Collections.sort(orderedList);
+
         System.out.println("WHAT THE HECk");
 
         List<User> list = new ArrayList<>();
 
+<<<<<<< HEAD
         //Case 1: ONLY inputting id. If other things are filled, ID supercedes everything
+=======
+        // Name Comparator
+        Collections.sort(list, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o2.getName().compareTo(o1.getName());
+            }
+        });
+
+>>>>>>> a98ce71fb95c732868e9b4626b05e803727f21fb
         if (id != null) {
             System.out.println("MAN WHAT");
             accountManipulator.getAllAccounts(new MyUserCallback() {
@@ -129,6 +144,7 @@ public class Manager extends User {
                     }
                 }
             });
+
             return list;
         }
         //CASE 2: null id with building chosen.
