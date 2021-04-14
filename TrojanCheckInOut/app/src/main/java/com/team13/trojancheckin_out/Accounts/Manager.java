@@ -120,19 +120,15 @@ public class Manager extends User {
 
         List<User> list = new ArrayList<>();
 
-//        // Name Comparator
-//        Collections.sort(list, new Comparator<User>() {
-//            @Override
-//            public int compare(User o1, User o2) {
-//                return o2.getName().compareTo(o1.getName());
-//            }
-//        });
-//
-//        Collections.sort(list, (s1, s2) -> {
-//
-//        });
+        //Case 1: ONLY inputting id. If other things are filled, ID supercedes everything
 
-        //Collections.sort(list, (User u1, User u2) -> u1.getName().compareTo(u2.getName());
+        // Name Comparator
+        Collections.sort(list, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o2.getName().compareTo(o1.getName());
+            }
+        });
 
         if (id != null) {
             System.out.println("MAN WHAT");
@@ -150,23 +146,21 @@ public class Manager extends User {
             System.out.println("Return list 1");
             return list;
         }
-        //First case was for id search only. this next set is if a building is chosen
+        //CASE 2: null id with building chosen.
         else if (building != null) {
             System.out.println("HERE IS NAME2");
-            // Major and times filled
+            //Case 2A: Major and Times filled. Need to add if Dates are filled too.
             if (major != null && startTime != -1 && endTime != -1) {
                 for (User user : building.getCurrentStudents()) {
                     String s = user.getHistory().get(building.getAbbreviation());
                     String[] ts = s.split(" ");
 
                     if (user.getMajor().equals(major) && Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
-
                         // Check name
                         if (searchName(user, fName, lName, list) != null) {
                             list.add(searchName(user, fName, lName, list));
                             continue;
                         }
-
                         // Check date
 
                         list.add(user);
@@ -180,8 +174,7 @@ public class Manager extends User {
                 System.out.println("Return list 2");
                 return list;
             }
-
-            // Major only
+            //Case 2B: Major is filled. Time is null. Need to add if Dates are null.
             else if (major != null && startTime == -1 && endTime == -1) {
                 for (User user : building.getCurrentStudents()) {
                     if (user.getMajor().equals(major)){
@@ -203,6 +196,7 @@ public class Manager extends User {
                 System.out.println("Return list 3");
                 return list;
             }
+            //Case 2C: Major is null. Time is filled. Need to add if Dates are null/filled.
             else if (major == null && startTime != -1 && endTime != -1) {
                 for (User user : building.getCurrentStudents()) {
                     String s = user.getHistory().get(building.getAbbreviation());
@@ -219,7 +213,7 @@ public class Manager extends User {
                     }
                 }
             }
-            //everything but building is null
+            //Case 2D: Everything but building is null.
             else {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
@@ -240,9 +234,11 @@ public class Manager extends User {
                     }
                 });
             }
-        } //major is the dominating condition
+        }
+        //Case 3: Building and ID are null. Major is filled/dominating condition.
         else if (major != null) {
             System.out.println("HERE IS NAME1");
+            //Case 3A: Time is also filled. Need to check if dates are null/filled.
             if (startTime != -1 && endTime != -1) {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
@@ -271,7 +267,9 @@ public class Manager extends User {
                 }
                 System.out.println("Return list 4");
                 return list;
-            } else {
+            }
+            //Case 3B: Everything is null except for major.
+            else {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
@@ -296,8 +294,7 @@ public class Manager extends User {
                 return list;
             }
         }
-
-        // Only time is a condition
+        // Case 4: ID, Building, and Major are null. Time is filled. Need to check if dates are null.
         else if (startTime != -1 && endTime != -1){
             System.out.println("TIME ONLY CASE");
             accountManipulator.getAllAccounts(new MyUserCallback() {
@@ -334,8 +331,7 @@ public class Manager extends User {
             System.out.println("Return list 6");
             return list;
         }
-
-        // Only name is a condition
+        //Case 5: Name is filled. I think that this should supercede everything but ID, so may we should move this up.
         else if (lName != null && fName != null || lName != null && fName == null || lName == null && fName != null){
             System.out.println("HERE IS NAMEEEE");
             accountManipulator.getAllAccounts(new MyUserCallback() {
