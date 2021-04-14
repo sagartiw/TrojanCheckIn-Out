@@ -35,6 +35,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +93,12 @@ public class StudentLanding extends AppCompatActivity {
         Major.setText(user.getMajor());
         currBuilding = (TextView)findViewById(R.id.buildingName);
 
+        System.out.println("TESTER : " + user.getCurrentBuilding().getAbbreviation());
+        System.out.println("TESTER : " + user.isInBuilding());
+        if(user.getCurrentBuilding().getName().toString().equals("NA")){
+            currBuilding.setText("NA");
+            user.setterInBuilding(false);
+        }
 
         if(user.isInBuilding() == true){
 
@@ -126,6 +133,7 @@ public class StudentLanding extends AppCompatActivity {
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
+
             }
         });
 
@@ -233,6 +241,8 @@ public class StudentLanding extends AppCompatActivity {
                         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                         int currentMinute = cal.get(Calendar.MINUTE);
                         //int currentDate = cal.get(Calendar.DATE);
+                        Date dater = cal.getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
                         String min = Integer.toString(currentMinute);
                         String hour = Integer.toString(currentHour);
@@ -246,8 +256,9 @@ public class StudentLanding extends AppCompatActivity {
                             hour = "0" + Integer.toString(currentHour);
                         }
 
-                        String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
-                        String time = hour + min + currentDate1;
+                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                        String date = sdf.format(dater).toString();
+                        String time = hour + min + date;
                         System.out.println("time:" + time);
                         String checkOutTime = time;
 
