@@ -25,6 +25,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameTitle4"
+                tools:context="net.simplifiedlearning.recyclerviewexample.MainActivity">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/nameTitle4"
                 android:layout_width="wrap_content"
@@ -38,84 +55,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView27" />
-
-            <TextView
-                android:id="@+id/nameTitle5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="BUILDING"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/divider4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle4" />
-
-            <TextView
-                android:id="@+id/nameTitle8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/montserrat"
-                android:text="JFF"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/divider4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle5" />
-
-            <TextView
-                android:id="@+id/nameTitle9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/montserrat"
-                android:text="Check In"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/divider5"
-                app:layout_constraintStart_toEndOf="@+id/divider4"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle6" />
-
-            <TextView
-                android:id="@+id/nameTitle10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/montserrat"
-                android:text="11:29 AM"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/divider5"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle7" />
-
-            <TextView
-                android:id="@+id/nameTitle6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="ACTION"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/divider5"
-                app:layout_constraintStart_toEndOf="@+id/divider4"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle4" />
-
-            <TextView
-                android:id="@+id/nameTitle7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="TIME"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/divider5"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle4" />
 
             <TextView
                 android:id="@+id/textView27"
@@ -142,26 +81,6 @@
                 android:textColor="#990000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="1dp"
-                android:layout_height="230dp"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="32dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle4" />
-
-            <View
-                android:id="@+id/divider5"
-                android:layout_width="1dp"
-                android:layout_height="230dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="120dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameTitle4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

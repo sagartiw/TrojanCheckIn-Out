@@ -17,8 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+<<<<<<< HEAD
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+=======
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,11 +32,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
@@ -76,13 +84,32 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         //getting the product of the specified position
         //Building building was the og. i added private member.
         building = buildingList.get(position);
+        System.out.println("CAPACITY: " + building.getCapacity());
+        System.out.println("PERCENT: " + building.getPercent());
+
+        // Retrieve currentCount
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                int count = map.get(building.getAbbreviation()).getCurrentCount();
+                System.out.println("COUNT: " + count);
+                double cur = (double) count;
+                System.out.println("CUR: " + cur);
+                double cap = (double) building.getCapacity();
+                System.out.println("CAP: " + cap);
+                double perc = (cur / cap) * 100;
+                System.out.println("PERC: " + perc);
+                int percent = (int) perc;
+                System.out.println("PERCENT: " + percent);
+                holder.textViewCurrent.setText(String.valueOf(count));
+                holder.textViewPercent.setText(String.valueOf(percent) + "%");
+                holder.progressBar.setProgress(percent);
+            }
+        });
 
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
-        holder.textViewCurrent.setText(String.valueOf(building.getCurrentCount()));
         holder.textViewCapacity.setText(String.valueOf(building.getCapacity()));
-        holder.textViewPercent.setText(String.valueOf(building.getPercent()) + "%");
-        holder.progressBar.setProgress((building.getPercent()));
 
         qrButton = holder.imageButton;
         cap = holder.capacity;
@@ -151,7 +178,16 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.cap_popup, null);
+<<<<<<< HEAD
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
+=======
+
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                Button submitButton = (Button) popupView.findViewById(R.id.button9);
+                TextView name = (TextView) popupView.findViewById(R.id.textView18);
+                name.setText(buildingList.get(position).getName());
+                //name.setText(building.getName());
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -165,6 +201,10 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override

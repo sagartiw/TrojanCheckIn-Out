@@ -3,10 +3,10 @@ package com.team13.trojancheckin_out.Accounts;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+
 
 class TimeStamps {
     String checkInTime = "";
@@ -32,6 +32,8 @@ public class User implements Serializable {
     private String major;
     private String isManager;
 
+    private boolean deleted;
+
     /**
      * User object via a default constructor.
      */
@@ -49,10 +51,11 @@ public class User implements Serializable {
      * @param history
      * @param major
      * @param isManager
+     * @param deleted
      */
     public User (String name, String email, String password, String photo, String id,
                  boolean inBuilding, Building currentBuilding, Map<String, String> history,
-                 String major, String isManager) {
+                 String major, String isManager, boolean deleted) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -63,6 +66,7 @@ public class User implements Serializable {
         this.history = history;
         this.major = major;
         this.isManager = isManager;
+        this.deleted = deleted;
     }
 
     /**
@@ -73,6 +77,8 @@ public class User implements Serializable {
     }
 
     public void setName(String name) {
+
+        System.out.println("I AM SETTING NAME");
         this.name = name;
     }
 
@@ -101,7 +107,9 @@ public class User implements Serializable {
     }
 
     public String getId() {
+
         return id;
+
     }
 
     public void setId(String id) {
@@ -124,10 +132,21 @@ public class User implements Serializable {
         return currentBuilding;
     }
 
-    public void setCurrentBuilding(Building currentBuilding) {
-        //referenceUsers.child(this.getId()).child("currentBuilding").child("abbreviation").setValue(currentBuilding.getAbbreviation());
+   public void setCurrentBuilding(Building currentBuilding) {
+
         this.currentBuilding = currentBuilding;
-    }
+   }
+
+   public void setterCurrentBuilding(Building currentBuilding) {
+       this.currentBuilding = currentBuilding;
+
+       Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getQRCode());
+//       b.setStudents(currentBuilding.getCurrentStudents());
+
+       System.out.println("FULL OBJECT" +currentBuilding.getName() +  " " + currentBuilding.getAbbreviation() + " " + currentBuilding.getCapacity() + " " + currentBuilding.getQRCode() );
+
+       referenceUsers.child(this.getId()).child("currentBuilding").setValue(b);
+   }
 
     public Map<String, String> getHistory() {
         return history;
@@ -152,6 +171,14 @@ public class User implements Serializable {
 
     public void setManager(String isManager) {
         this.isManager = isManager;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     /**

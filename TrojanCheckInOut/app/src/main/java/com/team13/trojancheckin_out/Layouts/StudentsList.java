@@ -52,6 +52,7 @@ public class StudentsList extends AppCompatActivity {
     private AccountManipulator accountManipulator = new AccountManipulator();
     private TextView buildingName;
     private Building building;
+    private TextView welcome;
 
     //a list to store all the products
     private List<User> studentList;
@@ -62,6 +63,9 @@ public class StudentsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
 
+        User user = accountManipulator.currentUser;
+
+
         Back = (Button)findViewById(R.id.backer2);
 
         buildingName = (TextView) findViewById(R.id.textView32);
@@ -69,6 +73,11 @@ public class StudentsList extends AppCompatActivity {
 
         //NEED TO MAKE THIS OUR ACTUAL BUILDING OBJECT
         buildingName.setText(building.getAbbreviation());
+
+        // make welcome message empty
+        welcome = (TextView) findViewById(R.id.textView30);
+
+        welcome.setText(" ");
 
 
         Back.setOnClickListener(new View.OnClickListener() {
@@ -82,26 +91,44 @@ public class StudentsList extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(StudentsList.this, LinearLayoutManager.VERTICAL, false));
+
         System.out.println("CHANGE");
 
         studentList = new ArrayList<>();
 
+<<<<<<< HEAD
+        StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+        recyclerView.setAdapter(adapter);
+=======
+        // get students list - idk why this doesnt work
+        //studentList = building.getCurrentStudents();
+
         StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
         recyclerView.setAdapter(adapter);
 
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
+
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
+
+
+
 
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
                 for (Map.Entry<String, User> e : map.entrySet()) {
                     User user = e.getValue();
-                    if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
-                        studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager()));
-                        System.out.println("USER NAME: " + user.getName());
+                    if (user.isInBuilding()) {
+                        if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
+                            studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager(), user.isDeleted()));
+                            System.out.println("USER NAME: " + user.getName());
+                        }
                     }
+
                 }
                 //getting the recyclerview from xml
 //                recyclerView = (RecyclerView) findViewById(R.id.recyclerView3);
@@ -144,181 +171,13 @@ public class StudentsList extends AppCompatActivity {
 //        });
 
 
-//        //adding some items to our list
-//        studentList.add(
-//                new User(
-//                        "Mindy Diep",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Arian Memari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Sagar Tiwari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Kabir Samra",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Annika Oeth",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Elizabeth Moody",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Mindy Diep",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Arian Memari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Sagar Tiwari",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Kabir Samra",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Annika Oeth",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-//
-//        studentList.add(
-//                new User(
-//                        "Elizabeth Moody",
-//                        "mindydie@usc.edu",
-//                        "hello",
-//                        "photo",
-//                        "123456789",
-//                        true,
-//                        null,
-//                        null,
-//                        "CSBA",
-//                        "false"
-//                ));
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
         final PopupMenu menu = new PopupMenu(this, fab);
+        menu.getMenu().add("Edit Profile");
+
         menu.getMenu().add("Student View");
         menu.getMenu().add("Sign Out");
-        menu.getMenu().add("Delete Account");
+       // menu.getMenu().add("Delete Account");
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 // insert your code here
@@ -327,36 +186,41 @@ public class StudentsList extends AppCompatActivity {
                     Intent intent = new Intent(StudentsList.this, StudentLanding.class);
                     startActivity(intent);
                 }
+                if(item.getTitle().toString().equals("Edit Profile")){
+                    Intent intent = new Intent(StudentsList.this, EditProfile.class);
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
                 if(item.getTitle().toString().equals("Sign Out")){
                     Intent intent = new Intent(StudentsList.this, Startup.class);
                     startActivity(intent);
                 }
-                if(item.getTitle().toString().equals("Delete Account")){
-                    // inflate the layout of the popup window
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
-                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    popupWindow.setElevation(20);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    closeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-                }
+//                if(item.getTitle().toString().equals("Delete Account")){
+//                    // inflate the layout of the popup window
+//                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                    View popupView = inflater.inflate(R.layout.delete_account_popup, null);
+//                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+//
+//                    // create the popup window
+//                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    boolean focusable = true; // lets taps outside the popup also dismiss it
+//                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    popupWindow.setElevation(20);
+//
+//                    // show the popup window
+//                    // which view you pass in doesn't matter, it is only used for the window token
+//                    popupWindow.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+//
+//                    // dismiss the popup window when touched
+//                    closeButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            popupWindow.dismiss();
+//                        }
+//                    });
+//                }
                 return true; }
         });
 

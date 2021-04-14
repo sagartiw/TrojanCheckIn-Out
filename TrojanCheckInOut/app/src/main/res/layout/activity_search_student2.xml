@@ -9,6 +9,19 @@
     tools:context="com.team13.trojancheckin_out.Layouts.SearchStudent2">
 
     <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat"
+        android:text='Please Input Times as Military Notation    EX: "0623" is 6:23'
+        android:textColor="#990000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+    <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

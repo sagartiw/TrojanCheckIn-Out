@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -16,25 +17,38 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+=======
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class CompleteProfile extends AppCompatActivity {
 
+    private java.util.UUID UUID;
     private Button Register;
     private Button Back;
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -45,17 +59,26 @@ public class CompleteProfile extends AppCompatActivity {
     private RadioButton studentButton;
     private RadioButton managerButton;
     private ImageButton profileImage;
+    private ImageButton uploadProfImage;
+    private ImageView viewPFP;
+    private Uri filePath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     //https://firebase.google.com/docs/storage/android/upload-files
-    public final static int PICK_PHOTO_CODE = 1046;
+    //public final static int PICK_PHOTO_CODE = 1046;
+    public final static int PICK_PHOTO_CODE = 71;
+
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_complete_profile);
+        viewPFP = (ImageView) findViewById(R.id.imageView3);
+        System.out.println("viewpfp: " + viewPFP);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);
@@ -204,12 +227,12 @@ public class CompleteProfile extends AppCompatActivity {
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
-        Register = (Button)findViewById(R.id.register3);
+        Register = (Button) findViewById(R.id.register3);
 
         // Grab currrent data for the user
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
-        radioGroup = (RadioGroup)findViewById(R.id.radioGroup) ;
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         radioGroup.clearCheck();
 
@@ -217,7 +240,7 @@ public class CompleteProfile extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // Get the selected Radio Button
-                RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
             }
         });
 
@@ -236,42 +259,78 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setMajor(major);
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
+                boolean checkConditions = true;
                 if (radioChosen == -1) {
                     Toast.makeText(CompleteProfile.this, "Please select account type!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    checkConditions = false;
+                } else {
 
-                    RadioButton chosen = (RadioButton)radioGroup.findViewById(radioChosen);
+                    RadioButton chosen = (RadioButton) radioGroup.findViewById(radioChosen);
                     studentButton = radioGroup.findViewById(R.id.radioButton3);
                     managerButton = radioGroup.findViewById(R.id.radioButton2);
 
-                    if(chosen.getId() == studentButton.getId()){
+                    if (chosen.getId() == studentButton.getId()) {
                         user.setManager("false");
-                    } else if(chosen.getId() == managerButton.getId()){
+                    } else if (chosen.getId() == managerButton.getId()) {
                         user.setManager("true");
                     }
                 }
 
+                if (studentID.getText().toString().length() != 10) {
+                    Toast.makeText(CompleteProfile.this, "All student IDs must be 10 digits!", Toast.LENGTH_SHORT).show();
+                    checkConditions = false;
+                }
+
                 user.setId(studentID.getText().toString());
 
+<<<<<<< HEAD
 //                // delete later
                 Building building = new Building();
                 building.setName("USC Campus");
                 user.setCurrentBuilding(building);
                 user.getHistory().put("USC", "1234 0123");
 
+=======
+                user.setDeleted(false);
 
-                // Push user to DB
-                accountManipulator.createAccount(user);
-                Intent intent = new Intent(CompleteProfile.this, StudentLanding.class);
 
-                intent.putExtra("PrevPageData", user);
-                startActivity(intent);
+                // delete later
+                /*
+                Building building = new Building();
+                building.setName("USC Campus");
+
+                //user.setCurrentBuilding(building);
+                user.getHistory().put("USC", "1234 0123");
+
+                // delete later
+
+                //Building building = new Building();
+
+                building.setName("USC");
+                user.setCurrentBuilding(building);
+                */
+
+                if (checkConditions) {
+                    user.getHistory().put("SLH", "0123 2344");
+
+                    // Push user to DB
+                    accountManipulator.createAccount(user);
+                    Intent intent;
+                    if (user.isManager().equals("true")) {
+                        intent = new Intent(CompleteProfile.this, ManagerLanding.class);
+                    } else {
+                        intent = new Intent(CompleteProfile.this, StudentLanding.class);
+                    }
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
+
+                    intent.putExtra("PrevPageData", user);
+                    startActivity(intent);
+                }
+
             }
         });
 
-        Back = (Button)findViewById(R.id.back3);
-
+        Back = (Button) findViewById(R.id.back3);
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,16 +340,118 @@ public class CompleteProfile extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
 
 
         profileImage = (ImageButton)findViewById(R.id.imageButton);
 
+=======
+        mAuth = FirebaseAuth.getInstance();
+        curr = mAuth.getCurrentUser();
+        if (curr == null){
+            mAuth.signInAnonymously();
+        }
+        profileImage = (ImageButton) findViewById(R.id.imageButton);
+      //  viewPFP = (ImageView) findViewById(R.id.pfp);
+        System.out.println("View pfp initial: " + viewPFP);
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked add profile pick");
+                chooseImage();
+                System.out.println("about to upload image");
+                uploadImage();
+            }
+        });
+
+
+        /*
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked upload image");
+                uploadImage();
+            }
+        });*/
+
+
+//        profileImage = (ImageButton)findViewById(R.id.imageButton);
+//
+//
+//        profileImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // inflate the layout of the popup window
+//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
+//                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
+//                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
+//                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
+//                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+//
+//                // create the popup window
+//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                boolean focusable = true; // lets taps outside the popup also dismiss it
+//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                popupWindow.setElevation(20);
+//
+//                // show the popup window
+//                // which view you pass in doesn't matter, it is only used for the window token
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+//
+//                tommy.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED TOMMY!");
+//                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
+//                        user.setPhoto(tommy);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//                hecuba.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED HECUBA!");
+//                        String hecuba = "@drawable/hecuba";
+//                        user.setPhoto(hecuba);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//                traveller.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        System.out.println("CLICKED TRAVELLER!");
+//                        String traveller = "@drawable/traveller";
+//                        user.setPhoto(traveller);
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//
+//                // dismiss the popup window when touched
+//                closeButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//
+//            }
+//
+//        });
+
+        /*profileImage = (ImageButton)findViewById(R.id.imageButton);
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
         profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     // Bring up gallery to select a photo
                     startActivityForResult(intent, PICK_PHOTO_CODE);
@@ -298,16 +459,29 @@ public class CompleteProfile extends AppCompatActivity {
             }
         });
     }
+<<<<<<< HEAD
 
     public Bitmap loadFromUri(Uri photoUri) {
+=======
+*/
+    //@Override
+  //  public void onStart() {
+  //      super.onStart();
+  //      Check if user is signed in (non-null) and update UI accordingly.
+   //   FirebaseUser currentUser = mAuth.getCurrentUser();
+ //   }
+    /*public Bitmap loadFromUri(Uri photoUri) {
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
         Bitmap image = null;
         try {
             // check version of Android on device
             if(Build.VERSION.SDK_INT > 27){
+
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
             } else {
+
                 // support older versions of Android by using getBitmap
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
             }
@@ -315,20 +489,22 @@ public class CompleteProfile extends AppCompatActivity {
             e.printStackTrace();
         }
         return image;
-    }
+    }*/
 
-    @SuppressLint("MissingSuperCall")
+/*    @SuppressLint("MissingSuperCall")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+        if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
 
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
 
-            StorageReference selectedFile = storageRef.child("Profile Pictures/" + photoUri.getLastPathSegment());
-            UploadTask uploadTask = selectedFile.putFile(photoUri);
+            StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            System.out.println("HELLO TEAM");
 
+            UploadTask uploadTask = selectedFile.putFile(photoUri);
+            System.out.println("HELLO TEAM 2");
             user = (User) getIntent().getSerializableExtra("PrevPageData");
 
             user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
@@ -346,8 +522,80 @@ public class CompleteProfile extends AppCompatActivity {
                     // ...
                 }
             });
+        }
+    }*/
+    }
 
+    //select image
+    private void chooseImage() {
+        System.out.println("starting choose image");
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PHOTO_CODE);
+        System.out.println("finish choose image");
+    }
+
+    //Upload local image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("start onActivityResult photo codes");
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            System.out.println("filepath oAR: " + filePath + ", data: " + data + ", getdata: " +data.getData());
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                viewPFP.setImageBitmap(bitmap);
+                uploadImage();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
+    private void uploadImage() {
+        System.out.println("filepath in Upload img: " + filePath);
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+           // StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            //"profile pics/ or images/" for ref?"
+            //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageRef.child("Profile Pictures/" + UUID.randomUUID().toString());
+
+            System.out.println("upload image function");
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CompleteProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("upload failed..... function");
+
+                            progressDialog.dismiss();
+                            Toast.makeText(CompleteProfile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+    }
 }

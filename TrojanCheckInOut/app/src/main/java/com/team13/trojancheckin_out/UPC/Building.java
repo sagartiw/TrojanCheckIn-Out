@@ -1,16 +1,10 @@
 package com.team13.trojancheckin_out.UPC;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
-import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 
@@ -24,13 +18,19 @@ public class Building implements Serializable {
     private String abbreviation;
     private String name;
     private int capacity;
+    private int currentCount;
 
     // Have to use an image builder, using String for now
     private String QRCode;
 
+<<<<<<< HEAD
    private List<User> students;
 
 
+=======
+   private List<User> students = new ArrayList<>();
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Accesses Building object via a default constructor.
      */
@@ -72,7 +72,12 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
+<<<<<<< HEAD
     public int getCapacity() { return this.capacity; }
+=======
+
+    //public int getCapacity() { return this.capacity; }
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 //    public int getCurrentCount() {
 //
 //        if(students == null){
@@ -84,6 +89,16 @@ public class Building implements Serializable {
 //        }
 //        return students.size();
 //    }
+<<<<<<< HEAD
+=======
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Updates the building capacity.
      * @param capacity
@@ -120,14 +135,14 @@ public class Building implements Serializable {
      * CURRENTLY BREAKS CODE DUE TO ACCESSING EMPTY DATA STRUCTURE
      */
     public int getCurrentCount() {
-        if (students == null) return 0;
-        if (!students.isEmpty()) {
-            return 0;
-        }
-        return students.size();
+        return this.currentCount;
     }
 
     /**
+<<<<<<< HEAD
+=======
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
      * @return percentage of building filled up.
      */
     public int getPercent() {

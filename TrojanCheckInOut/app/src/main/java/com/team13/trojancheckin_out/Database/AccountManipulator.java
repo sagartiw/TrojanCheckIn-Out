@@ -38,6 +38,7 @@ public class AccountManipulator extends User {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     User user = ds.getValue(User.class);
+                    System.out.println("USER ID: " + user.getId());
                     allAccounts.put(user.getId(), user);
                 }
 
@@ -124,12 +125,18 @@ public class AccountManipulator extends User {
      */
     public Boolean deleteAccount(User user) {
         currentUser = null;
-        referenceUsers.child(user.getId()).removeValue();
+
+        referenceUsers.child(user.getId()).child("deleted").setValue(true);
+
+        //referenceUsers.child(user.getId()).removeValue();
         if (user.isManager().equalsIgnoreCase("true")) {
-            managerAccounts.remove(user.getId());
+            //managerAccounts.remove(user.getId());
+
         } else {
-            studentAccounts.remove(user.getId());
+            //studentAccounts.remove(user.getId());
+
         }
+
         return true;
     }
 

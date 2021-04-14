@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.rootNode;
 
 /**
@@ -78,7 +77,11 @@ public class BuildingManipulator {
      */
     public Building getBuilding(String acronym) {
         System.out.println("IM HERE: " + acronym);
-        System.out.println("BITCH : " + currentBuildings.get(acronym).getAbbreviation());
+
+        //System.out.println("a : " + currentBuildings.get(acronym).getAbbreviation());
+
+        if (currentBuildings == null ) return new Building();
+
         return currentBuildings.get(acronym);
     }
 
@@ -105,7 +108,9 @@ public class BuildingManipulator {
                 String[] data = line.split("@");
 
                 Building building = getBuilding(data[1]);
+                building.setCapacity(Integer.parseInt(data[2]));
 
+<<<<<<< HEAD
                 building.setCapacity(Integer.parseInt(data[2]));
 
                 referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
@@ -120,6 +125,9 @@ public class BuildingManipulator {
 
                 // Store in DB
                 referenceBuildings.child(data[1]).setValue(building);
+=======
+                referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
             }
             scan.close();
         } catch (FileNotFoundException e) {

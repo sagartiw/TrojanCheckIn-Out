@@ -3,6 +3,8 @@ package com.team13.trojancheckin_out.Layouts;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,8 +26,20 @@ import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.UPC.Building;
 
+import java.util.Map;
+
+import static com.team13.trojancheckin_out.Accounts.ScanActivity.checkInTime;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+<<<<<<< HEAD
+=======
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 
 public class StudentLanding extends AppCompatActivity {
     private Button SignOut;
@@ -41,12 +55,14 @@ public class StudentLanding extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private TextView welcomeName;
+    private boolean notIncremented = true;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_landing);
+
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
@@ -64,29 +80,42 @@ public class StudentLanding extends AppCompatActivity {
         ID.setText(user.getId());
         Major = (TextView)findViewById(R.id.id2);
         Major.setText(user.getMajor());
-
         currBuilding = (TextView)findViewById(R.id.buildingName);
+<<<<<<< HEAD
         if(user.isInBuilding() == true){
             Major.setText(user.getCurrentBuilding().getName());
+=======
+
+
+        if(user.isInBuilding() == true){
+
+            currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
+
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
             Scan.setEnabled(false);
         } else {
+            currBuilding.setText("USC");
             CheckOut.setEnabled(false);
         }
+
 
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
         System.out.println("This is the user photo in student landing" + user.getPhoto());
-        Glide.with(getApplicationContext()).load(storageRef).into(soFab);
+        Glide.with(getApplicationContext()).load(pfp).into(soFab);
 
-        SignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentUser = null;
-                Intent intent = new Intent(StudentLanding.this, Startup.class);
-                intent.putExtra("PrevPageData", user);
-                startActivity(intent);
-            }
-        });
+//        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
+//        soFab.setImageResource(imageRe);
+
+//        SignOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                currentUser = null;
+//                Intent intent = new Intent(StudentLanding.this, Startup.class);
+//                intent.putExtra("PrevPageData", user);
+//                startActivity(intent);
+//            }
+//        });
 
         CheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +182,7 @@ public class StudentLanding extends AppCompatActivity {
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 popupWindow.setElevation(20);
 
@@ -167,11 +197,77 @@ public class StudentLanding extends AppCompatActivity {
                         popupWindow.dismiss();
                     }
                 });
+<<<<<<< HEAD
+=======
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Update count - 1
+                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                            @Override
+                            public void onCallback(Map<String, Building> map) {
+                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                if (notIncremented) {
+                                    count = count-1;
+                                    notIncremented = false;
+                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                }
+                            }
+                        });
+
+
+                        // Removes from current building DB
+                        user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                        // Remove user's current building
+                        user.setInBuilding(false);
+
+                        Building b = new Building("Not in Building", "NA", 500, "");
+                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+
+                        // Add to NA in DB
+                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
+
+                        currBuilding.setText("NA");
+
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = cal.get(Calendar.MINUTE);
+
+
+                        String min = Integer.toString(currentMinute);
+                        String hour = Integer.toString(currentHour);
+
+                        if(currentMinute <= 9){
+                            min = "0" + Integer.toString(currentMinute);
+                        }
+
+                        if(currentHour <= 9){
+                            hour = "0" + Integer.toString(currentHour);
+                        }
+
+                        String time = hour + min;
+                        System.out.println("time:" + time);
+                        String checkOutTime = time;
+
+                        System.out.println(checkInTime);
+
+                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
+
+                        Intent intent = new Intent(v.getContext(), StudentLanding.class);
+                        intent.putExtra("PrevPageData", user);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
             }
         });
 
-        Button signout = (Button) findViewById(R.id.signOut);
-        signout.setOnClickListener(new View.OnClickListener() {
+        //Button signout = (Button) findViewById(R.id.signOut);
+        SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // inflate the layout of the popup window
@@ -197,7 +293,7 @@ public class StudentLanding extends AppCompatActivity {
                     public void onClick(View v) {
                         currentUser = null;
                         Intent intent = new Intent(v.getContext(), Startup.class);
-                        intent.putExtra("PrevPageData", user);
+                        //intent.putExtra("PrevPageData", user);
                         v.getContext().startActivity(intent);
                     }
                 });
