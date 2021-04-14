@@ -200,7 +200,9 @@ public class EditProfile extends AppCompatActivity {
 
                         // Intent intent = new Intent(v.getContext(), Startup.class);
                         // v.getContext().startActivity(intent);
-                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        finishAndRemoveTask();
+                        finishAffinity();
 
                     }
                 });

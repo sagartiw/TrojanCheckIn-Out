@@ -174,7 +174,6 @@ public class SearchStudent2 extends AppCompatActivity {
                         }
                         else
                         {
-                            System.out.println("BUILDING: " + building.getAbbreviation());
                             studentList = manager.searchStudents(fName, lName, t1, t2, building, id, major, d1, d2); //date1, date2
                         }
 
