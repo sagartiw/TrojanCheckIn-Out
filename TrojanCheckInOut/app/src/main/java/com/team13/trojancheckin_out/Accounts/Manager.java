@@ -226,7 +226,6 @@ public class Manager extends User {
                                     list.add(searchName(user.getValue(), fName, lName, list));
                                     continue;
                                 }
-
                                 list.add(user.getValue());
                             }
                         }
@@ -239,14 +238,13 @@ public class Manager extends User {
                     public void onCallback(Map<String, User> map) {
                         for (Map.Entry<String, User> user : map.entrySet()) {
                             if (user.getValue().getMajor().equals(major)) {
-
+                                System.out.println("YOOOO");
                                 // Check name
                                 if (searchName(user.getValue(), fName, lName, list) != null) {
+                                    System.out.println("ANYTHING?" + user.getValue().getName());
                                     list.add(searchName(user.getValue(), fName, lName, list));
                                     continue;
                                 }
-
-                                list.add(user.getValue());
                             }
                         }
                     }
@@ -270,10 +268,13 @@ public class Manager extends User {
                             else{ timeEnder = Integer.parseInt(ts[1]);}
                             if ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime)) {
 
-                                // Check name
-                                if (searchName(user.getValue(), fName, lName, list) != null) {
-                                    list.add(searchName(user.getValue(), fName, lName, list));
-                                    continue;
+                                // Check name if exists
+                                if (lName != null && fName != null || lName != null && fName == null || lName == null && fName != null) {
+                                    if (searchName(user.getValue(), fName, lName, list) != null) {
+                                        System.out.println("NAME EXISTS");
+                                        list.add(searchName(user.getValue(), fName, lName, list));
+                                        continue;
+                                    }
                                 }
 
                                 list.add(user.getValue());
@@ -287,7 +288,7 @@ public class Manager extends User {
 
         // Only name is a condition
         else if (lName != null && fName != null || lName != null && fName == null || lName == null && fName != null){
-            System.out.println("HERE IS NAME");
+            System.out.println("HERE IS NAMEEEE");
             accountManipulator.getAllAccounts(new MyUserCallback() {
                 @Override
                 public void onCallback(Map<String, User> map) {
