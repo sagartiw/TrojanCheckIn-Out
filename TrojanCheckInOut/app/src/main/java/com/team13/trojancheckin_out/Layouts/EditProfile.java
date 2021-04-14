@@ -36,6 +36,7 @@ import com.team13.trojancheckin_out.Database.AccountManipulator;
 
 import java.io.IOException;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 
 public class EditProfile extends AppCompatActivity {
@@ -194,11 +195,12 @@ public class EditProfile extends AppCompatActivity {
                         //referenceUsers.child(user.getId()).removeValue();
                         // call delete account
                         accountManipulator.deleteAccount(user);
-
+                        currentUser = null;
                         //popupWindow.dismiss();
 
-                        Intent intent = new Intent(v.getContext(), Startup.class);
-                        v.getContext().startActivity(intent);
+                        // Intent intent = new Intent(v.getContext(), Startup.class);
+                        // v.getContext().startActivity(intent);
+                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
                     }
                 });

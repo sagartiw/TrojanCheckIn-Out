@@ -2,6 +2,7 @@ package com.team13.trojancheckin_out.Accounts;
 
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
+import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -181,7 +182,24 @@ public class Manager extends User {
             }
             //everything but building is null
             else {
-                return building.getCurrentStudents();
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> e : map.entrySet()) {
+                            User user = e.getValue();
+                            System.out.println("E NAME: " + user.getName());
+                            if (user.isInBuilding()) {
+                                System.out.println("EEE: " + user.getName());
+                                if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                    System.out.println("COCK!");
+                                    list.add(new User(user.getName(), user.getEmail(), user.getPassword(), user.getPhoto(), user.getId(), user.isInBuilding(), user.getCurrentBuilding(), user.getHistory(), user.getMajor(), user.isManager(), user.isDeleted()));
+                                    System.out.println("USER NAME: " + user.getName());
+                                }
+                            }
+
+                        }
+                    }
+                });
             }
         } //major is the dominating condition
         else if (major != null) {

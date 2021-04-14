@@ -246,7 +246,7 @@ public class ScanActivity extends AppCompatActivity {
                                     System.out.println("time:" + time);
                                     checkInTime = time;
                                     referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
-                                    user.setInBuilding(true);
+                                    user.setterInBuilding(true);
 
                                     // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                                 }
