@@ -87,7 +87,7 @@ public class SearchStudent2 extends AppCompatActivity {
                     @Override
                     public void onCallback(Map<String, Building> map) {
                         int t1 = -1;
-                        int t2 = -1;
+                        int t2 = 3000;
                         // Start time: 1234@12.03.2000, End time: 2222@12.03.2000
                         String d1 = "01.01.1970";
                         String d2 = "31.12.2099";
