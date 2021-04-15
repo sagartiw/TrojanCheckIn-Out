@@ -243,9 +243,13 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setName(lName.getText().toString() + ", " + fName.getText().toString());
                 user.setMajor(major);
                 user.setManager("false");
+                user.setterInBuilding(false);
+                user.setInBuilding(false);
+
 
                 Building currentBuilding = new Building("Not in Building", "NA", 500, "");
                 user.setCurrentBuilding(currentBuilding);
+                user.setterCurrentBuilding(currentBuilding);
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 boolean checkConditions = true;
