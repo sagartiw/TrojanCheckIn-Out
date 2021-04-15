@@ -7,10 +7,14 @@ import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -105,31 +109,12 @@ public class Manager extends User {
      * @param major
      * @return the searched student.
      */
-    public List<User> searchStudents(String fName, String lName, int startTime, int endTime, Building building, String id, String major, int startDate, int endDate) {
+    public List<User> searchStudents(String fName, String lName, int startTime, int endTime, Building building, String id, String major, String startDate, String endDate) {
+
         // IF WE ARE NOT SEARCHING BY TIME, ENTER "-1" into the startTime parameter.
-
-//        // Order based on name
-//        List<String> orderedList = new ArrayList<>();
-//        for (Map.Entry<String, User> user : map.entrySet()) {
-//            String[] lastName = user.getValue().getName().split(", ");
-//            orderedList.add(lastName[0]);
-//        }
-//        Collections.sort(orderedList);
-
-        System.out.println("WHAT THE HECk");
-
         List<User> list = new ArrayList<>();
 
         //Case 1: ONLY inputting id. If other things are filled, ID supercedes everything
-
-        // Name Comparator
-        Collections.sort(list, new Comparator<User>() {
-            @Override
-            public int compare(User o1, User o2) {
-                return o2.getName().compareTo(o1.getName());
-            }
-        });
-
         if (id != null) {
             System.out.println("MAN WHAT");
             accountManipulator.getAllAccounts(new MyUserCallback() {
@@ -146,32 +131,59 @@ public class Manager extends User {
             System.out.println("Return list 1");
             return list;
         }
+
         //CASE 2: null id with building chosen.
         else if (building != null) {
-            System.out.println("HERE IS NAME2");
+
             //Case 2A: Major and Times filled. Need to add if Dates are filled too.
             if (major != null && startTime != -1 && endTime != -1) {
-                for (User user : building.getCurrentStudents()) {
-                    String s = user.getHistory().get(building.getAbbreviation());
-                    String[] ts = s.split(" ");
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                      for (Map.Entry<String, User> e : map.entrySet()) {
+                          User user = e.getValue();
+                          if (user.isInBuilding()) {
+                              if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                  String s = user.getHistory().get(building.getAbbreviation());
+                                  String[] allHistory = s.split(", ");
+                                  String[] startArr = allHistory[0].split("@");
+                                  String[] endArr = startArr;
 
-                    if (user.getMajor().equals(major) && Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
-                        // Check name
-                        if (searchName(user, fName, lName, list) != null) {
-                            list.add(searchName(user, fName, lName, list));
-                            continue;
-                        }
-                        // Check date
+                                  // If there is an end date, update endArr to be the end date
+                                  if (allHistory.length > 1) {
+                                      endArr = allHistory[1].split("@");
+                                  }
 
-                        list.add(user);
+                                  try {
+                                      Date startUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startArr[1]);
+                                      Date startInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startDate);
+                                      Date endUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endArr[1]);
+                                      Date endInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endDate);
+
+                                      if (startUser.compareTo(startInput) >= 0 && endUser.compareTo(endInput) <= 0) {
+                                          if (user.getMajor().equals(major) && Integer.parseInt(startArr[0]) >= startTime && Integer.parseInt(endArr[0]) <= endTime) {
+
+                                              // Check name
+                                              if (searchName(user, fName, lName, list) != null) {
+                                                  list.add(searchName(user, fName, lName, list));
+                                                  continue;
+                                              }
+                                              list.add(user);
+                                          }
+                                      }
+
+                                  } catch (ParseException ex) {
+                                      ex.printStackTrace();
+                                  }
+                              }
+                          }
+                      }
                     }
-                }
+                });
 
                 if (!list.isEmpty()) {
-                    System.out.println("Name formatting: " + list.get(0).getName());
                     Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
                 }
-                System.out.println("Return list 2");
                 return list;
             }
             //Case 2B: Major is filled. Time is null. Need to add if Dates are null.

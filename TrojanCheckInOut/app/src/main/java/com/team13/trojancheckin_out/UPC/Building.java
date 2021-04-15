@@ -137,6 +137,7 @@ public class Building implements Serializable {
     }
 
     public void setCapacity(int capacity, String abb) {
+        System.out.println("SETTING CAPACITY FOR: " + abb + " TO " + capacity);
         this.capacity = capacity;
         System.out.println(abb);
         referenceBuildings.child(abb).child("capacity").setValue(capacity);

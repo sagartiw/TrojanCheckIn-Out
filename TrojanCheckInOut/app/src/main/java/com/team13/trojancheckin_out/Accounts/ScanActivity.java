@@ -1,6 +1,7 @@
 package com.team13.trojancheckin_out.Accounts;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -56,6 +57,7 @@ public class ScanActivity extends AppCompatActivity {
     private Map<User, String> sendIt;
     public static String buildingCheck;
     public static String checkInTime = "-1";
+    public static String checkOutTime = "-1";
     private boolean notIncremented = true;
 
     @Override
@@ -110,6 +112,7 @@ public class ScanActivity extends AppCompatActivity {
                 final SparseArray<Barcode> qrcode = detections.getDetectedItems();
                 if (qrcode.size() != 0) {
                     textView.post(new Runnable() {
+                        @SuppressLint("NewApi")
                         @Override
                         public void run() {
                             // this should be a building acronym
@@ -165,8 +168,38 @@ public class ScanActivity extends AppCompatActivity {
                                     referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
                                     System.out.println("b" + b.getName().toString());
 
-                                    // Add to NA in DB
-                                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
+                                    Calendar cal = Calendar.getInstance();
+                                    cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                                    int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                                    int currentMinute = cal.get(Calendar.MINUTE);
+                                    int currentDate = cal.get(Calendar.DATE);
+                                    Date dater = cal.getTime();
+                                    //WE NEED TO CHECK IF THIS IS VALID. IF SO, WE CAN USE AN INT. Old Version: dd.MM.yyyy
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                                    System.out.println("current min is "+ currentMinute);
+                                    System.out.println("current hour is "+ currentHour);
+                                    System.out.println("current date is "+ currentDate);
+                                    //String currentDate1 = SimpleDateFormat.getDateInstance().format("yyyy-MM-dd");
+
+                                    System.out.println("currentDate is "+ sdf.format(dater).toString());
+                                    String min = Integer.toString(currentMinute);
+                                    String hour = Integer.toString(currentHour);
+                                    //String date = Integer.toString(currentDate);
+                                    String date = sdf.format(dater);
+
+                                    if(currentMinute <= 9){
+                                        min = "0" + Integer.toString(currentMinute);
+                                    }
+
+                                    if(currentHour <= 9){
+                                        hour = "0" + Integer.toString(currentHour);
+                                    }
+
+                                    String time = hour + min + "@" + date + ", ";
+
+                                    System.out.println("time:" + time);
+                                    checkOutTime = time;
+                                    referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkOutTime);
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
@@ -279,7 +312,7 @@ public class ScanActivity extends AppCompatActivity {
                                         hour = "0" + Integer.toString(currentHour);
                                     }
 
-                                    String time = hour + min + date;
+                                    String time = hour + min + "@" + date;
 
                                     System.out.println("time:" + time);
                                     checkInTime = time;

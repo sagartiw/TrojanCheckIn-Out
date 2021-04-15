@@ -88,8 +88,9 @@ public class SearchStudent2 extends AppCompatActivity {
                     public void onCallback(Map<String, Building> map) {
                         int t1 = -1;
                         int t2 = -1;
-                        int d1 = -1;
-                        int d2 = -1;
+                        // Start time: 1234@12.03.2000, End time: 2222@12.03.2000
+                        String d1 = "01.01.1970";
+                        String d2 = "31.12.2099";
                         String id = null;
                         String major = null;
                         Building building = null;
@@ -123,11 +124,11 @@ public class SearchStudent2 extends AppCompatActivity {
                             cond4 = false;
                         }
                         if(!date1.getText().toString().equals("")) {
-                            d1 = Integer.parseInt(date1.getText().toString());
+                            d1 = date1.getText().toString();
                             cond5 = false;
                         }
                         if(!date2.getText().toString().equals("")) {
-                            d2 = Integer.parseInt(date2.getText().toString());
+                            d2 = date2.getText().toString();
                             cond6 = false;
                         }
                         if(!fName1.getText().toString().equals("")) {
