@@ -178,52 +178,157 @@ public class Manager extends User {
                               }
                           }
                       }
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 2A");
                     }
                 });
-
-                if (!list.isEmpty()) {
-                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
-                }
+//                if (!list.isEmpty()) {
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
                 return list;
             }
-            //Case 2B: Major is filled. Time is null. Need to add if Dates are null.
+            //Case 2B: Major is filled. Time is null. Need to add if Dates are null. THIS SEEMS WRONG TO ME
             else if (major != null && startTime == -1 && endTime == -1) {
-                for (User user : building.getCurrentStudents()) {
-                    if (user.getMajor().equals(major)){
+//                for (User user : building.getCurrentStudents()) {
+//                    if (user.getMajor().equals(major)){
+//
+//                        // Check name
+//                        if (searchName(user, fName, lName, list) != null) {
+//                            list.add(searchName(user, fName, lName, list));
+//                            continue;
+//                        }
+//
+//                        list.add(user);
+//                    }
+//                }
+//                if (!list.isEmpty()) {
+//                    System.out.println("Name formatting: " + list.get(0).getName());
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
+//                System.out.println("Return list 3");
+//                return list;
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> e : map.entrySet()) {
+                            User user = e.getValue();
+                            if (user.isInBuilding()) {
+                                if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                    String s = user.getHistory().get(building.getAbbreviation());
+                                    String[] allHistory = s.split(", ");
+                                    String[] startArr = allHistory[0].split("@");
+                                    String[] endArr = startArr;
 
-                        // Check name
-                        if (searchName(user, fName, lName, list) != null) {
-                            list.add(searchName(user, fName, lName, list));
-                            continue;
+                                    // If there is an end date, update endArr to be the end date
+                                    if (allHistory.length > 1) {
+                                        endArr = allHistory[1].split("@");
+                                    }
+
+                                    try {
+                                        Date startUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startArr[1]);
+                                        Date startInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startDate);
+                                        Date endUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endArr[1]);
+                                        Date endInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endDate);
+
+                                        if (startUser.compareTo(startInput) >= 0 && endUser.compareTo(endInput) <= 0) {
+                                            if (user.getMajor().equals(major)) {
+                                                // Check name
+                                                if (searchName(user, fName, lName, list) != null) {
+                                                    list.add(searchName(user, fName, lName, list));
+                                                    continue;
+                                                }
+                                                list.add(user);
+                                            }
+                                        }
+
+                                    } catch (ParseException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }
                         }
-
-                        list.add(user);
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 2B");
                     }
-                }
-
-                if (!list.isEmpty()) {
-                    System.out.println("Name formatting: " + list.get(0).getName());
-                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
-                }
-                System.out.println("Return list 3");
-                return list;
+                });
             }
             //Case 2C: Major is null. Time is filled. Need to add if Dates are null/filled.
             else if (major == null && startTime != -1 && endTime != -1) {
-                for (User user : building.getCurrentStudents()) {
-                    String s = user.getHistory().get(building.getAbbreviation());
-                    String[] ts = s.split(" ");
-                    if (Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
+                //COMMENTING THIS
+//                for (User user : building.getCurrentStudents()) {
+//                    String s = user.getHistory().get(building.getAbbreviation());
+//                    String[] ts = s.split(" ");
+//                    if (Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[1]) <= endTime) {
+//
+//                        // Check name
+//                        if (searchName(user, fName, lName, list) != null) {
+//                            list.add(searchName(user, fName, lName, list));
+//                            continue;
+//                        }
+//
+//                        list.add(user);
+//                    }
+//                }
+                accountManipulator.getAllAccounts(new MyUserCallback() {
+                    @Override
+                    public void onCallback(Map<String, User> map) {
+                        for (Map.Entry<String, User> e : map.entrySet()) {
+                            User user = e.getValue();
+                            if (user.isInBuilding()) {
+                                if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                    String s = user.getHistory().get(building.getAbbreviation());
+                                    String[] allHistory = s.split(", ");
+                                    String[] startArr = allHistory[0].split("@");
+                                    String[] endArr = startArr;
 
-                        // Check name
-                        if (searchName(user, fName, lName, list) != null) {
-                            list.add(searchName(user, fName, lName, list));
-                            continue;
+                                    // If there is an end date, update endArr to be the end date
+                                    if (allHistory.length > 1) {
+                                        endArr = allHistory[1].split("@");
+                                    }
+
+                                    try {
+                                        Date startUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startArr[1]);
+                                        Date startInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startDate);
+                                        Date endUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endArr[1]);
+                                        Date endInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endDate);
+
+                                        if (startUser.compareTo(startInput) >= 0 && endUser.compareTo(endInput) <= 0) {
+                                            if (Integer.parseInt(startArr[0]) >= startTime && Integer.parseInt(endArr[0]) <= endTime) {
+
+                                                // Check name
+                                                if (searchName(user, fName, lName, list) != null) {
+                                                    list.add(searchName(user, fName, lName, list));
+                                                    continue;
+                                                }
+                                                list.add(user);
+                                            }
+                                        }
+
+                                    } catch (ParseException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }
                         }
-
-                        list.add(user);
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 2C");
                     }
-                }
+                });
+//                if (!list.isEmpty()) {
+//                    System.out.println("Name formatting: " + list.get(0).getName());
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
+//                System.out.println("Return list 3");
+                return list;
             }
             //Case 2D: Everything but building is null.
             else {
@@ -243,8 +348,19 @@ public class Manager extends User {
                             }
 
                         }
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 3");
                     }
                 });
+//                if (!list.isEmpty()) {
+//                    System.out.println("Name formatting: " + list.get(0).getName());
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
+//                System.out.println("Return list 3");
+                return list;
             }
         }
         //Case 3: Building and ID are null. Major is filled/dominating condition.
@@ -252,32 +368,81 @@ public class Manager extends User {
             System.out.println("HERE IS NAME1");
             //Case 3A: Time is also filled. Need to check if dates are null/filled.
             if (startTime != -1 && endTime != -1) {
+//                accountManipulator.getAllAccounts(new MyUserCallback() {
+//                    @Override
+//                    public void onCallback(Map<String, User> map) {
+//                        for (Map.Entry<String, User> user : map.entrySet()) {
+//                            String s = user.getValue().getHistory().get(building.getAbbreviation());
+//                            String[] ts = s.split(" ");
+//                            int timeEnder;
+//                            if (s.length() <= 5){ timeEnder = 2359; }
+//                            else{ timeEnder = Integer.parseInt(ts[1]);}
+//                            if (user.getValue().getMajor().equals(major) && ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime))) {
+//
+//                                // Check name
+//                                if (searchName(user.getValue(), fName, lName, list) != null) {
+//                                    list.add(searchName(user.getValue(), fName, lName, list));
+//                                    continue;
+//                                }
+//                                list.add(user.getValue());
+//                            }
+//                        }
+//                    }
+//                });
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
-                        for (Map.Entry<String, User> user : map.entrySet()) {
-                            String s = user.getValue().getHistory().get(building.getAbbreviation());
-                            String[] ts = s.split(" ");
-                            int timeEnder;
-                            if (s.length() <= 5){ timeEnder = 2359; }
-                            else{ timeEnder = Integer.parseInt(ts[1]);}
-                            if (user.getValue().getMajor().equals(major) && ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime))) {
+                        for (Map.Entry<String, User> e : map.entrySet()) {
+                            User user = e.getValue();
+                            if (user.isInBuilding()) {
+                                if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())) {
+                                    String s = user.getHistory().get(building.getAbbreviation());
+                                    String[] allHistory = s.split(", ");
+                                    String[] startArr = allHistory[0].split("@");
+                                    String[] endArr = startArr;
 
-                                // Check name
-                                if (searchName(user.getValue(), fName, lName, list) != null) {
-                                    list.add(searchName(user.getValue(), fName, lName, list));
-                                    continue;
+                                    // If there is an end date, update endArr to be the end date
+                                    if (allHistory.length > 1) {
+                                        endArr = allHistory[1].split("@");
+                                    }
+
+                                    try {
+                                        Date startUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startArr[1]);
+                                        Date startInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(startDate);
+                                        Date endUser = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endArr[1]);
+                                        Date endInput = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).parse(endDate);
+
+                                        if (startUser.compareTo(startInput) >= 0 && endUser.compareTo(endInput) <= 0) {
+                                            if (user.getMajor().equals(major) && Integer.parseInt(startArr[0]) >= startTime && Integer.parseInt(endArr[0]) <= endTime) {
+
+                                                // Check name
+                                                if (searchName(user, fName, lName, list) != null) {
+                                                    list.add(searchName(user, fName, lName, list));
+                                                    continue;
+                                                }
+                                                list.add(user);
+                                            }
+                                        }
+
+                                    } catch (ParseException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
-                                list.add(user.getValue());
                             }
                         }
+                        System.out.println("LIST: " + list);
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 4");
                     }
                 });
-                if (!list.isEmpty()) {
-                    System.out.println("Name formatting: " + list.get(0).getName());
-                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
-                }
-                System.out.println("Return list 4");
+//                if (!list.isEmpty()) {
+//                    System.out.println("Name formatting: " + list.get(0).getName());
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
+//                System.out.println("Return list 4");
                 return list;
             }
             //Case 3B: Everything is null except for major.
@@ -296,13 +461,19 @@ public class Manager extends User {
                                 }
                             }
                         }
+                        System.out.println("LIST: " + list);
+                        if (!list.isEmpty()) {
+                            System.out.println("Name formatting: " + list.get(0).getName());
+                            Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                        }
+                        System.out.println("Return list 5");
                     }
                 });
-                if (!list.isEmpty()) {
-                    System.out.println("Name formatting: " + list.get(0).getName());
-                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
-                }
-                System.out.println("Return list 5");
+//                if (!list.isEmpty()) {
+//                    System.out.println("Name formatting: " + list.get(0).getName());
+//                    Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//                }
+//                System.out.println("Return list 5");
                 return list;
             }
         }
@@ -317,8 +488,10 @@ public class Manager extends User {
                             System.out.println("WE ARE IN THE TIME ONLY CASE:" + s);
                             String[] ts = s.split(" ");
                             int timeEnder;
-                            if (s.length() <= 5){ timeEnder = 2359; }
-                            else{ timeEnder = Integer.parseInt(ts[1]);}
+                            if (s.length() <= 17){ timeEnder = 2359; }
+                            else{
+                                timeEnder = Integer.parseInt(ts[1]);
+                            }
                             if ((Integer.parseInt(ts[0]) >= startTime && Integer.parseInt(ts[0]) <= endTime) || (timeEnder >= startTime && timeEnder <= endTime)) {
 
                                 // Check name if exists
@@ -334,13 +507,19 @@ public class Manager extends User {
                             }
                         }
                     }
+                    System.out.println("LIST: " + list);
+                    if (!list.isEmpty()) {
+                        System.out.println("Name formatting: " + list.get(0).getName());
+                        Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+                    }
+                    System.out.println("Return list 6");
                 }
             });
-            if (!list.isEmpty()) {
-                System.out.println("Name formatting: " + list.get(0).getName());
-                Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
-            }
-            System.out.println("Return list 6");
+//            if (!list.isEmpty()) {
+//                System.out.println("Name formatting: " + list.get(0).getName());
+//                Collections.sort(list, (User u1, User u2) -> u1.getLastName().toLowerCase().compareTo(u2.getLastName().toLowerCase()));
+//            }
+//            System.out.println("Return list 6");
             return list;
         }
         //Case 5: Name is filled. I think that this should supercede everything but ID, so may we should move this up.
