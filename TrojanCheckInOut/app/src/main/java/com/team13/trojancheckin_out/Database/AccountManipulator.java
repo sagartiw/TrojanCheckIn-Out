@@ -50,6 +50,10 @@ public class AccountManipulator extends User {
         });
     }
 
+    public Map<String, User> getStaticAccounts(){
+        return this.allAccounts;
+    }
+
     /**
      * @return the current list of registered student accounts. Accesses the Google Firebase to
      * parse the JSON data into Java "User" objects and into the studentAccounts data structure.
@@ -80,7 +84,6 @@ public class AccountManipulator extends User {
      * @return the current list of registered student accounts. Same concept as getStudentAccounts.
      * @param myUserCallback
      */
-
     public void getManagerAccounts(MyUserCallback myUserCallback) {
         studentAccounts = new HashMap<>();
         managerAccounts = new HashMap<>();
@@ -96,7 +99,6 @@ public class AccountManipulator extends User {
 //
                 myUserCallback.onCallback(studentAccounts);
             }
-          
             @Override
             public void onCancelled(DatabaseError databaseError) { }
         });
@@ -179,7 +181,6 @@ public class AccountManipulator extends User {
                 });
 
          */
-
         return true;
     }
 

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,14 +29,13 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-<<<<<<< HEAD
-=======
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +78,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 try {
@@ -123,16 +123,11 @@ public class ScanActivity extends AppCompatActivity {
 
                             //String holder = qrcode.valueAt(0).displayValue.toString();
 
-<<<<<<< HEAD
-                            if (match == null) {
-                                return;
-                            }
-
-=======
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
-                            System.out.println("CHECK MATCH: " + match.getAbbreviation());
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
+                            if(match.getAbbreviation() != null){
+                                System.out.println("CHECK MATCH: " + match.getAbbreviation());
+                            }
                             User user = accountManipulator.currentUser;
 
                             // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
@@ -141,14 +136,37 @@ public class ScanActivity extends AppCompatActivity {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
                                     // user is trying to check out
-<<<<<<< HEAD
-                                    match.removeStudent(user);
-                                    user.setCurrentBuilding(null);
-=======
                                     match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                                     user.setterCurrentBuilding(null);
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
+                                    user.setterInBuilding(false);
+
+                                    // Update count - 1
+                                    buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                                        @Override
+                                        public void onCallback(Map<String, Building> map) {
+                                            int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                            if (notIncremented) {
+                                                count = count-1;
+                                                notIncremented = false;
+                                                referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                            }
+                                        }
+                                    });
+                                    System.out.println("updated count" + referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").get().toString());
+
+                                    // Removes from current building DB
+                                    user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                                    System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                                    // Remove user's current building
                                     user.setInBuilding(false);
+                                    System.out.println("removed");
+                                    Building b = new Building("Not in Building", "NA", 500, "");
+                                    referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+                                    System.out.println("b" + b.getName().toString());
+
+                                    // Add to NA in DB
+                                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
@@ -175,11 +193,8 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
-<<<<<<< HEAD
-=======
                                     Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
                                             Toast.LENGTH_SHORT).show();
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                                 }
                             }
                             else { // user is trying to check in
@@ -209,12 +224,9 @@ public class ScanActivity extends AppCompatActivity {
                                             popupWindow.dismiss();
                                         }
                                     });
-<<<<<<< HEAD
-=======
 
                                     Toast.makeText(ScanActivity.this, "Building is Full!",
                                             Toast.LENGTH_SHORT).show();
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                                 }
                                 else { // check in the user
                                     match.addStudent(user);
@@ -245,10 +257,19 @@ public class ScanActivity extends AppCompatActivity {
                                     cal.setTimeZone(TimeZone.getTimeZone("PST"));
                                     int currentHour = cal.get(Calendar.HOUR_OF_DAY);
                                     int currentMinute = cal.get(Calendar.MINUTE);
+                                    int currentDate = cal.get(Calendar.DATE);
+                                    Date dater = cal.getTime();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                                    System.out.println("current min is "+ currentMinute);
+                                    System.out.println("current hour is "+ currentHour);
+                                    System.out.println("current date is "+ currentDate);
+                                    //String currentDate1 = SimpleDateFormat.getDateInstance().format("yyyy-MM-dd");
 
-
+                                    System.out.println("currentDate is "+ sdf.format(dater).toString());
                                     String min = Integer.toString(currentMinute);
                                     String hour = Integer.toString(currentHour);
+                                    //String date = Integer.toString(currentDate);
+                                    String date = sdf.format(dater).toString();
 
                                     if(currentMinute <= 9){
                                         min = "0" + Integer.toString(currentMinute);
@@ -258,12 +279,12 @@ public class ScanActivity extends AppCompatActivity {
                                         hour = "0" + Integer.toString(currentHour);
                                     }
 
-                                    String time = hour + min;
+                                    String time = hour + min + date;
 
                                     System.out.println("time:" + time);
                                     checkInTime = time;
                                     referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
-                                    user.setInBuilding(true);
+                                    user.setterInBuilding(true);
 
                                     // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                                 }

@@ -126,7 +126,6 @@ public class Building implements Serializable {
         return this.students;
     }
 
-
     public void setStudents(List<User> students) { this.students = students; }
 
 

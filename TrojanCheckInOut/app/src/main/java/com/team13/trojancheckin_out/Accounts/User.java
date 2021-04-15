@@ -76,6 +76,10 @@ public class User implements Serializable {
         return name;
     }
 
+    public String getLastName() {
+        String[] nameComp = name.split(", ");
+        return nameComp[0];
+    }
     public void setName(String name) {
 
         System.out.println("I AM SETTING NAME");
@@ -128,6 +132,11 @@ public class User implements Serializable {
         this.inBuilding = inBuilding;
     }
 
+    public void setterInBuilding(boolean inBuilding) {
+        this.inBuilding = inBuilding;
+        referenceUsers.child(this.getId()).child("inBuilding").setValue(inBuilding);
+    }
+
     public Building getCurrentBuilding() {
         return currentBuilding;
     }
@@ -139,12 +148,7 @@ public class User implements Serializable {
 
    public void setterCurrentBuilding(Building currentBuilding) {
        this.currentBuilding = currentBuilding;
-
        Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getQRCode());
-//       b.setStudents(currentBuilding.getCurrentStudents());
-
-       System.out.println("FULL OBJECT" +currentBuilding.getName() +  " " + currentBuilding.getAbbreviation() + " " + currentBuilding.getCapacity() + " " + currentBuilding.getQRCode() );
-
        referenceUsers.child(this.getId()).child("currentBuilding").setValue(b);
    }
 

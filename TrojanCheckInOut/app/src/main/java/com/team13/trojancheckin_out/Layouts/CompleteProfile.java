@@ -285,14 +285,10 @@ public class CompleteProfile extends AppCompatActivity {
                 /*
                 Building building = new Building();
                 building.setName("USC Campus");
-
                 //user.setCurrentBuilding(building);
                 user.getHistory().put("USC", "1234 0123");
-
                 // delete later
-
                 //Building building = new Building();
-
                 building.setName("USC");
                 user.setCurrentBuilding(building);
                 */
@@ -450,12 +446,10 @@ public class CompleteProfile extends AppCompatActivity {
         try {
             // check version of Android on device
             if(Build.VERSION.SDK_INT > 27){
-
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
             } else {
-
                 // support older versions of Android by using getBitmap
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
             }
@@ -470,19 +464,14 @@ public class CompleteProfile extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
-
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
-
             StorageReference selectedFile = storageRef.child("Profile Pictures/");
             System.out.println("HELLO TEAM");
-
             UploadTask uploadTask = selectedFile.putFile(photoUri);
             System.out.println("HELLO TEAM 2");
             user = (User) getIntent().getSerializableExtra("PrevPageData");
-
             user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
-
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override

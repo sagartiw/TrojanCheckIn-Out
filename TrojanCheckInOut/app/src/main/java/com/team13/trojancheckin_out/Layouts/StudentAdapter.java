@@ -54,8 +54,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public void onBindViewHolder(StudentViewHolder holder, int position) {
         //getting the product of the specified position
         User student = studentList.get(position);
-
         //binding the data with the viewholder views
+        System.out.println("HOLDER NAME: " + student.getName());
         holder.fullName.setText(student.getName());
         holder.studentID.setText(String.valueOf(student.getId()));
         if (student.isDeleted()) {

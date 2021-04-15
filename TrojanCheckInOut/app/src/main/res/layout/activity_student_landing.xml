@@ -140,6 +140,24 @@
         app:layout_constraintTop_toBottomOf="@+id/Actions" />
 
     <Button
+        android:id="@+id/checkOut2"
+        android:layout_width="371dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
+        android:letterSpacing="0"
+        android:text="Visit History"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:backgroundTint="#ffffff"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Scan" />
+
+    <Button
         android:id="@+id/Scan"
         android:layout_width="175dp"
         android:layout_height="185dp"
