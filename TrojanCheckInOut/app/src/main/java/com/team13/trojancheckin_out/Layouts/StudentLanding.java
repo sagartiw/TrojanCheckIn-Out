@@ -96,17 +96,21 @@ public class StudentLanding extends AppCompatActivity {
 
         System.out.println("TESTER : " + user.getCurrentBuilding().getAbbreviation());
         System.out.println("TESTER : " + user.isInBuilding());
-        if(user.getCurrentBuilding().getName().toString().equals("NA")){
-            currBuilding.setText("NA");
-            user.setterInBuilding(false);
-        }
 
         if(user.isInBuilding() == true){
 
             currBuilding.setText(user.getCurrentBuilding().getAbbreviation());
-        } else {
+        }
+        else {
             currBuilding.setText("USC");
         }
+
+//        if(user.getCurrentBuilding().getName().toString().equals("NA")){
+//            currBuilding.setText("NA");
+//            user.setterInBuilding(false);
+//        }
+
+
 
 
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
@@ -209,34 +213,35 @@ public class StudentLanding extends AppCompatActivity {
                     @SuppressLint("NewApi")
                     @Override
                     public void onClick(View v) {
+
+
                         // Update count - 1
-                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
-                            @Override
-                            public void onCallback(Map<String, Building> map) {
-                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
-                                if (notIncremented) {
-                                    count = count-1;
-                                    notIncremented = false;
-                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
-                                }
-                            }
-                        });
+                        System.out.println("before building callback ");
+
+
+                        System.out.println("after building callback ");
 
 
                         // Removes from current building DB
                         user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
                         System.out.println("CURR: " + user.getCurrentBuilding().getName());
 
-                        // Remove user's current building
-                        user.setInBuilding(false);
 
                         Building b = new Building("Not in Building", "NA", 500, "");
+                        user.setterCurrentBuilding(b);
                         referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+
 
                         // Add to NA in DB
                         referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
 
                         currBuilding.setText("NA");
+
+                        // Remove user's current building
+                        user.setterInBuilding(false);
+                        user.setInBuilding(false);
+
+
 
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeZone(TimeZone.getTimeZone("PST"));
@@ -267,6 +272,22 @@ public class StudentLanding extends AppCompatActivity {
                         System.out.println(checkInTime);
 
                         referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
+
+                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                            @Override
+                            public void onCallback(Map<String, Building> map) {
+                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                if (notIncremented) {
+                                    count = count-1;
+                                    notIncremented = false;
+                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+                                }
+                            }
+                        });
+
+
+                        accountManipulator.currentUser = user;
+
 
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
