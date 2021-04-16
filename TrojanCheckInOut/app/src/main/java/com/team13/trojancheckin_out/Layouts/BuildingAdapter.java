@@ -183,7 +183,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                         EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
                         String w = num.getText().toString();
                         int x = Integer.parseInt(w);
-                        building.setCapacity(x, building.getAbbreviation());
+                        buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
                         popupWindow.dismiss();
                     }
                 });

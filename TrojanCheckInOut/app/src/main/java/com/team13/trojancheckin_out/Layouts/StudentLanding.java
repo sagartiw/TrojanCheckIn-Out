@@ -1,5 +1,6 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -209,6 +210,7 @@ public class StudentLanding extends AppCompatActivity {
                 });
 
                 submit.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("NewApi")
                     @Override
                     public void onClick(View v) {
 
@@ -263,7 +265,7 @@ public class StudentLanding extends AppCompatActivity {
 
                         //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
                         String date = sdf.format(dater).toString();
-                        String time = hour + min + date;
+                        String time = hour + min + "@" + date;
                         System.out.println("time:" + time);
                         String checkOutTime = time;
 

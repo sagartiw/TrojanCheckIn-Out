@@ -1,8 +1,12 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -23,21 +28,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
-import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.IOException;
-
-import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
+import java.util.UUID;
 
 public class CompleteProfile extends AppCompatActivity {
 
+    private java.util.UUID UUID;
     private Button Register;
     private Button Back;
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -48,21 +52,28 @@ public class CompleteProfile extends AppCompatActivity {
     private RadioButton studentButton;
     private RadioButton managerButton;
     private ImageButton profileImage;
+    private ImageButton uploadProfImage;
+    private ImageView viewPFP;
+    private Uri filePath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth;
     private FirebaseUser curr;
-    private Uri filePath;
     //https://firebase.google.com/docs/storage/android/upload-files
-    public final static int PICK_PHOTO_CODE = 1046;
+    //public final static int PICK_PHOTO_CODE = 1046;
+    public final static int PICK_PHOTO_CODE = 71;
+
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
-    private BuildingManipulator buildingManipulator = new BuildingManipulator();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_complete_profile);
+        viewPFP = (ImageView) findViewById(R.id.imageView3);
+        System.out.println("viewpfp: " + viewPFP);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);
@@ -204,7 +215,6 @@ public class CompleteProfile extends AppCompatActivity {
                 "Writing for Screen and Television",
         };
 
-
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -240,7 +250,7 @@ public class CompleteProfile extends AppCompatActivity {
                 studentID = (EditText) findViewById(R.id.editTextTextPersonName4);
 
                 // Add data from this current page to complete the user object
-                user.setName(lName.getText().toString() + ", " + fName.getText().toString());
+                user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
                 user.setManager("false");
                 user.setterInBuilding(false);
@@ -250,6 +260,7 @@ public class CompleteProfile extends AppCompatActivity {
                 Building currentBuilding = new Building("Not in Building", "NA", 500, "");
                 user.setCurrentBuilding(currentBuilding);
                 user.setterCurrentBuilding(currentBuilding);
+
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 boolean checkConditions = true;
@@ -278,15 +289,17 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setDeleted(false);
 
-                Building match = buildingManipulator.getBuilding("NA");
 
                 // delete later
                 /*
                 Building building = new Building();
                 building.setName("USC Campus");
+
                 //user.setCurrentBuilding(building);
                 user.getHistory().put("USC", "1234 0123");
+
                 // delete later
+
                 //Building building = new Building();
 
                 building.setName("USC");
@@ -295,11 +308,9 @@ public class CompleteProfile extends AppCompatActivity {
 
                 if (checkConditions) {
                     user.getHistory().put("SLH", "0123 2344");
+
                     // Push user to DB
                     accountManipulator.createAccount(user);
-                    System.out.println("STEP ONE");
-                    // Add user to building
-                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
                     Intent intent;
                     if (user.isManager().equals("true")) {
                         intent = new Intent(CompleteProfile.this, ManagerLanding.class);
@@ -310,11 +321,11 @@ public class CompleteProfile extends AppCompatActivity {
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
+
             }
         });
 
         Back = (Button) findViewById(R.id.back3);
-
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,7 +335,34 @@ public class CompleteProfile extends AppCompatActivity {
             }
         });
 
+        mAuth = FirebaseAuth.getInstance();
+        curr = mAuth.getCurrentUser();
+        if (curr == null){
+            mAuth.signInAnonymously();
+        }
+        profileImage = (ImageButton) findViewById(R.id.imageButton);
+      //  viewPFP = (ImageView) findViewById(R.id.pfp);
+        System.out.println("View pfp initial: " + viewPFP);
 
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked add profile pick");
+                chooseImage();
+                System.out.println("about to upload image");
+                uploadImage();
+            }
+        });
+
+
+        /*
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked upload image");
+                uploadImage();
+            }
+        });*/
 
 
 //        profileImage = (ImageButton)findViewById(R.id.imageButton);
@@ -396,22 +434,79 @@ public class CompleteProfile extends AppCompatActivity {
 //            }
 //
 //        });
-        mAuth = FirebaseAuth.getInstance();
-        curr = mAuth.getCurrentUser();
 
-        if (curr == null) {
-            mAuth.signInAnonymously();
-        }
-
-        profileImage = (ImageButton) findViewById(R.id.imageButton);
-
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        /*profileImage = (ImageButton)findViewById(R.id.imageButton);
+        profileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                System.out.println("Clicked add profile pick");
-                chooseImage();
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(intent, PICK_PHOTO_CODE);
+                }
             }
         });
+    }
+*/
+    //@Override
+  //  public void onStart() {
+  //      super.onStart();
+  //      Check if user is signed in (non-null) and update UI accordingly.
+   //   FirebaseUser currentUser = mAuth.getCurrentUser();
+ //   }
+    /*public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }*/
+
+/*    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            String filepath = photoUri.getPath();
+            System.out.println("This is the filepath of the local file: " + filepath);
+
+            StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            System.out.println("HELLO TEAM");
+
+            UploadTask uploadTask = selectedFile.putFile(photoUri);
+            System.out.println("HELLO TEAM 2");
+            user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+        }
+    }*/
     }
 
     //select image
@@ -432,11 +527,11 @@ public class CompleteProfile extends AppCompatActivity {
         if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
-            filePath = data.getData();
+            //filePath = data.getData();
             System.out.println("filepath oAR: " + filePath + ", data: " + data + ", getdata: " +data.getData());
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                //viewPFP.setImageBitmap(bitmap);
+                viewPFP.setImageBitmap(bitmap);
                 uploadImage();
             }
             catch (IOException e)
@@ -447,146 +542,44 @@ public class CompleteProfile extends AppCompatActivity {
     }
 
     private void uploadImage() {
-        Uri file = Uri.fromFile(new File(String.valueOf(filePath)));
-        StorageReference selectedFile = storageRef.child("Profile Pictures/" + filePath.toString());
-        System.out.println("filepath oAR: " + filePath.toString() + " Last path segment: " + file.toString());
-
-        System.out.println("HELLO TEAM");
-        UploadTask uploadTask = selectedFile.putFile(filePath);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Toast.makeText(CompleteProfile.this, "Failed "+ exception.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                Toast.makeText(CompleteProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        System.out.println("HELLO TEAM 2");
-        user = (User) getIntent().getSerializableExtra("PrevPageData");
-
-        user.setPhoto("Profile Pictures/" + filePath.getLastPathSegment());
-
         System.out.println("filepath in Upload img: " + filePath);
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+           // StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            //"profile pics/ or images/" for ref?"
+            //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageRef.child("Profile Pictures/" + filePath.getLastPathSegment());
 
-//        if(filePath != null)
-//        {
-//            final ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Uploading...");
-//            progressDialog.show();
-//            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
-//            //"profile pics/ or images/" for ref?"
-//            //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
-//            StorageReference ref = storageRef.child("Profile Pictures/" + UUID.randomUUID().toString());
-//
-//            System.out.println("upload image function");
-//            ref.putFile(filePath)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(CompleteProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            System.out.println("upload failed..... function");
-//
-//                            progressDialog.dismiss();
-//                            Toast.makeText(CompleteProfile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-//                                    .getTotalByteCount());
-//                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-//                        }
-//                    });
-//        }
+            System.out.println("upload image function");
+            filePath = Uri.fromFile(new File(filePath.getPath()));
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CompleteProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("upload failed..... function");
+
+                            progressDialog.dismiss();
+                            Toast.makeText(CompleteProfile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
     }
-
-//        profileImage = (ImageButton)findViewById(R.id.imageButton);
-//
-//        profileImage.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    // Bring up gallery to select a photo
-//                    startActivityForResult(intent, PICK_PHOTO_CODE);
-//                }
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//    }
-//
-//    public Bitmap loadFromUri(Uri photoUri) {
-//        Bitmap image = null;
-//        try {
-//            // check version of Android on device
-//            if(Build.VERSION.SDK_INT > 27){
-//                // on newer versions of Android, use the new decodeBitmap method
-//                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
-//                image = ImageDecoder.decodeBitmap(source);
-//            } else {
-//                // support older versions of Android by using getBitmap
-//                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return image;
-//    }
-//
-//    @SuppressLint("MissingSuperCall")
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
-//            Uri photoUri = data.getData();
-//
-//            String filepath = photoUri.getPath();
-//            System.out.println("This is the filepath of the local file: " + filepath);
-//
-//            StorageReference selectedFile = storageRef.child("Profile Pictures/");
-//            System.out.println("HELLO TEAM");
-//            UploadTask uploadTask = selectedFile.putFile(photoUri);
-//            System.out.println("HELLO TEAM 2");
-//            user = (User) getIntent().getSerializableExtra("PrevPageData");
-//
-//            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
-//
-//            // Register observers to listen for when the download is done or if it fails
-//            uploadTask.addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    // Handle unsuccessful uploads
-//                }
-//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                    // ...
-//                }
-//            });
-//
-//        }
-    //}
-
 }
