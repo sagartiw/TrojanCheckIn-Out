@@ -36,7 +36,6 @@ import com.team13.trojancheckin_out.Database.AccountManipulator;
 import java.io.IOException;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
-import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -266,10 +265,9 @@ public class EditProfile extends AppCompatActivity {
         changePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
                 // inflate the layout of the popup window
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.change_profile_pic, null);
+                View popupView = inflater.inflate(R.layout.choose_profile_pic , null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 // create the popup window
@@ -297,9 +295,6 @@ public class EditProfile extends AppCompatActivity {
         pfp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-=======
-
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 if (intent.resolveActivity(getPackageManager()) != null) {
