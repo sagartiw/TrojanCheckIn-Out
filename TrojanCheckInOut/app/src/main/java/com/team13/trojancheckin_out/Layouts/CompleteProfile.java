@@ -1,12 +1,9 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -38,7 +35,6 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 public class CompleteProfile extends AppCompatActivity {
 

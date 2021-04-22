@@ -153,6 +153,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 Button submitButton = (Button) popupView.findViewById(R.id.button9);
                 TextView name = (TextView) popupView.findViewById(R.id.textView18);
                 name.setText(buildingList.get(position).getName());
+                EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
+                String w = num.getText().toString();
+                int x = Integer.parseInt(w);
                 //name.setText(building.getName());
 
                 // create the popup window
@@ -167,6 +170,10 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+                // If cap is less than current count
+                if(x < building.getCurrentCount()) {
+                    System.out.println("CHICKEN NUGGETS");
+                }
 
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
@@ -179,10 +186,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
-                        String w = num.getText().toString();
-                        int x = Integer.parseInt(w);
                         buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
                         popupWindow.dismiss();
                     }
