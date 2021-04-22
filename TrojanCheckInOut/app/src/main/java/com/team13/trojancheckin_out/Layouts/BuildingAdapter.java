@@ -178,16 +178,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // inflate the layout of the popup window
                 LayoutInflater inflater = LayoutInflater.from(mCtx);
                 View popupView = inflater.inflate(R.layout.cap_popup, null);
-<<<<<<< HEAD
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
-=======
 
-                Button closeButton = (Button) popupView.findViewById(R.id.button6);
-                Button submitButton = (Button) popupView.findViewById(R.id.button9);
-                TextView name = (TextView) popupView.findViewById(R.id.textView18);
-                name.setText(buildingList.get(position).getName());
-                //name.setText(building.getName());
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -201,10 +193,11 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-<<<<<<< HEAD
-=======
+                // If cap is less than current count
+                if(x < building.getCurrentCount()) {
+                    System.out.println("CHICKEN NUGGETS");
+                }
 
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -212,6 +205,16 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                         popupWindow.dismiss();
                     }
                 });
+
+
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
+                        popupWindow.dismiss();
+                    }
+                });
+
             }
         });
 

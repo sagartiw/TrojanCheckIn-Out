@@ -23,14 +23,8 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-<<<<<<< HEAD
    private List<User> students;
 
-
-=======
-   private List<User> students = new ArrayList<>();
-
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Accesses Building object via a default constructor.
      */
@@ -72,12 +66,8 @@ public class Building implements Serializable {
     /**
      * @return the building's capacity.
      */
-<<<<<<< HEAD
     public int getCapacity() { return this.capacity; }
-=======
 
-    //public int getCapacity() { return this.capacity; }
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 //    public int getCurrentCount() {
 //
 //        if(students == null){
@@ -89,16 +79,7 @@ public class Building implements Serializable {
 //        }
 //        return students.size();
 //    }
-<<<<<<< HEAD
-=======
 
-    public int getCapacity() {
-        return this.capacity;
-    }
-
-
-
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
     /**
      * Updates the building capacity.
      * @param capacity
@@ -138,10 +119,7 @@ public class Building implements Serializable {
     }
 
     /**
-<<<<<<< HEAD
-=======
 
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
      * @return percentage of building filled up.
      */
     public int getPercent() {
@@ -152,6 +130,14 @@ public class Building implements Serializable {
         return percent;
     }
 
+
+    public void setCapacity(int capacity, String abb) {
+        System.out.println("SETTING CAPACITY FOR: " + abb + " TO " + capacity);
+        this.capacity = capacity;
+        System.out.println(abb);
+        referenceBuildings.child(abb).child("capacity").setValue(capacity);
+
+    }
 
     /**
      *  checks if a student is in a building

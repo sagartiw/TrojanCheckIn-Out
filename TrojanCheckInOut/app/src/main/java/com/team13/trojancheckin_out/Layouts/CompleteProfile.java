@@ -1,12 +1,9 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -34,10 +31,10 @@ import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -252,6 +249,15 @@ public class CompleteProfile extends AppCompatActivity {
                 // Add data from this current page to complete the user object
                 user.setName(fName.getText().toString() + " " + lName.getText().toString());
                 user.setMajor(major);
+                user.setManager("false");
+                user.setterInBuilding(false);
+                user.setInBuilding(false);
+
+
+                Building currentBuilding = new Building("Not in Building", "NA", 500, "");
+                user.setCurrentBuilding(currentBuilding);
+                user.setterCurrentBuilding(currentBuilding);
+
 
                 int radioChosen = radioGroup.getCheckedRadioButtonId();
                 boolean checkConditions = true;
