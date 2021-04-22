@@ -223,7 +223,7 @@ public class StudentLanding extends AppCompatActivity {
 
 
                         // Removes from current building DB
-                        user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                        user.getCurrentBuilding().removeStudent(user);
                         System.out.println("CURR: " + user.getCurrentBuilding().getName());
 
 

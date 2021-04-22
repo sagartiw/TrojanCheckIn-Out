@@ -159,7 +159,7 @@ public class ScanActivity extends AppCompatActivity {
                                     startActivity(intent);
 
                                     // user is trying to check out
-                                    match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                                    match.removeStudent(user);
                                     user.setterCurrentBuilding(null);
                                     user.setterInBuilding(false);
 
@@ -178,7 +178,7 @@ public class ScanActivity extends AppCompatActivity {
                                     System.out.println("updated count" + referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").get().toString());
 
                                     // Removes from current building DB
-                                    user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                                    user.getCurrentBuilding().removeStudent(user);
                                     System.out.println("CURR: " + user.getCurrentBuilding().getName());
 
                                     // Remove user's current building

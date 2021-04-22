@@ -9,7 +9,6 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,24 +109,9 @@ public class BuildingManipulator {
                 Building building = getBuilding(data[1]);
                 building.setCapacity(Integer.parseInt(data[2]));
 
-<<<<<<< HEAD
-                building.setCapacity(Integer.parseInt(data[2]));
 
-                referenceBuildings.child(data[2]).child("capacity").setValue(data[2]);
-                //Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
-                //referenceBuildings.child(data[2]).child("capcity").setValue(data[2]);
-               // Building building = new Building(data[0], data[1], Integer.parseInt(data[2]), "QR");
-
-                //User user = new User("Adam Levine", "adam@usc.edu", "adam",
-                  //      "Photo", "123", false, null, new ArrayList<Building>(),
-                   //     "Business", "true");
-                //building.addStudent(user);
-
-                // Store in DB
-                referenceBuildings.child(data[1]).setValue(building);
-=======
                 referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
->>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
+
             }
             scan.close();
         } catch (FileNotFoundException e) {
