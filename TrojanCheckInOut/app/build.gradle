@@ -50,8 +50,6 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
     implementation 'com.github.bumptech.glide:glide:4.x'
     //annotationProcessor 'com.github.bumptech.glide:compiler:4.x'
-    implementation platform('com.google.firebase:firebase-bom:26.7.0')
-    implementation 'com.google.firebase:firebase-auth'
     testImplementation 'junit:junit:4.+'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -69,5 +67,6 @@ dependencies {
 
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+   
 
 }

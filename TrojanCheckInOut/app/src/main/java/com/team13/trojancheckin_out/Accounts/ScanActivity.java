@@ -91,7 +91,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 try {

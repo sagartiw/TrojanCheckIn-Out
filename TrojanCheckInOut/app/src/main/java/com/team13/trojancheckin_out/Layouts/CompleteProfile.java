@@ -291,14 +291,10 @@ public class CompleteProfile extends AppCompatActivity {
                 /*
                 Building building = new Building();
                 building.setName("USC Campus");
-
                 //user.setCurrentBuilding(building);
                 user.getHistory().put("USC", "1234 0123");
-
                 // delete later
-
                 //Building building = new Building();
-
                 building.setName("USC");
                 user.setCurrentBuilding(building);
                 */
@@ -338,7 +334,7 @@ public class CompleteProfile extends AppCompatActivity {
             mAuth.signInAnonymously();
         }
         profileImage = (ImageButton) findViewById(R.id.imageButton);
-      //  viewPFP = (ImageView) findViewById(R.id.pfp);
+        //  viewPFP = (ImageView) findViewById(R.id.pfp);
         System.out.println("View pfp initial: " + viewPFP);
 
         profileImage.setOnClickListener(new View.OnClickListener() {
@@ -445,23 +441,21 @@ public class CompleteProfile extends AppCompatActivity {
         });
     }
 */
-    //@Override
-  //  public void onStart() {
-  //      super.onStart();
-  //      Check if user is signed in (non-null) and update UI accordingly.
-   //   FirebaseUser currentUser = mAuth.getCurrentUser();
- //   }
+        //@Override
+        //  public void onStart() {
+        //      super.onStart();
+        //      Check if user is signed in (non-null) and update UI accordingly.
+        //   FirebaseUser currentUser = mAuth.getCurrentUser();
+        //   }
     /*public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
         try {
             // check version of Android on device
             if(Build.VERSION.SDK_INT > 27){
-
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
             } else {
-
                 // support older versions of Android by using getBitmap
                 image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
             }
@@ -476,19 +470,14 @@ public class CompleteProfile extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
             Uri photoUri = data.getData();
-
             String filepath = photoUri.getPath();
             System.out.println("This is the filepath of the local file: " + filepath);
-
             StorageReference selectedFile = storageRef.child("Profile Pictures/");
             System.out.println("HELLO TEAM");
-
             UploadTask uploadTask = selectedFile.putFile(photoUri);
             System.out.println("HELLO TEAM 2");
             user = (User) getIntent().getSerializableExtra("PrevPageData");
-
             user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
-
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -545,7 +534,7 @@ public class CompleteProfile extends AppCompatActivity {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
-           // StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
             //"profile pics/ or images/" for ref?"
             //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
             StorageReference ref = storageRef.child("Profile Pictures/" + filePath.getLastPathSegment());

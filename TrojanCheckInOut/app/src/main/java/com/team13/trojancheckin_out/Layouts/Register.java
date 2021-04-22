@@ -71,7 +71,7 @@ public class Register extends AppCompatActivity {
                     }
                 });
 
-              //ALERT 1: check if email is usc email and is valid
+                //ALERT 1: check if email is usc email and is valid
                 if (!email.getText().toString().contains("@usc.edu")) {
                     System.out.println("EMAIL ERROR!");
 

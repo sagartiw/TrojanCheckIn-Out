@@ -79,6 +79,10 @@ public class StudentsList extends AppCompatActivity {
 
         studentList = new ArrayList<>();
 
+<<<<<<< HEAD
+        StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
+        recyclerView.setAdapter(adapter);
+=======
         // get students list - idk why this doesnt work
         //studentList = building.getCurrentStudents();
 
@@ -86,6 +90,7 @@ public class StudentsList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         System.out.println("I WANNA DIe " + studentList.size());
 
+>>>>>>> 78892f1c1a32bcc0e8799e3567a8faf95634d420
 
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);

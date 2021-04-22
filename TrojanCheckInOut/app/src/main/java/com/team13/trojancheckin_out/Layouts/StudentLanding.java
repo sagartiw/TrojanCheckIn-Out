@@ -253,7 +253,7 @@ public class StudentLanding extends AppCompatActivity {
 
                         String min = Integer.toString(currentMinute);
                         String hour = Integer.toString(currentHour);
-                       //String date = Integer.toString(currentDate);
+                        //String date = Integer.toString(currentDate);
 
                         if(currentMinute <= 9){
                             min = "0" + Integer.toString(currentMinute);
