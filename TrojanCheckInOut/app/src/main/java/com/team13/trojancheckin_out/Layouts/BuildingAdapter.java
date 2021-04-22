@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -154,8 +155,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 TextView name = (TextView) popupView.findViewById(R.id.textView18);
                 name.setText(buildingList.get(position).getName());
                 EditText num = (EditText) popupView.findViewById(R.id.editTextNumber2);
-                String w = num.getText().toString();
-                int x = Integer.parseInt(w);
                 //name.setText(building.getName());
 
                 // create the popup window
@@ -170,11 +169,6 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-                // If cap is less than current count
-                if(x < building.getCurrentCount()) {
-                    System.out.println("CHICKEN NUGGETS");
-                }
-
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -186,7 +180,20 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
+                        String w = num.getText().toString();
+                        int x = Integer.parseInt(w);
+                        // If cap is less than current count
+                        String hold = holder.textViewCurrent.getText().toString();
+                        int y = Integer.parseInt(hold);
+
+                        if(x < y || x < 0) {
+                            Toast.makeText(v.getContext(), "New capacity cannot be less than current count of students!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
+                        }
                         popupWindow.dismiss();
                     }
                 });
