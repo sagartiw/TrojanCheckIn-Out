@@ -247,7 +247,7 @@ public class CompleteProfile extends AppCompatActivity {
                 studentID = (EditText) findViewById(R.id.editTextTextPersonName4);
 
                 // Add data from this current page to complete the user object
-                user.setName(fName.getText().toString() + " " + lName.getText().toString());
+                user.setName(lName.getText().toString() + ", " + fName.getText().toString());
                 user.setMajor(major);
                 user.setManager("false");
                 // user.setterInBuilding(false);
@@ -300,7 +300,7 @@ public class CompleteProfile extends AppCompatActivity {
                 */
 
                 if (checkConditions) {
-                    user.getHistory().put("SLH", "0123 2344");
+                    user.getHistory().put("SLH", "0123@01.01.2020 2344@01.01.2020");
 
                     // Push user to DB
                     accountManipulator.createAccount(user);
