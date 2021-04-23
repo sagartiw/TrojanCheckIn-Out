@@ -152,9 +152,6 @@ public class Building implements Serializable {
      */
     public Boolean removeStudent(User user) {
         students.remove(user);
-        // THIS SHOULD BE CHANGED TO ADD USER TO ARRAY OF STUDENTS NOT SET VALUE
-        referenceBuildings.child(abbreviation).child("students").setValue(user);
-
         referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).removeValue();
         return true;
     }

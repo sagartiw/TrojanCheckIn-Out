@@ -67,7 +67,6 @@ public class StudentLanding extends AppCompatActivity {
     private List<History> historyList;
     private AccountManipulator accountManipulator = new AccountManipulator();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,9 +214,38 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-
                         // Update count - 1
+                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+                            @Override
+                            public void onCallback(Map<String, Building> map) {
 
+                                System.out.println("HEY THERE!" + user.getCurrentBuilding().getAbbreviation());
+                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
+                                System.out.println("HEYYYY " + count);
+                                if (notIncremented) {
+                                    System.out.println("WHAT THE HECKAROO");
+                                    count = count-1;
+                                    System.out.println("YUM" + count);
+                                    notIncremented = false;
+                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
+
+                                    // Removes from current building DB
+                                    System.out.println("Track user 2" + user);
+                                    user.getCurrentBuilding().removeStudent(user);
+                                    System.out.println("Building before deletion: " + user.getCurrentBuilding().getName());
+
+                                    Building b = new Building("Not in Building", "NA", 500, "");
+                                    user.setterCurrentBuilding(b);
+                                    referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+                                    System.out.println("Building after deletion: " + user.getCurrentBuilding().getName());
+
+
+                                    // Add to NA in DB
+                                    referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
+                                    currBuilding.setText("NA");
+                                }
+                            }
+                        });
 
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeZone(TimeZone.getTimeZone("PST"));
@@ -247,47 +275,14 @@ public class StudentLanding extends AppCompatActivity {
 
                         System.out.println(checkInTime);
 
+                        System.out.println("Building before checkin time: " + user.getCurrentBuilding().getAbbreviation());
                         referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
-
-
-                        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
-                            @Override
-                            public void onCallback(Map<String, Building> map) {
-                                int count = map.get(user.getCurrentBuilding().getAbbreviation()).getCurrentCount();
-                                if (notIncremented) {
-                                    count = count-1;
-                                    notIncremented = false;
-                                    referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").setValue(count);
-                                }
-                            }
-                        });
-
-
-
-                        // Removes from current building DB
-                        System.out.println("Track user 2" + user);
-                        user.getCurrentBuilding().removeStudent(user);
-                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
-
-
-                        Building b = new Building("Not in Building", "NA", 500, "");
-                        user.setterCurrentBuilding(b);
-                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
-
-
-                        // Add to NA in DB
-                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
-
-                        currBuilding.setText("NA");
 
                         // Remove user's current building
                         user.setterInBuilding(false);
                         user.setInBuilding(false);
 
-
-
                         accountManipulator.currentUser = user;
-
 
                         Intent intent = new Intent(v.getContext(), StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
