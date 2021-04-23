@@ -9,7 +9,6 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +109,9 @@ public class BuildingManipulator {
                 Building building = getBuilding(data[1]);
                 building.setCapacity(Integer.parseInt(data[2]));
 
+
                 referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
+
             }
             scan.close();
         } catch (FileNotFoundException e) {

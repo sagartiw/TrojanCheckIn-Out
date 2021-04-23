@@ -4,20 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Patterns;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
-
-import android.view.Gravity;
-import android.view.LayoutInflater;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,14 +19,9 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
-import com.team13.trojancheckin_out.UPC.Building;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 
 public class Register extends AppCompatActivity {
 
@@ -71,7 +59,7 @@ public class Register extends AppCompatActivity {
                     }
                 });
 
-              //ALERT 1: check if email is usc email and is valid
+                //ALERT 1: check if email is usc email and is valid
                 if (!email.getText().toString().contains("@usc.edu")) {
                     System.out.println("EMAIL ERROR!");
 
@@ -226,6 +214,7 @@ public class Register extends AppCompatActivity {
                     });
                 }
                 else{
+                    email = (EditText) findViewById(R.id.editTextTextEmailAddress);
                     accountManipulator.getAllAccounts(new MyUserCallback() {
                         @Override
                         public void onCallback(Map<String, User> map) {

@@ -79,6 +79,8 @@ public class ScanActivity extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        System.out.println("Track user 1" + user);
+
         surfaceView = findViewById(R.id.camera);
         textView = findViewById(R.id.text);
 
@@ -91,7 +93,7 @@ public class ScanActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 try {
@@ -139,18 +141,25 @@ public class ScanActivity extends AppCompatActivity {
 
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
-                            if(match.getAbbreviation() != null){
+                            if(match != null && match.getAbbreviation() != null){
                                 System.out.println("CHECK MATCH: " + match.getAbbreviation());
                             }
+                            System.out.println("Track user 2" + user);
+
                             User user = accountManipulator.currentUser;
+
+                            System.out.println("Track user 3" + user);
+
 
                             // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
                             //    IM HERE: SAL
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
+
+
                                     // user is trying to check out
-                                    match.removeStudent(user, user.getCurrentBuilding().getAbbreviation());
+                                    match.removeStudent(user);
                                     user.setterCurrentBuilding(null);
                                     user.setterInBuilding(false);
 
@@ -168,18 +177,8 @@ public class ScanActivity extends AppCompatActivity {
                                     });
                                     System.out.println("updated count" + referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").get().toString());
 
-                                    // Removes from current building DB
-                                    user.getCurrentBuilding().removeStudent(user, user.getCurrentBuilding().getAbbreviation());
-                                    System.out.println("CURR: " + user.getCurrentBuilding().getName());
 
-                                    // Remove user's current building
-                                    user.setInBuilding(false);
-                                    System.out.println("removed");
-                                    Building b = new Building("Not in Building", "NA", 500, "");
-                                    referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
-                                    user.setterCurrentBuilding(b);
-
-                                    System.out.println("b" + b.getName().toString());
+                                    //System.out.println("b" + b.getName().toString());
 
                                     Calendar cal = Calendar.getInstance();
                                     cal.setTimeZone(TimeZone.getTimeZone("PST"));
@@ -213,39 +212,72 @@ public class ScanActivity extends AppCompatActivity {
                                     System.out.println("time:" + time);
                                     checkOutTime = time;
                                     referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkOutTime);
+
+                                    // Removes from current building DB
+                                    user.getCurrentBuilding().removeStudent(user);
+                                    System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+                                    // Remove user's current building
+                                    user.setInBuilding(false);
+                                    System.out.println("removed");
+                                    Building b = new Building("Not in Building", "NA", 500, "");
+                                    referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+                                    user.setterCurrentBuilding(b);
+
+
+                                    // add popup
+//                                    String error ="Successfully checked out of current building!";
+//                                    Intent intent = new Intent(ScanActivity.this, QRCodeScanner.class);
+//                                    System.out.println("TRYING TO CHECK OUT USER");
+//
+//                                    intent.putExtra("error", error);
+//                                    startActivity(intent);
+
                                 }
                                 else {
                                     // send an error message that they need to check out of their current building before trying to check in somewhere else
-                                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                                    View popupView = inflater.inflate(R.layout.scan_qr_popup, null);
-                                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
 
-                                    // create the popup window
-                                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                    popupWindow.setElevation(20);
+//                                    String error ="Check out of current building before trying to check in somewhere else!";
+//                                    Intent intent = new Intent(ScanActivity.this, QRCodeScanner.class);
+//
+//                                    intent.putExtra("error", error);
+//                                    startActivity(intent);
 
-                                    // show the popup window
-                                    // which view you pass in doesn't matter, it is only used for the window token
-                                    popupWindow.showAtLocation(textView, Gravity.CENTER, 0, 0);
-
-                                    // dismiss the popup window when touched
-                                    closeButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            popupWindow.dismiss();
-                                        }
-                                    });
-                                    Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
-                                            Toast.LENGTH_SHORT).show();
+//
+//                                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+//                                    View popupView = inflater.inflate(R.layout.scan_qr_popup, null);
+//                                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+//
+//                                    // create the popup window
+//                                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                                    boolean focusable = true; // lets taps outside the popup also dismiss it
+//                                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//                                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                                    popupWindow.setElevation(20);
+//
+//                                    // show the popup window
+//                                    // which view you pass in doesn't matter, it is only used for the window token
+//                                    popupWindow.showAtLocation(textView, Gravity.CENTER, 0, 0);
+//
+//                                    // dismiss the popup window when touched
+//                                    closeButton.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            popupWindow.dismiss();
+//                                        }
+//                                    });
+//                                    Toast.makeText(ScanActivity.this, "Check out of current building before trying to check in somewhere else!",
+//                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else { // user is trying to check in
                                 // check if there is capacity in the building
                                 if (match.getCurrentCount() + 1 > match.getCapacity()) {
+
+
+
+
                                     // return error to the user saying they cannot check into this building because it is full
                                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                                     View popupView = inflater.inflate(R.layout.scan_qr_popup2, null);
@@ -271,11 +303,22 @@ public class ScanActivity extends AppCompatActivity {
                                         }
                                     });
 
-                                    Toast.makeText(ScanActivity.this, "Building is Full!",
-                                            Toast.LENGTH_SHORT).show();
+                                    // add popup
+//                                    String error ="Error: this building is full!";
+//                                    Intent intent = new Intent(ScanActivity.this, QRCodeScanner.class);
+//
+//                                    intent.putExtra("error", error);
+//                                    startActivity(intent);
+
+//                                    Toast.makeText(ScanActivity.this, "Building is Full!",
+//                                            Toast.LENGTH_SHORT).show();
                                 }
                                 else { // check in the user
+                                    System.out.println("Track user 4" + match);
                                     match.addStudent(user);
+
+
+
                                     // set in building for curr user to be true so that they check in
                                     System.out.println("SCAN ID: " + user.getId());
                                     System.out.println("MATCH " + match.getAbbreviation());
@@ -336,10 +379,19 @@ public class ScanActivity extends AppCompatActivity {
                                     accountManipulator.currentUser = user;
 
 
+                                    // add popup
+//                                    String error ="Checked in to building!";
+//                                    Intent intent = new Intent(ScanActivity.this, QRCodeScanner.class);
+//
+//                                    intent.putExtra("error", error);
+//                                    startActivity(intent);
+
+
                                     // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                                 }
                             }
                             Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
+
                             intent.putExtra("PrevPageData", user);
                             startActivity(intent);
                         }

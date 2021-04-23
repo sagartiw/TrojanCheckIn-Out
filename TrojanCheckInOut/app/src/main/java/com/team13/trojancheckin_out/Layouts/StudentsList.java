@@ -1,21 +1,11 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import android.animation.BidirectionalTypeConverter;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,26 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
-import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
-import static com.team13.trojancheckin_out.Database.BuildingManipulator.currentBuildings;
-import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.ManagerLanding.tracker;
-import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
 public class StudentsList extends AppCompatActivity {
 
@@ -98,13 +79,13 @@ public class StudentsList extends AppCompatActivity {
 
         studentList = new ArrayList<>();
 
+
         // get students list - idk why this doesnt work
         //studentList = building.getCurrentStudents();
 
         StudentAdapter adapter = new StudentAdapter(StudentsList.this, studentList);
         recyclerView.setAdapter(adapter);
-
-
+        System.out.println("I WANNA DIe " + studentList.size());
 
         //creating recyclerview adapter
         //StudentAdapter adapter1 = new StudentAdapter(StudentsList.this, studentList);
@@ -116,8 +97,11 @@ public class StudentsList extends AppCompatActivity {
             @Override
             public void onCallback(Map<String, User> map) {
                 for (Map.Entry<String, User> e : map.entrySet()) {
+                    System.out.println("WHAT THE FUCK");
                     User user = e.getValue();
+                    System.out.println("WATHTESBF: " + user.getName());
                     if (user.isInBuilding()) {
+                        System.out.println("I AM IN BUILDING");
                         if (user.getCurrentBuilding().getAbbreviation().equals(building.getAbbreviation())){
                             studentList.add(new User(user.getName(),user.getEmail(),user.getPassword(),user.getPhoto(),user.getId(),user.isInBuilding(),user.getCurrentBuilding(),user.getHistory(),user.getMajor(),user.isManager(), user.isDeleted()));
                             System.out.println("USER NAME: " + user.getName());

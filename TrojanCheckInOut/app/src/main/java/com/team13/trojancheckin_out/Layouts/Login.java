@@ -23,7 +23,7 @@ import com.team13.trojancheckin_out.Database.MyUserCallback;
 import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
-
+import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 
 
 public class Login extends AppCompatActivity {
@@ -105,16 +105,58 @@ public class Login extends AppCompatActivity {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-
+                                currentUser = user;
                                 // check if account is deleted
                                 if (user.isDeleted()) {
                                     // create specific popup??
+                                    System.out.println("Deleted Account ERROR!");
+                                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                                    View popupView = inflater.inflate(R.layout.reactivate_popup , null);
+                                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                                    Button reactivateButton = (Button) popupView.findViewById(R.id.button10);
+
+                                    // create the popup window
+                                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    popupWindow.setElevation(20);
+
+                                    // show the popup window
+                                    // which view you pass in doesn't matter, it is only used for the window token
+                                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+                                    // dismiss the popup window when touched
+                                    closeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            popupWindow.dismiss();
+                                        }
+                                    });
+
+                                    //reroute to register
+                                    reactivateButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            referenceUsers.child(user.getId()).child("deleted").setValue(false);
+
+                                            if (user.isManager().equalsIgnoreCase("false")) {
+                                                intent = new Intent(Login.this, StudentLanding.class);
+                                                intent.putExtra("PrevPageData", user);
+                                                startActivity(intent);
+                                            }
+                                            //Manager Case
+                                            else if (user.isManager().equalsIgnoreCase("true")) {
+                                                intent = new Intent(Login.this, ManagerLanding.class);
+                                                intent.putExtra("PrevPageData", user);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
                                     continue;
                                 }
-
-
                                 //Student Case
-                                currentUser = user;
                                 System.out.println("LOGIN ID: " + currentUser.getId());
 
                                 if (user.isManager().equalsIgnoreCase("false")) {
@@ -132,9 +174,47 @@ public class Login extends AppCompatActivity {
                             }
                             System.out.println("WE HAVE GOTTEN HERE");
                         }
+                        if (!found) {
+                            //reset the page here. user not found!
+                            System.out.println("LOGIN ERROR!");
+                            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                            View popupView = inflater.inflate(R.layout.login_popup, null);
+                            Button closeButton = (Button) popupView.findViewById(R.id.button12);
+                            Button registerButton = (Button) popupView.findViewById(R.id.button10);
+
+                            // create the popup window
+                            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                            boolean focusable = true; // lets taps outside the popup also dismiss it
+                            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            popupWindow.setElevation(20);
+
+                            // show the popup window
+                            // which view you pass in doesn't matter, it is only used for the window token
+                            popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+                            // dismiss the popup window when touched
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    popupWindow.dismiss();
+                                }
+                            });
+
+                            //reroute to register
+                            registerButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    intent = new Intent(Login.this, Register.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
                     }
                 });
-
+            }
+/*
 
 //                accountManipulator.getStudentAccounts(new MyUserCallback() {
 //                    @Override
@@ -180,45 +260,6 @@ public class Login extends AppCompatActivity {
 //                    }
 //                });
 
-                if (!found) {
-                    //reset the page here. user not found!
-                    System.out.println("LOGIN ERROR!");
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                    View popupView = inflater.inflate(R.layout.login_popup, null);
-                    Button closeButton = (Button) popupView.findViewById(R.id.button12);
-                    Button registerButton = (Button) popupView.findViewById(R.id.button10);
-
-                    // create the popup window
-                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    boolean focusable = true; // lets taps outside the popup also dismiss it
-                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    popupWindow.setElevation(20);
-
-                    // show the popup window
-                    // which view you pass in doesn't matter, it is only used for the window token
-                    popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
-
-                    // dismiss the popup window when touched
-                    closeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
-                        }
-                    });
-
-                    //reroute to register
-                    registerButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            intent = new Intent(Login.this, Register.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            }
-/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
