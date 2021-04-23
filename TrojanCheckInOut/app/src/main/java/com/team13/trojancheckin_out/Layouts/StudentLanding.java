@@ -79,6 +79,7 @@ public class StudentLanding extends AppCompatActivity {
         History = (Button)findViewById(R.id.checkOut2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        System.out.println("Track user 1" + user);
         soFab = (FloatingActionButton)findViewById(R.id.fab);
         welcomeName = (TextView)findViewById(R.id.welcomeMessage);
         System.out.println("NAME: " + user.getName());
@@ -116,7 +117,7 @@ public class StudentLanding extends AppCompatActivity {
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
         System.out.println("This is the user photo in student landing" + user.getPhoto());
-        Glide.with(getApplicationContext()).load(pfp).into(soFab);
+     //   Glide.with(getApplicationContext()).load(pfp).into(soFab);
 
 //        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
 //        soFab.setImageResource(imageRe);
@@ -216,31 +217,6 @@ public class StudentLanding extends AppCompatActivity {
 
 
                         // Update count - 1
-                        System.out.println("before building callback ");
-
-
-                        System.out.println("after building callback ");
-
-
-                        // Removes from current building DB
-                        user.getCurrentBuilding().removeStudent(user);
-                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
-
-
-                        Building b = new Building("Not in Building", "NA", 500, "");
-                        user.setterCurrentBuilding(b);
-                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
-
-
-                        // Add to NA in DB
-                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
-
-                        currBuilding.setText("NA");
-
-                        // Remove user's current building
-                        user.setterInBuilding(false);
-                        user.setInBuilding(false);
-
 
 
                         Calendar cal = Calendar.getInstance();
@@ -273,6 +249,7 @@ public class StudentLanding extends AppCompatActivity {
 
                         referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
 
+
                         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                             @Override
                             public void onCallback(Map<String, Building> map) {
@@ -284,6 +261,29 @@ public class StudentLanding extends AppCompatActivity {
                                 }
                             }
                         });
+
+
+
+                        // Removes from current building DB
+                        System.out.println("Track user 2" + user);
+                        user.getCurrentBuilding().removeStudent(user);
+                        System.out.println("CURR: " + user.getCurrentBuilding().getName());
+
+
+                        Building b = new Building("Not in Building", "NA", 500, "");
+                        user.setterCurrentBuilding(b);
+                        referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
+
+
+                        // Add to NA in DB
+                        referenceBuildings.child("NA").child("currentStudents").child(user.getId()).setValue(user);
+
+                        currBuilding.setText("NA");
+
+                        // Remove user's current building
+                        user.setterInBuilding(false);
+                        user.setInBuilding(false);
+
 
 
                         accountManipulator.currentUser = user;
@@ -396,12 +396,12 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         currentUser = null;
-                        //Intent intent = new Intent(v.getContext(), Startup.class);
-                        //intent.putExtra("PrevPageData", user);
-                        //v.getContext().startActivity(intent);
-                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        finishAndRemoveTask();
-                        finishAffinity();
+                        Intent intent = new Intent(v.getContext(), Startup.class);
+                        intent.putExtra("PrevPageData", currentUser);
+                        v.getContext().startActivity(intent);
+                        //startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        //finishAndRemoveTask();
+                        //finishAffinity();
                     }
                 });
 

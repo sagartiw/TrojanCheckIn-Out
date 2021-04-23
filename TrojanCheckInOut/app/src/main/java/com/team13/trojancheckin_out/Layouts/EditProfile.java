@@ -43,7 +43,7 @@ public class EditProfile extends AppCompatActivity {
     private Button yeetusDeletus; //id back3
     private User user;
     private TextView name;
-    private TextView name2;
+    private TextView bigName;
     private TextView id;
     private TextView major;
     private ImageView pfp;
@@ -64,6 +64,9 @@ public class EditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+        bigName = (TextView) findViewById(R.id.name);
+        bigName.setText(user.getName());
 
 
         name = (TextView) findViewById(R.id.name2);

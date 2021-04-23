@@ -23,7 +23,7 @@ public class Building implements Serializable {
     // Have to use an image builder, using String for now
     private String QRCode;
 
-   private List<User> students;
+   private List<User> students = new ArrayList<>();
 
     /**
      * Accesses Building object via a default constructor.
@@ -152,7 +152,10 @@ public class Building implements Serializable {
      */
     public Boolean removeStudent(User user) {
         students.remove(user);
+        // THIS SHOULD BE CHANGED TO ADD USER TO ARRAY OF STUDENTS NOT SET VALUE
         referenceBuildings.child(abbreviation).child("students").setValue(user);
+
+        referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).removeValue();
         return true;
     }
 
@@ -161,6 +164,7 @@ public class Building implements Serializable {
      * @return true if the student has been successfully added into the building.
      */
     public Boolean addStudent(User user) {
+
         students.add(user);
         referenceBuildings.child(abbreviation).child("currentStudents").child(user.getId()).setValue(user);
         return true;

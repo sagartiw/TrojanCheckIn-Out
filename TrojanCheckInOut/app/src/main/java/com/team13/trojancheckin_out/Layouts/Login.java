@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
                                 user = checkUser.getValue();
                                 System.out.println(user.isManager());
                                 found = true;
-
+                                currentUser = user;
                                 // check if account is deleted
                                 if (user.isDeleted()) {
                                     // create specific popup??
@@ -154,14 +154,9 @@ public class Login extends AppCompatActivity {
                                             }
                                         }
                                     });
-
-
                                     continue;
                                 }
-
-
                                 //Student Case
-                                currentUser = user;
                                 System.out.println("LOGIN ID: " + currentUser.getId());
 
                                 if (user.isManager().equalsIgnoreCase("false")) {
