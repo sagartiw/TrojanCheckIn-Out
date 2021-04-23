@@ -251,6 +251,8 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setMajor(major);
                 user.setManager("false");
                 // user.setterInBuilding(false);
+
+
                 user.setInBuilding(false);
 
 
