@@ -2,8 +2,10 @@ package com.team13.trojancheckin_out.Layouts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.zxing.WriterException;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
@@ -30,6 +32,9 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.util.List;
 import java.util.Map;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
@@ -40,6 +45,8 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
     private ImageButton qrButton;
     private Button cap, studentList;
     private User user;
+    Bitmap bitmap;
+    QRGEncoder qrgEncoder;
 
     //NEW STUFF
     private Building building;
@@ -113,31 +120,36 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
 
                 TextView buildingName = (TextView) popupView.findViewById(R.id.textView19);
-                buildingName.setText(building.getName());
+                buildingName.setText(buildingList.get(position).getName());
 
                 ImageView qrImage = (ImageView) popupView.findViewById(R.id.imageView8);
 
-                String pathToPicture = building.getQRCode();
+                // QR Code Generation
 
-                //qrImage.setImageBitmap(BitmapFactory.decodeFile(pathToPicture));
+                // getting width and
+                // height of a point
 
-                System.out.println("qr code path = " + pathToPicture);
+                int w = 1200;
+                int h = 1200;
 
-//                Uri filePath = Uri.parse(pathToPicture);
-//                Bitmap bitmap = null;
-//                try {
-//                    bitmap = MediaStore.Images.Media.getBitmap(mCtx.getContentResolver(), filePath);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                //qrImage.setImageBitmap(bitmap);
+                // generating dimension from width and height.
+                int dimen = w < h ? w : h;
+                dimen = dimen * 3 / 4;
 
-                System.out.println(pathToPicture);
-                StorageReference httpsReference = storage.getReference().child(pathToPicture);
-
-                Glide.with(mCtx).load(httpsReference).into(qrImage);
-
-                //qrImage.setImageResource(building.getQRCode());
+                // setting this dimensions inside our qr code
+                // encoder to generate our qr code.
+                qrgEncoder = new QRGEncoder(buildingList.get(position).getAbbreviation(), null, QRGContents.Type.TEXT, dimen);
+                try {
+                    // getting our qrcode in the form of bitmap.
+                    bitmap = qrgEncoder.encodeAsBitmap();
+                    // the bitmap is set inside our image
+                    // view using .setimagebitmap method.
+                    qrImage.setImageBitmap(bitmap);
+                } catch (WriterException e) {
+                    // this method is called for
+                    // exception handling.
+                    Log.e("Tag", e.toString());
+                }
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;

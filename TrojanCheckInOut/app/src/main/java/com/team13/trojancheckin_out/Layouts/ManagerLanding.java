@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
-import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
@@ -33,11 +32,9 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
@@ -96,6 +93,7 @@ public class ManagerLanding extends AppCompatActivity {
             public void onCallback(Map<String, Building> map) {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
                     Building b = checkBuilding.getValue();
+                    if (b.getAbbreviation().equalsIgnoreCase("NA")) continue;
                     buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
                 }
                 //creating recyclerview adapter

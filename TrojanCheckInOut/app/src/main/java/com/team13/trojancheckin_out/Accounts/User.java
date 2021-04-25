@@ -33,6 +33,7 @@ public class User implements Serializable {
     private String isManager;
 
     private boolean deleted;
+    private boolean kickedOut = false;
 
     /**
      * User object via a default constructor.
@@ -67,6 +68,7 @@ public class User implements Serializable {
         this.major = major;
         this.isManager = isManager;
         this.deleted = deleted;
+        this.kickedOut = false;
     }
 
     /**
@@ -130,6 +132,15 @@ public class User implements Serializable {
 
     public void setInBuilding(boolean inBuilding) {
         this.inBuilding = inBuilding;
+    }
+
+    public boolean isKickedOut() { return kickedOut; }
+
+    public void setKickedOut(boolean setter) { this.kickedOut = setter; }
+
+    public void setterKickedOut(boolean setter) {
+        this.kickedOut = setter;
+        referenceUsers.child(this.getId()).child("kickedOut").setValue(setter);
     }
 
     public void setterInBuilding(boolean inBuilding) {

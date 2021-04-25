@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:elevation="2dp">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="350dp"
-        android:layout_height="420dp"
+        android:layout_height="270dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -27,42 +26,50 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button6"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="49dp"
-                android:layout_height="47dp"
-                android:elevation="2dp"
-                android:text="X"
-                android:textColor="#990000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="316dp"
-                android:layout_height="72dp"
-                android:layout_marginBottom="2dp"
-                android:elevation="2dp"
+                android:id="@+id/button10"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/red"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Salvatori Computer Science Center"
-                android:textAlignment="center"
-                android:textColor="@color/red"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:letterSpacing="0.02"
+                android:stateListAnimator="@null"
+                android:text="OK"
+                android:textSize="10sp"
+                app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="316dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Notification"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="30dp"
                 tools:layout_conversion_absoluteWidth="234dp" />
 
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="A manager has removed you from the building."
+                android:textAlignment="center"
+                android:textColor="#565656"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/qr_code" />
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

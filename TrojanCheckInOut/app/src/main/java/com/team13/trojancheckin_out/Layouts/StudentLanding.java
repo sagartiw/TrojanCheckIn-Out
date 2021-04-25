@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
@@ -105,13 +110,46 @@ public class StudentLanding extends AppCompatActivity {
             currBuilding.setText("USC");
         }
 
-//        if(user.getCurrentBuilding().getName().toString().equals("NA")){
-//            currBuilding.setText("NA");
-//            user.setterInBuilding(false);
-//        }
+        // If kicked out
+        accountManipulator.getAllAccounts(new MyUserCallback() {
+            @Override
+            public void onCallback(Map<String, User> map) {
+                if (map.get(user.getId()).isKickedOut())
+                {
+                    System.out.println("ALERT");
+                    // inflate the layout of the popup window
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.kickedout_popup, null);
+                    Button submit = (Button) popupView.findViewById(R.id.button10);
 
+                    // create the popup window
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    boolean focusable = true; // lets taps outside the popup also dismiss it
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
+                    popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    popupWindow.setElevation(20);
 
+                    // show the popup window
+                    // which view you pass in doesn't matter, it is only used for the window token
+                    popupWindow.showAtLocation(findViewById(android.R.id.content).getRootView(), Gravity.CENTER, 0, 0);
+
+                    submit.setOnClickListener(new View.OnClickListener() {
+                        @SuppressLint("NewApi")
+                        @Override
+                        public void onClick(View v) {
+                            // Remove user's current building
+                            user.setterInBuilding(false);
+                            user.setInBuilding(false);
+                            user.setKickedOut(false);
+                            user.setterKickedOut(false);
+                            popupWindow.dismiss();
+                        }
+                    });
+                }
+            }
+        });
 
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
