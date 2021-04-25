@@ -342,10 +342,12 @@ public class CompleteProfile extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Clicked add profile pick");
-                chooseImage();
-                System.out.println("about to upload image");
-                uploadImage();
+
+
+//                System.out.println("Clicked add profile pick");
+//                chooseImage();
+//                System.out.println("about to upload image");
+//                uploadImage();
             }
         });
 

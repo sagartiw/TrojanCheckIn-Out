@@ -7,28 +7,23 @@ import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
@@ -50,6 +45,10 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUs
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
+
+//https://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android for the profile picture urls
+
+
 
 
 public class StudentLanding extends AppCompatActivity {
@@ -83,6 +82,8 @@ public class StudentLanding extends AppCompatActivity {
         History = (Button)findViewById(R.id.checkOut2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
+
         System.out.println("Track user 1" + user);
         soFab = (FloatingActionButton)findViewById(R.id.fab);
         welcomeName = (TextView)findViewById(R.id.welcomeMessage);
@@ -101,6 +102,8 @@ public class StudentLanding extends AppCompatActivity {
 
         System.out.println("TESTER : " + user.getCurrentBuilding().getAbbreviation());
         System.out.println("TESTER : " + user.isInBuilding());
+
+
 
         if(user.isInBuilding() == true){
 
@@ -154,7 +157,10 @@ public class StudentLanding extends AppCompatActivity {
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
         System.out.println("This is the user photo in student landing" + user.getPhoto());
-     //   Glide.with(getApplicationContext()).load(pfp).into(soFab);
+
+
+
+        //   Glide.with(getApplicationContext()).load(pfp).into(soFab);
 
 //        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
 //        soFab.setImageResource(imageRe);

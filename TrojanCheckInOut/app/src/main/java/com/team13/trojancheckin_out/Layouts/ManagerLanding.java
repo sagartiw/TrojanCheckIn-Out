@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public class ManagerLanding extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_manager_landing);

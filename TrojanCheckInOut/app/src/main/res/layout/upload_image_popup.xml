@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="350dp"
-        android:layout_height="270dp"
+        android:layout_height="370dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -25,12 +25,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="34dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="30dp"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/button15"
+                app:layout_constraintStart_toStartOf="@+id/button15"
+                app:layout_constraintTop_toTopOf="@+id/button15"
+                app:srcCompat="@drawable/ic_baseline_arrow_upward_24" />
+
+            <Button
+                android:id="@+id/button15"
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/red"
+                android:fontFamily="@font/montserrat"
+                android:letterSpacing="0.02"
+                android:stateListAnimator="@null"
+                android:text="   Upload file"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView39"
+                app:strokeColor="@color/red"
+                app:strokeWidth="1dp" />
+
             <Button
                 android:id="@+id/button12"
                 android:layout_width="120dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/montserrat_semibold"
                 android:letterSpacing="0.02"
@@ -39,8 +69,9 @@
                 android:textColor="@color/red"
                 android:textSize="10sp"
                 app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextURL"
                 app:strokeColor="@color/red"
                 app:strokeWidth="1dp" />
 
@@ -48,33 +79,44 @@
                 android:id="@+id/textView20"
                 android:layout_width="316dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Upload Profile Picture:"
+                android:text="Upload Profile Picture"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.558"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="30dp"
                 tools:layout_conversion_absoluteWidth="234dp" />
 
-
-
             <TextView
                 android:id="@+id/textView26"
-                android:layout_width="223dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="32dp"
+                android:layout_width="313dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="URL:"
+                android:text="FROM URL"
                 android:textColor="#990000"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView20"/>
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="313dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="FROM GALLERY"
+                android:textColor="#990000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
             <EditText
                 android:id="@+id/editTextURL"
@@ -82,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#990000"
                 android:ems="10"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:textColorHighlight="#80990000"
                 android:textColorLink="#990000"
                 android:textCursorDrawable="@drawable/color_cursor"
@@ -92,20 +134,30 @@
 
 
             <Button
-                android:id="@+id/button10"
-                android:layout_width="120dp"
+                android:id="@+id/button13"
+                android:layout_width="100dp"
                 android:layout_height="35dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/red"
                 android:fontFamily="@font/montserrat_semibold"
                 android:letterSpacing="0.02"
                 android:stateListAnimator="@null"
-                android:text="LOGIN"
-                android:textSize="10sp"
+                android:text="Submit URL"
+                android:textSize="8sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextURL" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="320dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#A68F8F8F"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button13" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

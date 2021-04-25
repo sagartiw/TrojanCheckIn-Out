@@ -65,6 +65,8 @@ public class EditProfile extends AppCompatActivity {
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        new DownloadImageTask((ImageView)findViewById(R.id.pfp)).execute(user.getPhoto());
+
         bigName = (TextView) findViewById(R.id.name);
         bigName.setText(user.getName());
 
