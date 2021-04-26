@@ -158,6 +158,9 @@ public class ScanActivity extends AppCompatActivity {
                                 if (match == user.getCurrentBuilding()) {
 
 
+                                    // ADD POPUP TO ASK USER IF THEY WANT TO CHECK OUT
+
+
                                     // user is trying to check out
                                     match.removeStudent(user);
                                     user.setterCurrentBuilding(null);
@@ -314,6 +317,11 @@ public class ScanActivity extends AppCompatActivity {
 //                                            Toast.LENGTH_SHORT).show();
                                 }
                                 else { // check in the user
+
+
+                                    // ADD POPUP TO ASK USER IF THEY WANT TO CHECK IN TO THIS BUILDING
+
+
                                     System.out.println("Track user 4" + match);
                                     match.addStudent(user);
 
