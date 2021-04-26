@@ -55,13 +55,14 @@ public class ManagerLanding extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_manager_landing);
 
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
+
         tracker = user;
         buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);

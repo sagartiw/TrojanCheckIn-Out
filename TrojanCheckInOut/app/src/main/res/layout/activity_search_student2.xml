@@ -55,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
-        android:text='Input Dates as " ddMMyyyy"  EX: "1/31/2021" is "31.01.2021"'
+        android:text='Input Dates as "dd.MM.yyyy"  EX: "1/31/2021" is "31.01.2021"'
         android:textColor="#990000"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"

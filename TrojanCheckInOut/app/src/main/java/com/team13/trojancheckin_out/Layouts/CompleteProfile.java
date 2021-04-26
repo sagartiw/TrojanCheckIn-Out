@@ -3,15 +3,21 @@ package com.team13.trojancheckin_out.Layouts;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -342,13 +348,61 @@ public class CompleteProfile extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.upload_image_popup, null);
+                EditText urlInput = (EditText) popupView.findViewById(R.id.editTextURL);
+                Button submitUrl = (Button) popupView.findViewById(R.id.button13);
+                Button galleryUpload = (Button) popupView.findViewById(R.id.button15);
+                Button closeButton = (Button) popupView.findViewById(R.id.button12);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                submitUrl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Submit URL!");
+                        user.setPhoto(urlInput.getText().toString());
+                        popupWindow.dismiss();
+                    }
+                });
+
+                galleryUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+            }
 
 
 //                System.out.println("Clicked add profile pick");
 //                chooseImage();
 //                System.out.println("about to upload image");
 //                uploadImage();
-            }
+
         });
 
 

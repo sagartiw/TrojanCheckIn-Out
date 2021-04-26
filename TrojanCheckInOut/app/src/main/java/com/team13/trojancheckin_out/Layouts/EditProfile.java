@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -191,81 +192,58 @@ public class EditProfile extends AppCompatActivity {
 
         System.out.println("This is the user photo in student landing" + user.getPhoto());
         Glide.with(getApplicationContext()).load(pfp2).into(pfp);
-//        changePic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // inflate the layout of the popup window
-//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
-//                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
-//                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
-//                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
-//                Button closeButton = (Button) popupView.findViewById(R.id.button6);
-//
-//                // create the popup window
-//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                boolean focusable = true; // lets taps outside the popup also dismiss it
-//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                popupWindow.setElevation(20);
-//
-//                // show the popup window
-//                // which view you pass in doesn't matter, it is only used for the window token
-//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-//
-//                tommy.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED TOMMY!");
-//                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
-//                        user.setPhoto(tommy);
-//                        referenceUsers.child(user.getId()).child("photo").setValue(tommy);
-//                        popupWindow.dismiss();
-//                        Intent intent = new Intent(v.getContext(), EditProfile.class);
-//                        intent.putExtra("PrevPageData", user);
-//                        startActivity(intent);
-//                    }
-//                });
-//
-//                hecuba.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED HECUBA!");
-//                        String hecuba = "@drawable/hecuba";
-//                        user.setPhoto(hecuba);
-//                        popupWindow.dismiss();
-//                        referenceUsers.child(user.getId()).child("photo").setValue(hecuba);
-//                        Intent intent = new Intent(v.getContext(), EditProfile.class);
-//                        intent.putExtra("PrevPageData", user);
-//                        startActivity(intent);
-//                    }
-//                });
-//
-//                traveller.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED TRAVELLER!");
-//                        String traveller = "@drawable/traveller";
-//                        user.setPhoto(traveller);
-//                        referenceUsers.child(user.getId()).child("photo").setValue(traveller);
-//                        popupWindow.dismiss();
-//                        Intent intent = new Intent(v.getContext(), EditProfile.class);
-//                        intent.putExtra("PrevPageData", user);
-//                        startActivity(intent);
-//                    }
-//                });
-//
-//
-//                // dismiss the popup window when touched
-//                closeButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//            }
-//        });
+        changePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.upload_image_popup, null);
+                EditText urlInput = (EditText) popupView.findViewById(R.id.editTextURL);
+                Button submitUrl = (Button) popupView.findViewById(R.id.button13);
+                Button galleryUpload = (Button) popupView.findViewById(R.id.button15);
+                Button closeButton = (Button) popupView.findViewById(R.id.button12);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                submitUrl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Sumbit URL!");
+                        user.setPhoto(urlInput.getText().toString());
+                        popupWindow.dismiss();
+                    }
+                });
+
+                galleryUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+
+            }
+        });
 
         changePic.setOnClickListener(new View.OnClickListener(){
             @Override
