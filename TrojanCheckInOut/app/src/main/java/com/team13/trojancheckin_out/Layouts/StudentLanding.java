@@ -258,6 +258,53 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        String abb = user.getCurrentBuilding().getAbbreviation();
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = cal.get(Calendar.MINUTE);
+                        //int currentDate = cal.get(Calendar.DATE);
+                        Date dater = cal.getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+                        String min = Integer.toString(currentMinute);
+                        String hour = Integer.toString(currentHour);
+                        //String date = Integer.toString(currentDate);
+
+                        if(currentMinute <= 9){
+                            min = "0" + Integer.toString(currentMinute);
+                        }
+
+                        if(currentHour <= 9){
+                            hour = "0" + Integer.toString(currentHour);
+                        }
+
+                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                        String date = sdf.format(dater).toString();
+                        String time = hour + min + "@" + date;
+                        System.out.println("time:" + time);
+                        String checkOutTime = time;
+
+                        System.out.println("Building before checkin time: " + user.getCurrentBuilding().getAbbreviation());
+                        //referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
+
+                        // Update full time in DB
+                        accountManipulator.getAllAccounts(new MyUserCallback() {
+                            @Override
+                            public void onCallback(Map<String, User> map) {
+                                map.get(user.getId()).getHistory();
+                                for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
+                                    if(e.getKey().equalsIgnoreCase(abb))
+                                    {
+                                        String currentTime = e.getValue();
+                                        System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
+                                        System.out.println("CHECK OUT TIME: " + checkOutTime);
+                                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(currentTime + " " + checkOutTime);
+                                    }
+                                }
+                            }
+                        });
+
                         // Update count - 1
                         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                             @Override
@@ -290,37 +337,6 @@ public class StudentLanding extends AppCompatActivity {
                                 }
                             }
                         });
-
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
-                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
-                        int currentMinute = cal.get(Calendar.MINUTE);
-                        //int currentDate = cal.get(Calendar.DATE);
-                        Date dater = cal.getTime();
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-                        String min = Integer.toString(currentMinute);
-                        String hour = Integer.toString(currentHour);
-                        //String date = Integer.toString(currentDate);
-
-                        if(currentMinute <= 9){
-                            min = "0" + Integer.toString(currentMinute);
-                        }
-
-                        if(currentHour <= 9){
-                            hour = "0" + Integer.toString(currentHour);
-                        }
-
-                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
-                        String date = sdf.format(dater).toString();
-                        String time = hour + min + "@" + date;
-                        System.out.println("time:" + time);
-                        String checkOutTime = time;
-
-                        System.out.println(checkInTime);
-
-                        System.out.println("Building before checkin time: " + user.getCurrentBuilding().getAbbreviation());
-                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
 
                         // Remove user's current building
                         user.setterInBuilding(false);
