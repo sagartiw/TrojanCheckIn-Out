@@ -347,6 +347,7 @@ public class StudentLanding extends AppCompatActivity {
                 TextView nameText = (TextView) popupView.findViewById(R.id.nameTitle4);
 
                 nameText.setText(user.getName());
+                new DownloadImageTask((ImageView)popupView.findViewById(R.id.imageView14)).execute(user.getPhoto());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -392,6 +393,7 @@ public class StudentLanding extends AppCompatActivity {
                             }
                             History history = new History(e.getKey(), "In: " + components[0], "Out: " + components[1]);
                             System.out.println("HISTORY: " + e.getKey() + components[0] + components[1]);
+                            if (e.getKey().equalsIgnoreCase("NA")) continue;
                             historyList.add(history);
                         }
 
