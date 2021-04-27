@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -188,6 +189,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 TextView majorText = (TextView) popupView.findViewById(R.id.id6);
                 TextView buildingName = (TextView) popupView.findViewById(R.id.buildingName2);
 
+                new DownloadImageTask((ImageView)popupView.findViewById(R.id.imageView14)).execute(student.getPhoto());
+
                 nameText.setText(student.getName());
                 idText.setText(student.getId());
                 majorText.setText(student.getMajor());
@@ -225,6 +228,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 TextView nameText = (TextView) popupView.findViewById(R.id.nameTitle4);
 
                 nameText.setText(student.getName());
+                new DownloadImageTask((ImageView)popupView.findViewById(R.id.imageView14)).execute(student.getPhoto());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;

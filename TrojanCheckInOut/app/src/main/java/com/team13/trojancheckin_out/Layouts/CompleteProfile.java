@@ -1,25 +1,43 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
+import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +53,8 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CompleteProfile extends AppCompatActivity {
 
@@ -60,13 +80,32 @@ public class CompleteProfile extends AppCompatActivity {
     //public final static int PICK_PHOTO_CODE = 1046;
     public final static int PICK_PHOTO_CODE = 71;
 
+    private ImageButton pfp;
+    private TextView progress;
+    private TextView mText;
+    private static final int PERMISSION_CODE = 1;
+    private static final int PICK_IMAGE = 1;
+    String filePath2;
+    Map config = new HashMap();
+
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
+    private void configCloudinary() {
+        config.put("cloud_name","mindydie");
+        config.put("api_key", "218152914823857");
+        config.put("api_secret","_citpdQZKhf9GLu6QB4kwa5Tr1I");
+        MediaManager.init(CompleteProfile.this, config);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+
+        configCloudinary();
+
+
 
         setContentView(R.layout.activity_complete_profile);
         viewPFP = (ImageView) findViewById(R.id.imageView3);
@@ -288,19 +327,6 @@ public class CompleteProfile extends AppCompatActivity {
 
                 user.setDeleted(false);
 
-
-                // delete later
-                /*
-                Building building = new Building();
-                building.setName("USC Campus");
-                //user.setCurrentBuilding(building);
-                user.getHistory().put("USC", "1234 0123");
-                // delete later
-                //Building building = new Building();
-                building.setName("USC");
-                user.setCurrentBuilding(building);
-                */
-
                 if (checkConditions) {
                     user.getHistory().put("SLH", "0123@01.01.2020 2344@01.01.2020");
 
@@ -342,159 +368,160 @@ public class CompleteProfile extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Clicked add profile pick");
-                chooseImage();
-                System.out.println("about to upload image");
-                uploadImage();
-            }
-        });
+                // inflate the layout of the popup window
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.upload_image_popup, null);
+                EditText urlInput = (EditText) popupView.findViewById(R.id.editTextURL);
+                Button submitUrl = (Button) popupView.findViewById(R.id.button13);
+                Button galleryUpload = (Button) popupView.findViewById(R.id.button15);
+                Button closeButton = (Button) popupView.findViewById(R.id.button12);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                popupWindow.setElevation(20);
+
+                // show the popup window
+                // which view you pass in doesn't matter, it is only used for the window token
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                submitUrl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Submit URL!");
+                        user.setPhoto(urlInput.getText().toString());
+                        popupWindow.dismiss();
+                    }
+                });
+
+                galleryUpload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        requestPermission();
+                        popupWindow.dismiss();
+                    }
+                });
 
 
-        /*
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Clicked upload image");
-                uploadImage();
-            }
-        });*/
+                // dismiss the popup window when touched
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
 
 
-//        profileImage = (ImageButton)findViewById(R.id.imageButton);
-//
-//
-//        profileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // inflate the layout of the popup window
-//                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-//                View popupView = inflater.inflate(R.layout.choose_profile_pic, null);
-//                ImageView tommy = (ImageView) popupView.findViewById(R.id.man);
-//                ImageView hecuba = (ImageView) popupView.findViewById(R.id.woman);
-//                ImageView traveller = (ImageView) popupView.findViewById(R.id.horse);
-//                Button closeButton = (Button) popupView.findViewById(R.id.button6);
-//
-//                // create the popup window
-//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                boolean focusable = true; // lets taps outside the popup also dismiss it
-//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                popupWindow.setElevation(20);
-//
-//                // show the popup window
-//                // which view you pass in doesn't matter, it is only used for the window token
-//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-//
-//                tommy.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED TOMMY!");
-//                        String tommy = "@drawable/usc_day_in_troy_mcgillen_012917_3907";
-//                        user.setPhoto(tommy);
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//
-//                hecuba.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED HECUBA!");
-//                        String hecuba = "@drawable/hecuba";
-//                        user.setPhoto(hecuba);
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//
-//                traveller.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        System.out.println("CLICKED TRAVELLER!");
-//                        String traveller = "@drawable/traveller";
-//                        user.setPhoto(traveller);
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//
-//
-//                // dismiss the popup window when touched
-//                closeButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//
-//
-//            }
-//
-//        });
-
-        /*profileImage = (ImageButton)findViewById(R.id.imageButton);
-        profileImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    // Bring up gallery to select a photo
-                    startActivityForResult(intent, PICK_PHOTO_CODE);
-                }
             }
         });
     }
-*/
-        //@Override
-        //  public void onStart() {
-        //      super.onStart();
-        //      Check if user is signed in (non-null) and update UI accordingly.
-        //   FirebaseUser currentUser = mAuth.getCurrentUser();
-        //   }
-    /*public Bitmap loadFromUri(Uri photoUri) {
-        Bitmap image = null;
-        try {
-            // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
-                // on newer versions of Android, use the new decodeBitmap method
-                ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), photoUri);
-                image = ImageDecoder.decodeBitmap(source);
-            } else {
-                // support older versions of Android by using getBitmap
-                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }*/
 
-/*    @SuppressLint("MissingSuperCall")
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) { //&& requestCode == PICK_PHOTO_CODE) {
-            Uri photoUri = data.getData();
-            String filepath = photoUri.getPath();
-            System.out.println("This is the filepath of the local file: " + filepath);
-            StorageReference selectedFile = storageRef.child("Profile Pictures/");
-            System.out.println("HELLO TEAM");
-            UploadTask uploadTask = selectedFile.putFile(photoUri);
-            System.out.println("HELLO TEAM 2");
-            user = (User) getIntent().getSerializableExtra("PrevPageData");
-            user.setPhoto("Profile Pictures/" + photoUri.getLastPathSegment());
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                }
-            });
+    //https://levelup.gitconnected.com/image-upload-to-cloudinary-using-android-sdk-7bbe60204b44
+    //Cloudinary API
+
+    private void requestPermission(){
+        if(ContextCompat.checkSelfPermission
+                (CompleteProfile.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+        ){
+            accessTheGallery();
+        } else {
+            ActivityCompat.requestPermissions(
+                    CompleteProfile.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSION_CODE
+            );
         }
-    }*/
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode== PERMISSION_CODE){
+            if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                accessTheGallery();
+            } else {
+                Toast.makeText(CompleteProfile.this, "permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void accessTheGallery(){
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.setType("image/*");
+        startActivityForResult(i, PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //get the image's file location
+        filePath2 = getRealPathFromUri(data.getData(), CompleteProfile.this);
+
+        if(requestCode==PICK_IMAGE && resultCode==RESULT_OK){
+            try {
+                //set picked image to the mProfile
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                //pfp.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("A", "sign up uploadToCloudinary- ");
+
+        pfp = (ImageButton)findViewById(R.id.imageButton);
+        progress = (TextView)findViewById(R.id.textView40);
+
+        MediaManager.get().upload(filePath2).callback(new UploadCallback() {
+            @Override
+            public void onStart(String requestId) {
+                progress.setText("Starting Upload");
+                System.out.println("Starting Upload");
+            }
+
+            @Override
+            public void onProgress(String requestId, long bytes, long totalBytes) {
+                progress.setText("Uploading...Don't Leave This Page");
+                System.out.println("Starting Upload");
+            }
+
+            @Override
+            public void onSuccess(String requestId, Map resultData) {
+                progress.setText("Completed!");
+                System.out.println("image URL: "+resultData.get("url").toString());
+
+                user.setPhoto(resultData.get("url").toString());
+            }
+
+            @Override
+            public void onError(String requestId, ErrorInfo error) {
+                progress.setText("error " + error.getDescription());
+                System.out.println("error " + error.getDescription());
+            }
+
+            @Override
+            public void onReschedule(String requestId, ErrorInfo error) {
+                progress.setText("Reshedule " + error.getDescription());
+                System.out.println("Reshedule " + error.getDescription());
+            }
+        }).dispatch();
+    }
+
+    private String getRealPathFromUri(Uri imageUri, Activity activity){
+        Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
+
+        if(cursor==null) {
+            return imageUri.getPath();
+        }else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
     }
 
     //select image
@@ -505,28 +532,6 @@ public class CompleteProfile extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PHOTO_CODE);
         System.out.println("finish choose image");
-    }
-
-    //Upload local image
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("start onActivityResult photo codes");
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_PHOTO_CODE && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
-            //filePath = data.getData();
-            System.out.println("filepath oAR: " + filePath + ", data: " + data + ", getdata: " +data.getData());
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                viewPFP.setImageBitmap(bitmap);
-                uploadImage();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void uploadImage() {

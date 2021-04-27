@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,6 +70,7 @@ public class SearchStudent2 extends AppCompatActivity {
         date2 = (EditText)findViewById(R.id.editTextDate2);
         fName1 = (EditText)findViewById(R.id.firstName);
         lName1 = (EditText)findViewById(R.id.lName2);
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
 
         Search.setOnClickListener(new View.OnClickListener() {
             @Override

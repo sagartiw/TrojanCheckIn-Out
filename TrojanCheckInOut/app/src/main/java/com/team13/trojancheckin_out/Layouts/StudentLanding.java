@@ -7,28 +7,23 @@ import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
@@ -50,6 +45,10 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUs
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
+
+//https://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android for the profile picture urls
+
+
 
 
 public class StudentLanding extends AppCompatActivity {
@@ -83,6 +82,8 @@ public class StudentLanding extends AppCompatActivity {
         History = (Button)findViewById(R.id.checkOut2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
 
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
+
         System.out.println("Track user 1" + user);
         soFab = (FloatingActionButton)findViewById(R.id.fab);
         welcomeName = (TextView)findViewById(R.id.welcomeMessage);
@@ -101,6 +102,8 @@ public class StudentLanding extends AppCompatActivity {
 
         System.out.println("TESTER : " + user.getCurrentBuilding().getAbbreviation());
         System.out.println("TESTER : " + user.isInBuilding());
+
+
 
         if(user.isInBuilding() == true){
 
@@ -154,7 +157,10 @@ public class StudentLanding extends AppCompatActivity {
         StorageReference pfp = FirebaseStorage.getInstance().getReference().child(user.getPhoto());
 
         System.out.println("This is the user photo in student landing" + user.getPhoto());
-     //   Glide.with(getApplicationContext()).load(pfp).into(soFab);
+
+
+
+        //   Glide.with(getApplicationContext()).load(pfp).into(soFab);
 
 //        int imageRe = getResources().getIdentifier(user.getPhoto(), null, getPackageName());
 //        soFab.setImageResource(imageRe);
@@ -251,6 +257,53 @@ public class StudentLanding extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        String abb = user.getCurrentBuilding().getAbbreviation();
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
+                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = cal.get(Calendar.MINUTE);
+                        //int currentDate = cal.get(Calendar.DATE);
+                        Date dater = cal.getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+
+                        String min = Integer.toString(currentMinute);
+                        String hour = Integer.toString(currentHour);
+                        //String date = Integer.toString(currentDate);
+
+                        if(currentMinute <= 9){
+                            min = "0" + Integer.toString(currentMinute);
+                        }
+
+                        if(currentHour <= 9){
+                            hour = "0" + Integer.toString(currentHour);
+                        }
+
+                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
+                        String date = sdf.format(dater).toString();
+                        String time = hour + min + "@" + date;
+                        System.out.println("time:" + time);
+                        String checkOutTime = time;
+
+                        System.out.println("Building before checkin time: " + user.getCurrentBuilding().getAbbreviation());
+                        //referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
+
+                        // Update full time in DB
+                        accountManipulator.getAllAccounts(new MyUserCallback() {
+                            @Override
+                            public void onCallback(Map<String, User> map) {
+                                map.get(user.getId()).getHistory();
+                                for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
+                                    if(e.getKey().equalsIgnoreCase(abb))
+                                    {
+                                        String currentTime = e.getValue();
+                                        System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
+                                        System.out.println("CHECK OUT TIME: " + checkOutTime);
+                                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(currentTime + " " + checkOutTime);
+                                    }
+                                }
+                            }
+                        });
+
                         // Update count - 1
                         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                             @Override
@@ -284,37 +337,6 @@ public class StudentLanding extends AppCompatActivity {
                             }
                         });
 
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTimeZone(TimeZone.getTimeZone("PST"));
-                        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
-                        int currentMinute = cal.get(Calendar.MINUTE);
-                        //int currentDate = cal.get(Calendar.DATE);
-                        Date dater = cal.getTime();
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-
-                        String min = Integer.toString(currentMinute);
-                        String hour = Integer.toString(currentHour);
-                        //String date = Integer.toString(currentDate);
-
-                        if(currentMinute <= 9){
-                            min = "0" + Integer.toString(currentMinute);
-                        }
-
-                        if(currentHour <= 9){
-                            hour = "0" + Integer.toString(currentHour);
-                        }
-
-                        //String currentDate1 = SimpleDateFormat.getDateInstance().format("ddMMyyyy");
-                        String date = sdf.format(dater).toString();
-                        String time = hour + min + "@" + date;
-                        System.out.println("time:" + time);
-                        String checkOutTime = time;
-
-                        System.out.println(checkInTime);
-
-                        System.out.println("Building before checkin time: " + user.getCurrentBuilding().getAbbreviation());
-                        referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
-
                         // Remove user's current building
                         user.setterInBuilding(false);
                         user.setInBuilding(false);
@@ -340,6 +362,7 @@ public class StudentLanding extends AppCompatActivity {
                 TextView nameText = (TextView) popupView.findViewById(R.id.nameTitle4);
 
                 nameText.setText(user.getName());
+                new DownloadImageTask((ImageView)popupView.findViewById(R.id.imageView14)).execute(user.getPhoto());
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -385,6 +408,7 @@ public class StudentLanding extends AppCompatActivity {
                             }
                             History history = new History(e.getKey(), "In: " + components[0], "Out: " + components[1]);
                             System.out.println("HISTORY: " + e.getKey() + components[0] + components[1]);
+                            if (e.getKey().equalsIgnoreCase("NA")) continue;
                             historyList.add(history);
                         }
 

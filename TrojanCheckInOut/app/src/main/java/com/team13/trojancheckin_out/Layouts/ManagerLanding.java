@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -54,13 +55,14 @@ public class ManagerLanding extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_manager_landing);
 
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+        new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
+
         tracker = user;
         buildingManipulator = new BuildingManipulator();
         Search = (Button)findViewById(R.id.button5);
