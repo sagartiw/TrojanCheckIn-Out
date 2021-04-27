@@ -1,20 +1,17 @@
 package com.team13.trojancheckin_out.Layouts;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.Manifest;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.team13.trojancheckin_out.Accounts.QRCodeScanner;
 import com.team13.trojancheckin_out.Accounts.R;
-import com.team13.trojancheckin_out.Accounts.ScanActivity;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
@@ -148,6 +145,8 @@ public class CheckInPopup extends AppCompatActivity {
                                 referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue("," + currentTime + " " + checkInTime);
                                 a = true;
                                 break;
+//                                referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
+//                                break;
                             }
                         }
                         if(!a){

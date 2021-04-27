@@ -17,9 +17,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
 
-        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckOutErrorPopup"></activity>
-        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckInPopup" />
-        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckOutPopup" />
+        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckOutErrorPopup">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckInPopup">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckOutPopup" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Layouts.ScanReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Accounts.ScanActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.team13.trojancheckin_out.Accounts.QRCodeScanner" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
 
         <activity android:name="com.team13.trojancheckin_out.Layouts.StudentsList">
             <intent-filter>
@@ -31,8 +63,6 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScanActivity" />
-        <activity android:name=".QRCodeScanner" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

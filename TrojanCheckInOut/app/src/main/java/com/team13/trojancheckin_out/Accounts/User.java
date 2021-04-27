@@ -31,6 +31,7 @@ public class User implements Serializable {
     private Map<String, String> history;
     private String major;
     private String isManager;
+    private String lastName;
 
     private boolean deleted;
     private boolean kickedOut = false;
@@ -69,6 +70,7 @@ public class User implements Serializable {
         this.isManager = isManager;
         this.deleted = deleted;
         this.kickedOut = false;
+        this.lastName = name.split(",")[0];
     }
 
     /**
@@ -79,13 +81,14 @@ public class User implements Serializable {
     }
 
     public String getLastName() {
-        String[] nameComp = name.split(", ");
-        return nameComp[0];
+        return this.lastName;
     }
+
     public void setName(String name) {
 
         System.out.println("I AM SETTING NAME");
         this.name = name;
+        this.lastName = name.split(",")[0];
     }
 
     public String getEmail() {

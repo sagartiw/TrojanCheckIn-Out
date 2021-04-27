@@ -22,6 +22,7 @@ public class Building implements Serializable {
 
     // Have to use an image builder, using String for now
     private String QRCode;
+    private int percentage;
 
    private List<User> students = new ArrayList<>();
 
@@ -42,6 +43,7 @@ public class Building implements Serializable {
         this.abbreviation = abbreviation;
         this.capacity = capacity;
         this.QRCode = QRCode;
+        this.percentage = 0;
     }
 
     /**
@@ -129,8 +131,8 @@ public class Building implements Serializable {
         double cur = (double) this.getCurrentCount();
         double cap = (double) this.capacity;
         double perc = (cur/cap)*100;
-        int percent = (int) perc;
-        return percent;
+        this.percentage = (int) perc;
+        return this.percentage;
     }
 
 
