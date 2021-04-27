@@ -32,6 +32,7 @@ import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.Layouts.CheckInPopup;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
@@ -148,6 +149,9 @@ public class ScanActivity extends AppCompatActivity {
                             if (user.isInBuilding()) {
                                 // if the building is the one they are in
                                 if (match == user.getCurrentBuilding()) {
+
+
+                                    // ADD POPUP TO ASK USER IF THEY WANT TO CHECK OUT
 
 
                                     // user is trying to check out
@@ -300,6 +304,17 @@ public class ScanActivity extends AppCompatActivity {
 //                                            Toast.LENGTH_SHORT).show();
                                 }
                                 else { // check in the user
+
+
+                                    // REDIRECT TO POPUP TO ASK USER IF THEY WANT TO CHECK IN TO THIS BUILDING
+                                    Intent intent = new Intent(ScanActivity.this, CheckInPopup.class);
+                                    intent.putExtra("building", match);
+                                    intent.putExtra("PrevPageData", user);
+                                    startActivity(intent);
+
+
+                                    // MOVE THIS SHIT
+
                                     System.out.println("Track user 4" + match);
                                     match.addStudent(user);
 
