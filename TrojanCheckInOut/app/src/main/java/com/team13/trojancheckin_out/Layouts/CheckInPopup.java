@@ -90,6 +90,13 @@ public class CheckInPopup extends AppCompatActivity {
                         }
                     }
                 });
+//                String count = referenceBuildings.child(match.getAbbreviation()).child("currentCount").getKey();
+//                int numCount = Integer.parseInt(count);
+//                if (notIncremented) {
+//                    numCount++;
+//                    notIncremented = false;
+//                    referenceBuildings.child(match.getAbbreviation()).child("currentCount").setValue(numCount);
+//                }
 
                 // Remove from NA if there
                 referenceBuildings.child("NA").child("currentStudents").child(user.getId()).removeValue();
@@ -148,6 +155,12 @@ public class CheckInPopup extends AppCompatActivity {
                         }
                     }
                 });
+
+//                String currentTime = e.getValue();
+//                System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
+//                System.out.println("CHECK IN TIME: " + checkInTime);
+//                referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue("," + currentTime + " " + checkInTime);
+//                a = true;
 
                 user.setterInBuilding(true);
                 user.setterCurrentBuilding(match);

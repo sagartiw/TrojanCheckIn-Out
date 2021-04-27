@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrojanCheckInOut">
-        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckInPopup"></activity>
+        <activity android:name="com.team13.trojancheckin_out.Layouts.ScanReceiver"></activity>
+        <activity android:name="com.team13.trojancheckin_out.Layouts.CheckInPopup" />
         <activity android:name="com.team13.trojancheckin_out.Layouts.StudentsList">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

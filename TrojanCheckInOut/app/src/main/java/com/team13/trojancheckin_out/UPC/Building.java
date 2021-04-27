@@ -116,7 +116,10 @@ public class Building implements Serializable {
      */
     public int getCurrentCount() {
         return this.currentCount;
+
+
     }
+
 
     /**
 

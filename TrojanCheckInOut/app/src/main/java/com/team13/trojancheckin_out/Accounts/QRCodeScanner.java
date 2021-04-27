@@ -15,12 +15,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.team13.trojancheckin_out.Database.AccountManipulator;
+import com.team13.trojancheckin_out.Layouts.StudentLanding;
 
 public class QRCodeScanner extends AppCompatActivity {
     public static final int CAMERA_PERMISSION_CODE = 100;
 
     private Button camera;
     private Button scan;
+    private Button back;
     private User user;
     private boolean notIncremented = true;
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -176,6 +178,17 @@ public class QRCodeScanner extends AppCompatActivity {
 
             }
         });
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QRCodeScanner.this, StudentLanding.class);
+                intent.putExtra("PrevPageData", user);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void checkPermission(String permission, int requestCode) {
