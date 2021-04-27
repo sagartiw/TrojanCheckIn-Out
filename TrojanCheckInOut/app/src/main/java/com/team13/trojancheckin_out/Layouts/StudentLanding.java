@@ -182,7 +182,6 @@ public class StudentLanding extends AppCompatActivity {
                 Intent intent = new Intent(StudentLanding.this, QRCodeScanner.class);
                 intent.putExtra("PrevPageData", user);
                 startActivity(intent);
-
             }
         });
 
