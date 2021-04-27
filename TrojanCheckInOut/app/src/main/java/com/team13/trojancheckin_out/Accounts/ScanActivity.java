@@ -104,21 +104,15 @@ public class ScanActivity extends AppCompatActivity {
             }
 
             @Override
-            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-
-            }
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) { }
 
             @Override
-            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-
-            }
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) { }
         });
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void release() {
-
-            }
+            public void release() { }
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
@@ -138,7 +132,6 @@ public class ScanActivity extends AppCompatActivity {
                             //Building match = buildingManipulator.getBuilding(buildingAcronym);
 
                             //String holder = qrcode.valueAt(0).displayValue.toString();
-
                             if (buildingManipulator == null) { return; }
                             Building match = buildingManipulator.getBuilding(buildingAcronym);
                             if(match != null && match.getAbbreviation() != null){
@@ -149,8 +142,6 @@ public class ScanActivity extends AppCompatActivity {
                             User user = accountManipulator.currentUser;
 
                             System.out.println("Track user 3" + user);
-
-
                             // check if user is checking in or out of a buildingtem.out: hello i am me: SAL
                             //    IM HERE: SAL
                             if (user.isInBuilding()) {
@@ -176,8 +167,6 @@ public class ScanActivity extends AppCompatActivity {
                                         }
                                     });
                                     System.out.println("updated count" + referenceBuildings.child(user.getCurrentBuilding().getAbbreviation()).child("currentCount").get().toString());
-
-
                                     //System.out.println("b" + b.getName().toString());
 
                                     Calendar cal = Calendar.getInstance();
@@ -274,10 +263,6 @@ public class ScanActivity extends AppCompatActivity {
                             else { // user is trying to check in
                                 // check if there is capacity in the building
                                 if (match.getCurrentCount() + 1 > match.getCapacity()) {
-
-
-
-
                                     // return error to the user saying they cannot check into this building because it is full
                                     LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                                     View popupView = inflater.inflate(R.layout.scan_qr_popup2, null);
@@ -317,14 +302,11 @@ public class ScanActivity extends AppCompatActivity {
                                     System.out.println("Track user 4" + match);
                                     match.addStudent(user);
 
-
-
                                     // set in building for curr user to be true so that they check in
                                     System.out.println("SCAN ID: " + user.getId());
                                     System.out.println("MATCH " + match.getAbbreviation());
                                     user.setterCurrentBuilding(match);
                                     System.out.println("MATCH 2" + match.getAbbreviation());
-
                                     // Update count + 1
                                     buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                                         @Override
@@ -377,16 +359,12 @@ public class ScanActivity extends AppCompatActivity {
                                     user.setterCurrentBuilding(match);
 
                                     accountManipulator.currentUser = user;
-
-
                                     // add popup
 //                                    String error ="Checked in to building!";
 //                                    Intent intent = new Intent(ScanActivity.this, QRCodeScanner.class);
 //
 //                                    intent.putExtra("error", error);
 //                                    startActivity(intent);
-
-
                                     // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                                 }
                             }
@@ -400,13 +378,10 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
 
-
         /* -------------    */
         // dummy button for testing if check in works
 
         // comment this shit out if you wanna test scan
-
-
 /*
         manualScan = (Button)findViewById(R.id.button9);
 
@@ -424,7 +399,6 @@ public class ScanActivity extends AppCompatActivity {
 //                if(match.getAbbreviation() != null){
 //                    System.out.println("CHECK MATCH: " + match.getAbbreviation());
 //                }
-
                 // get matching building
                 buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
                     @Override
@@ -432,8 +406,6 @@ public class ScanActivity extends AppCompatActivity {
                         for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
                             Building b = checkBuilding.getValue();
                             String acronym = b.getAbbreviation();
-
-
                             if (acronym.equalsIgnoreCase(buildingAcronym)) {
                                 System.out.println("match = " + acronym);
                                 match[0] = new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode());
@@ -448,8 +420,6 @@ public class ScanActivity extends AppCompatActivity {
                             System.out.println("NO MATCH FOUND FOR BUILDING '" + buildingAcronym + "'");
 
                         }
-
-
                         // move all the code to here or else it will keep having a null pointer bc it cant wait for the callback
 
                         User user = accountManipulator.currentUser;
@@ -523,7 +493,6 @@ public class ScanActivity extends AppCompatActivity {
                                 referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
 
                                 accountManipulator.currentUser = user;
-
                             }
                             else {
                                 // send an error message that they need to check out of their current building before trying to check in somewhere else
@@ -601,8 +570,6 @@ public class ScanActivity extends AppCompatActivity {
                                     notIncremented = false;
                                     referenceBuildings.child(match[0].getAbbreviation()).child("currentCount").setValue(count);
                                 }
-
-
                                 // Remove from NA if there
                                 referenceBuildings.child("NA").child("currentStudents").child(user.getId()).removeValue();
 
@@ -642,32 +609,16 @@ public class ScanActivity extends AppCompatActivity {
 
                                 accountManipulator.currentUser = user;
 
-
                                 // Go to where we checkout students and write this line of code: "referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime + " " + checkOutTime);
                             }
                         }
                         Intent intent = new Intent(ScanActivity.this, StudentLanding.class);
                         intent.putExtra("PrevPageData", user);
                         startActivity(intent);
-
-
                     }
                 });
-
-
-
-
-
-
-
-
-
-
             }
         });
-
  */
-
-
     }
 }
