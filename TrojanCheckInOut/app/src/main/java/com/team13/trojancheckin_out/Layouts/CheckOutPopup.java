@@ -26,7 +26,7 @@ import static com.team13.trojancheckin_out.Database.AccountManipulator.reference
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
 
-public class CheckOutPopup extends AppCompatActivity {
+public class  CheckOutPopup extends AppCompatActivity {
     private User user;
     private Building match;
     private AccountManipulator accountManipulator = new AccountManipulator();
@@ -108,6 +108,7 @@ public class CheckOutPopup extends AppCompatActivity {
                                 System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
                                 System.out.println("CHECK OUT TIME: " + checkOutTime);
                                 referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(currentTime + " " + checkOutTime);
+                                break;
                             }
                         }
                     }
