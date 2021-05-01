@@ -31,10 +31,14 @@ import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
+
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 
 import static com.team13.trojancheckin_out.Database.BuildingManipulator.referenceBuildings;
 import static com.team13.trojancheckin_out.Layouts.Startup.buildingManipulator;
@@ -161,11 +165,17 @@ public class ManagerLanding extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if(item.getTitle().toString().equals("Sign Out")){
-                    //Intent intent = new Intent(ManagerLanding.this, Startup.class);
-                    //startActivity(intent);
-                    startActivity(new Intent(ManagerLanding.this, Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    finishAndRemoveTask();
-                    finishAffinity();
+                    Intent intent = new Intent(ManagerLanding.this, Startup.class);
+                    //startActivity(new Intent(ManagerLanding.this, Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    user = null;
+                    currentUser = null;
+                    intent.putExtra("PrevPageData", currentUser);
+                    //intent.putExtra("PrevPageData", user);
+
+                    startActivity(intent);
+
+                   // finishAndRemoveTask();
+                    //finishAffinity();
                 }
 //                if(item.getTitle().toString().equals("Delete Account")){
 //                    // inflate the layout of the popup window
