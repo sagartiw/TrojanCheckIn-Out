@@ -102,7 +102,7 @@ public class  CheckOutPopup extends AppCompatActivity {
                     public void onCallback(Map<String, User> map) {
                         map.get(user.getId()).getHistory();
                         for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
-                            if(e.getKey().equalsIgnoreCase(abb))
+                            if (!abb.equals("NA") && e.getKey().equalsIgnoreCase(abb))
                             {
                                 String currentTime = e.getValue();
                                 System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());

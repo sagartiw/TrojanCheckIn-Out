@@ -130,30 +130,7 @@ public class CheckInPopup extends AppCompatActivity {
                 System.out.println("time:" + time);
                 checkInTime = time;
 
-                // Update full time in DB
-                accountManipulator.getAllAccounts(new MyUserCallback() {
-                    @Override
-                    public void onCallback(Map<String, User> map) {
-                        map.get(user.getId()).getHistory();
-                        System.out.println("inside AM");
-                        boolean a = false;
-                        for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
-                            if(e.getKey().equalsIgnoreCase(match.getAbbreviation())) {
-                                String currentTime = e.getValue();
-                                System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
-                                System.out.println("CHECK IN TIME: " + checkInTime);
-                                referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue("," + currentTime + " " + checkInTime);
-                                a = true;
-                                break;
-//                                referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
-//                                break;
-                            }
-                        }
-                        if(!a){
-                            referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
-                        }
-                    }
-                });
+                referenceUsers.child(user.getId()).child("history").child(user.getCurrentBuilding().getAbbreviation()).setValue(checkInTime);
 
 //                String currentTime = e.getValue();
 //                System.out.println("CURRENT TIME: " + currentTime + " @ " + e.getKey());
