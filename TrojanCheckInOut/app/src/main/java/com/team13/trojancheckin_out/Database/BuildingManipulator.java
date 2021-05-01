@@ -103,14 +103,27 @@ public class BuildingManipulator {
                 // CSV files will put unwanted double quotes around each line of data
                 line = line.replaceAll("\"","");
 
-                // <Full Name>|<Abbreviation>|<Capacity>
+                // <Full Name>|<Abbreviation>|<Capacity>|<Action>
+                // <Action>: a = add, e = edit, d = delete
                 String[] data = line.split("@");
 
-                Building building = getBuilding(data[1]);
-                building.setCapacity(Integer.parseInt(data[2]));
+                String action = data[3];
 
+                // Add building
+                if (action.equalsIgnoreCase("a")) {
+                    // Create new building
+                    Building temp = new Building(data[0], data[1], Integer.parseInt(data[2]), "");
+                    referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
+                }
+                else if (action.equalsIgnoreCase("e")) {
+                    Building building = getBuilding(data[1]);
+                    building.setCapacity(Integer.parseInt(data[2]));
+                    referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
+                }
+                else if (action.equalsIgnoreCase("d")) {
+                    System.out.println("Deleting building");
+                }
 
-                referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
 
             }
             scan.close();
