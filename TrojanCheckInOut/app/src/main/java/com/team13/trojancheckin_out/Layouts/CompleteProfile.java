@@ -90,12 +90,14 @@ public class CompleteProfile extends AppCompatActivity {
 
     //https://guides.codepath.com/android/Accessing-the-Camera-and-Stored-Media
 
+    /*
     private void configCloudinary() {
         config.put("cloud_name","mindydie");
         config.put("api_key", "218152914823857");
         config.put("api_secret","_citpdQZKhf9GLu6QB4kwa5Tr1I");
         MediaManager.init(CompleteProfile.this, config);
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,7 @@ public class CompleteProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
-        configCloudinary();
+        // configCloudinary();
 
 
 
