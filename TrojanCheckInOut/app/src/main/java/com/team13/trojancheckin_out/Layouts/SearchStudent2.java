@@ -212,6 +212,7 @@ public class SearchStudent2 extends AppCompatActivity {
                 Log.d("menu title: ", item.getTitle().toString());
                 if(item.getTitle().toString().equals("Student View")){
                     Intent intent = new Intent(SearchStudent2.this, StudentLanding.class);
+                    intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
                 if(item.getTitle().toString().equals("Edit Profile")){
@@ -221,6 +222,8 @@ public class SearchStudent2 extends AppCompatActivity {
                 }
                 if(item.getTitle().toString().equals("Sign Out")){
                     Intent intent = new Intent(SearchStudent2.this, Startup.class);
+                    user = null;
+                    intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
 //                if(item.getTitle().toString().equals("Delete Account")){
