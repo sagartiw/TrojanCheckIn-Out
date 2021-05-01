@@ -51,6 +51,9 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.UPC.Building;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -338,7 +341,7 @@ public class CompleteProfile extends AppCompatActivity {
                     } else {
                         intent = new Intent(CompleteProfile.this, StudentLanding.class);
                     }
-
+                    currentUser = user;
                     intent.putExtra("PrevPageData", user);
                     startActivity(intent);
                 }
@@ -351,7 +354,8 @@ public class CompleteProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CompleteProfile.this, Register.class);
-                intent.putExtra("PrevPageData", user);
+                //user = null;
+                //intent.putExtra("PrevPageData", user);
                 startActivity(intent);
             }
         });

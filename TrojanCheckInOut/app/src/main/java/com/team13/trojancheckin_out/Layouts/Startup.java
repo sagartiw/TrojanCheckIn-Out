@@ -10,17 +10,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 
+import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+
+
 public class Startup extends AppCompatActivity {
 
     private Button Register;
     private Button Login;
     public static BuildingManipulator buildingManipulator;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
         buildingManipulator = new BuildingManipulator();
+
+        currentUser = null;
 
 
         Register = (Button)findViewById(R.id.register);
