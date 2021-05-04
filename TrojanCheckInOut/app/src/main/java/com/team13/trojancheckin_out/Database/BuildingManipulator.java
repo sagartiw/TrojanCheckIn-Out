@@ -1,10 +1,13 @@
 package com.team13.trojancheckin_out.Database;
 
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.team13.trojancheckin_out.Accounts.User;
+import com.team13.trojancheckin_out.Layouts.ManagerLanding;
 import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
@@ -30,6 +33,7 @@ public class BuildingManipulator {
     private List<String> currentQRCodes;
     private File file;
     private Map<String,User> studentList;
+    private AccountManipulator accountManipulator = new AccountManipulator();
 
     /**
      * @return a map of the currently established buildings.
@@ -149,7 +153,23 @@ public class BuildingManipulator {
                     referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
                 }
                 else if (action.equalsIgnoreCase("d")) {
-                    referenceBuildings.child(data[1]).removeValue();
+                    final boolean[] res = {true};
+                    accountManipulator.getAllAccounts(new MyUserCallback() {
+                        @Override
+                        public void onCallback(Map<String, User> map) {
+                            for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                                if (checkUser.getValue().getCurrentBuilding().getAbbreviation().equalsIgnoreCase(data[1])) {
+                                    System.out.println("TEST: 1");
+                                    res[0] = false;
+                                    break;
+                                }
+                            }
+                            if (res[0]) {
+                                System.out.println("TEST: 2");
+                                referenceBuildings.child(data[1]).removeValue();
+                            }
+                        }
+                    });
                 }
             }
             scan.close();

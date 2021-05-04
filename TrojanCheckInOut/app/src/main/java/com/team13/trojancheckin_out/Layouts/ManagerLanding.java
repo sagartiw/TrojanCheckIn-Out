@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,14 +30,17 @@ import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
+import com.team13.trojancheckin_out.Database.MyUserCallback;
 import com.team13.trojancheckin_out.UPC.Building;
 
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 
@@ -284,8 +288,21 @@ public class ManagerLanding extends AppCompatActivity {
                 submitDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        referenceBuildings.child(deleteAbb.getText().toString()).removeValue();
-                        popupWindow.dismiss();
+                        // Check if there are any students in this building
+                        accountManipulator.getAllAccounts(new MyUserCallback() {
+                              @Override
+                              public void onCallback(Map<String, User> map) {
+                                  for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                                      if (checkUser.getValue().getCurrentBuilding().getAbbreviation().equalsIgnoreCase(deleteAbb.getText().toString())) {
+                                          Toast.makeText(ManagerLanding.this, "There are students in the building!", Toast.LENGTH_SHORT).show();
+                                          popupWindow.dismiss();
+                                          return;
+                                      }
+                                  }
+                                  referenceBuildings.child(deleteAbb.getText().toString()).removeValue();
+                                  popupWindow.dismiss();
+                              }
+                        });
                     }
                 });
 
@@ -354,10 +371,81 @@ public class ManagerLanding extends AppCompatActivity {
                     // successText.setText("Upload successful!");
                     //BuildingManipulator buildingManipulator = new BuildingManipulator();
                     File file = new File(path);
-                    if (buildingManipulator.processCSV(file)) {
-                        successText.setText("Upload successful!");
-                    } else {
-                        successText.setText("Upload failed. CSV file is incorrectly formatted.");
+
+                    // Pasted code
+                    Scanner scan = null;
+                    try {
+                        scan = new Scanner(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    while (scan.hasNextLine()) {
+                        String line = scan.nextLine();
+
+                        // CSV files will put unwanted double quotes around each line of data
+                        line = line.replaceAll("\"", "");
+
+                        // <Full Name>|<Abbreviation>|<Capacity>|<Action>
+                        // <Action>: a = add, e = edit, d = delete
+                        String[] data1 = line.split("@");
+
+                        // Error check
+                        if ((data1.length != 4) ||
+                                (data1[1].length() != 3) ||
+                                (Integer.parseInt(data1[2]) <= 0) ||
+                                !(data1[3].equalsIgnoreCase("a") || data1[3].equalsIgnoreCase("e" )|| data1[3].equalsIgnoreCase( "d"))) {
+                            successText.setText("Upload failed. CSV file is incorrectly formatted.");
+                            scan.close();
+                            return;
+                        }
+                    }
+                    scan.close();
+
+                    try {
+
+                        Scanner scan1 = new Scanner(file);
+                        while (scan1.hasNextLine()) {
+                            String line = scan1.nextLine();
+                            line = line.replaceAll("\"","");
+                            String[] data2 = line.split("@");
+                            String action = data2[3];
+
+                            System.out.println("DATA ARRAY: " + data.toString());
+                            System.out.println("ACTION IS: " + action);
+                            // Add building
+                            if (action.equalsIgnoreCase("a")) {
+                                System.out.println("ACTION: a");
+                                successText.setText("Upload successful!");
+                                referenceBuildings.child(data2[1]).setValue(new Building(data2[0], data2[1], Integer.parseInt(data2[2]), ""));
+                            }
+                            else if (action.equalsIgnoreCase("e")) {
+                                successText.setText("Upload successful!");
+                                referenceBuildings.child(data2[1]).child("capacity").setValue(Integer.parseInt(data2[2]));
+                            }
+                            else if (action.equalsIgnoreCase("d")) {
+                                boolean successful = true;
+                                if (successful) {
+                                    accountManipulator.getAllAccounts(new MyUserCallback() {
+                                        @Override
+                                        public void onCallback(Map<String, User> map) {
+                                            for (Map.Entry<String, User> checkUser : map.entrySet()) {
+                                                if (checkUser.getValue().getCurrentBuilding().getAbbreviation().equalsIgnoreCase(data2[1])) {
+                                                    successText.setText("Upload failed. There are students in the building(s) you are trying to delete.");
+                                                    return;
+                                                }
+                                            }
+                                            successText.setText("Upload successful!");
+                                            referenceBuildings.child(data2[1]).removeValue();
+                                        }
+                                    });
+                                    successful = false;
+                                }
+                            }
+                        }
+                        scan.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        return;
                     }
                 }
                 break;
