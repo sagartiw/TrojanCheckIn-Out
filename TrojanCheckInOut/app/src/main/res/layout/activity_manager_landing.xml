@@ -95,7 +95,7 @@
         android:fontFamily="@font/montserrat_semibold"
         android:letterSpacing="0.02"
         android:stateListAnimator="@null"
-        android:text="+ Add"
+        android:text="EDIT"
         android:textColor="@color/white"
         android:textSize="9sp"
         app:cornerRadius="12dp"

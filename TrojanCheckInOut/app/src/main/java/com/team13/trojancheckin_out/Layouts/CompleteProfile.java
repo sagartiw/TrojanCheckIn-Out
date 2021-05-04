@@ -345,6 +345,7 @@ public class CompleteProfile extends AppCompatActivity {
                     }
                     currentUser = user;
                     intent.putExtra("PrevPageData", user);
+                    System.out.println("Before: " + intent + "User: " + user.getName());
                     startActivity(intent);
                 }
 

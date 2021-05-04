@@ -9,6 +9,7 @@ import com.team13.trojancheckin_out.UPC.Building;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,30 @@ public class BuildingManipulator {
      */
     public List<String> getCurrentQRCodes() { return this.currentQRCodes; }
 
+    public boolean checkInvalidCSV(File file) throws FileNotFoundException {
+        Scanner scan = new Scanner(file);
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+
+            // CSV files will put unwanted double quotes around each line of data
+            line = line.replaceAll("\"", "");
+
+            // <Full Name>|<Abbreviation>|<Capacity>|<Action>
+            // <Action>: a = add, e = edit, d = delete
+            String[] data = line.split("@");
+
+            // Error check
+            if ((data.length != 4) ||
+                    (data[1].length() != 3) ||
+                            (Integer.parseInt(data[2]) <= 0) ||
+                            !(data[3].equalsIgnoreCase("a") || data[3].equalsIgnoreCase("e" )|| data[3].equalsIgnoreCase( "d"))) {
+                return true;
+            }
+        }
+        scan.close();
+        return false;
+    }
+
     /**
      * @param file
      * @return true if the CSV file has been successfully processed.
@@ -96,21 +121,24 @@ public class BuildingManipulator {
     public Boolean processCSV(File file) {
         try {
             this.file = file;
+
+            // Invalid CSV file
+            if (checkInvalidCSV(file)) {
+                return false;
+            }
+
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
                 String line = scan.nextLine();
-
-                // CSV files will put unwanted double quotes around each line of data
                 line = line.replaceAll("\"","");
-
-                // <Full Name>|<Abbreviation>|<Capacity>|<Action>
-                // <Action>: a = add, e = edit, d = delete
                 String[] data = line.split("@");
-
                 String action = data[3];
 
+                System.out.println("DATA ARRAY: " + data.toString());
+                System.out.println("ACTION IS: " + action);
                 // Add building
                 if (action.equalsIgnoreCase("a")) {
+                    System.out.println("ACTION: a");
                     // Create new building
                     Building temp = new Building(data[0], data[1], Integer.parseInt(data[2]), "");
                     referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
@@ -121,14 +149,13 @@ public class BuildingManipulator {
                     referenceBuildings.child(data[1]).child("capacity").setValue(Integer.parseInt(data[2]));
                 }
                 else if (action.equalsIgnoreCase("d")) {
-                    System.out.println("Deleting building");
+                    referenceBuildings.child(data[1]).removeValue();
                 }
-
-
             }
             scan.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }

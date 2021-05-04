@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="354dp"
-        android:layout_height="420dp"
+        android:layout_height="600dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Add Building"
+                android:text="Add/Delete Building"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="24sp"
@@ -79,6 +79,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+            <EditText
+                android:id="@+id/editTextTextPassword6"
+                android:layout_width="313dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#990000"
+                android:ems="10"
+                android:inputType="text"
+                android:textColorHighlight="#80990000"
+                android:textColorLink="#990000"
+                android:textCursorDrawable="@drawable/color_cursor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
             <EditText
                 android:id="@+id/editTextTextPassword5"
@@ -121,6 +135,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
             <TextView
+                android:id="@+id/textView41"
+                android:layout_width="223dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="ABBREVIATION"
+                android:textColor="#990000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider4" />
+
+            <TextView
                 android:id="@+id/textView22"
                 android:layout_width="259dp"
                 android:layout_height="28dp"
@@ -137,18 +164,44 @@
                 android:id="@+id/button11"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:backgroundTint="@color/red"
                 android:fontFamily="@font/montserrat_semibold"
                 android:letterSpacing="0.02"
                 android:stateListAnimator="@null"
-                android:text="SUBMIT"
+                android:text="ADD"
                 android:textSize="10sp"
                 app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword5" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/red"
+                android:fontFamily="@font/montserrat_semibold"
+                android:letterSpacing="0.02"
+                android:stateListAnimator="@null"
+                android:text="DELETE"
+                android:textSize="10sp"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword6" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="24dp"
+                android:background="?android:attr/listDivider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button11" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

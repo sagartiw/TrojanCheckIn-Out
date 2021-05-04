@@ -243,9 +243,11 @@ public class ManagerLanding extends AppCompatActivity {
                 View popupView = inflater.inflate(R.layout.add_building_popup, null);
                 Button closeButton = (Button) popupView.findViewById(R.id.button6);
                 Button submit = (Button) popupView.findViewById(R.id.button11);
+                Button submitDelete = (Button) popupView.findViewById(R.id.button3);
                 EditText name = (EditText) popupView.findViewById(R.id.editTextTextPassword);
                 EditText abbrev = (EditText) popupView.findViewById(R.id.editTextTextPassword4);
                 EditText cap = (EditText) popupView.findViewById(R.id.editTextTextPassword5);
+                EditText deleteAbb = (EditText) popupView.findViewById(R.id.editTextTextPassword6);
 
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -275,6 +277,14 @@ public class ManagerLanding extends AppCompatActivity {
                         int x = Integer.parseInt(w);
                         Building temp = new Building(name.getText().toString(), abbrev.getText().toString(), x, "");
                         referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
+                        popupWindow.dismiss();
+                    }
+                });
+
+                submitDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        referenceBuildings.child(deleteAbb.getText().toString()).removeValue();
                         popupWindow.dismiss();
                     }
                 });
@@ -341,10 +351,14 @@ public class ManagerLanding extends AppCompatActivity {
                     String dataPath = data.getData().getPath();
                     String path = dataPath.replace("/document/raw:", "");
                     txt_path.setText(path);
-                    successText.setText("Upload successful!");
+                    // successText.setText("Upload successful!");
                     //BuildingManipulator buildingManipulator = new BuildingManipulator();
                     File file = new File(path);
-                    buildingManipulator.processCSV(file);
+                    if (buildingManipulator.processCSV(file)) {
+                        successText.setText("Upload successful!");
+                    } else {
+                        successText.setText("Upload failed. CSV file is incorrectly formatted.");
+                    }
                 }
                 break;
         }

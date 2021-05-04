@@ -76,11 +76,14 @@ public class StudentLanding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_landing);
 
+
         SignOut = (Button)findViewById(R.id.signOut);
         Scan = (Button)findViewById(R.id.Scan);
         CheckOut = (Button)findViewById(R.id.checkOut);
         History = (Button)findViewById(R.id.checkOut2);
         user = (User) getIntent().getSerializableExtra("PrevPageData");
+
+        System.out.println("Next: " + this + "User: " + user.getName());
 
         new DownloadImageTask((ImageView)findViewById(R.id.fab)).execute(user.getPhoto());
 
