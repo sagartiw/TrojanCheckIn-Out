@@ -490,7 +490,7 @@ public class Manager extends User {
                         boolean poop = false;
                         for(String s : user.getValue().getHistory().values()){
                             System.out.println("WE ARE IN THE TIME ONLY CASE:" + s);
-                            String[] ts = s.split(", ");
+                            String[] ts = s.split(" ");
                             String[] starter = ts[0].split("@");
                             int timeEnder = Integer.parseInt(starter[0]);
                             if (s.length() > 17) {
