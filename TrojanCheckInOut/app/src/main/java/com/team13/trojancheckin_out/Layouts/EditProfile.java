@@ -37,6 +37,7 @@ import java.io.IOException;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.resetFromStart;
 
 public class EditProfile extends AppCompatActivity {
 
@@ -172,17 +173,17 @@ public class EditProfile extends AppCompatActivity {
                         // call delete account
                         accountManipulator.deleteAccount(user);
                         currentUser = null;
-                        popupWindow.dismiss();
-
 
                         Intent intent = new Intent(v.getContext(), Startup.class);
-
-                        // shouldnt even need this but maybe it will work
+                        popupWindow.dismiss();
                         user = null;
                         intent.putExtra("PrevPageData", user);
 
+                        System.out.println("DELETING USER HERE");
+                        resetFromStart = true;
 
                          v.getContext().startActivity(intent);
+
 //                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
 //                        finishAndRemoveTask();
 //                        finishAffinity();

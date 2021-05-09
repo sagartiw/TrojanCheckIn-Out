@@ -120,6 +120,22 @@ public class StudentLanding extends AppCompatActivity {
         accountManipulator.getAllAccounts(new MyUserCallback() {
             @Override
             public void onCallback(Map<String, User> map) {
+                System.out.println("STUDENT LANDING ACCOUNT MANIP CALLBACK 1");
+
+                // CHECK IF USER IS NULL
+                if (user == null) {
+                    // this should never happen lol but redirect to startup anyways
+                    System.out.println("USER IS NULL SO REDIRECTING TO STARTUP PAGE");
+                    Intent intent = new Intent(StudentLanding.this, Startup.class);
+
+                    // do i even need this ?
+                    //intent.putExtra("PrevPageData", user);
+
+                    startActivity(intent);
+                }
+
+
+
                 if (map.get(user.getId()).isKickedOut())
                 {
                     System.out.println("ALERT");
@@ -294,6 +310,7 @@ public class StudentLanding extends AppCompatActivity {
                         accountManipulator.getAllAccounts(new MyUserCallback() {
                             @Override
                             public void onCallback(Map<String, User> map) {
+                                System.out.println("STUDENT LANDING ACCOUNT MANIP CALLBACK 2");
                                 map.get(user.getId()).getHistory();
                                 for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
                                     if(!abb.equals("NA") && e.getKey().equalsIgnoreCase(abb))
@@ -396,6 +413,7 @@ public class StudentLanding extends AppCompatActivity {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
+                        System.out.println("STUDENT LANDING ACCOUNT MANIP CALLBACK 3");
                         map.get(user.getId()).getHistory();
                         for (Map.Entry<String, String> e : map.get(user.getId()).getHistory().entrySet()) {
                             String[] comp = e.getValue().split(" ");
@@ -460,8 +478,8 @@ public class StudentLanding extends AppCompatActivity {
                         user = null;
                         intent.putExtra("PrevPageData", user);
 
-                        //intent.putExtra("PrevPageData", currentUser);
                         v.getContext().startActivity(intent);
+
                         //startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         //finishAndRemoveTask();
                         //finishAffinity();

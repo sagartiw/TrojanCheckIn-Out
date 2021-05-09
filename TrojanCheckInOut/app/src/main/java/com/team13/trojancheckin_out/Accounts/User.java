@@ -108,6 +108,9 @@ public class User implements Serializable {
     }
 
     public String getPhoto() {
+
+        // ONLY RETURN IF VALID PHOTO
+
         return photo;
     }
 
