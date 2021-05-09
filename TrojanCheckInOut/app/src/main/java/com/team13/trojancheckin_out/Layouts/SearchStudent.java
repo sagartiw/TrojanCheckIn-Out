@@ -87,29 +87,29 @@ public class SearchStudent extends AppCompatActivity {
 
 
         //adding some items to our list
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
-
-        buildingList.add(
-                new Building(
-                        "Salvatori Computer Science Center",
-                        "SAL",
-                        100,
-                        null
-                ));
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
+//
+//        buildingList.add(
+//                new Building(
+//                        "Salvatori Computer Science Center",
+//                        "SAL",
+//                        100,
+//                        null
+//                ));
 
         //creating recyclerview adapter
         BuildingAdapter adapter = new BuildingAdapter(this, buildingList);

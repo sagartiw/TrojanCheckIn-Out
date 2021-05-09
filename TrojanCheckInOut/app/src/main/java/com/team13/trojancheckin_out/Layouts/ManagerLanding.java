@@ -110,7 +110,7 @@ public class ManagerLanding extends AppCompatActivity {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
                     Building b = checkBuilding.getValue();
                     if (b.getAbbreviation().equalsIgnoreCase("NA")) continue;
-                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
+                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getCurrentCount(), b.getQRCode()));
                 }
 
                 // UPDATE RECYCLERVIEW ADAPTER
@@ -287,7 +287,7 @@ public class ManagerLanding extends AppCompatActivity {
                         // Create new building
                         String w = cap.getText().toString();
                         int x = Integer.parseInt(w);
-                        Building temp = new Building(name.getText().toString(), abbrev.getText().toString(), x, "");
+                        Building temp = new Building(name.getText().toString(), abbrev.getText().toString(), x, 0, "");
                         referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
                         popupWindow.dismiss();
                     }
@@ -425,7 +425,7 @@ public class ManagerLanding extends AppCompatActivity {
                             if (action.equalsIgnoreCase("a")) {
                                 System.out.println("ACTION: a");
                                 successText.setText("Upload successful!");
-                                referenceBuildings.child(data2[1]).setValue(new Building(data2[0], data2[1], Integer.parseInt(data2[2]), ""));
+                                referenceBuildings.child(data2[1]).setValue(new Building(data2[0], data2[1], Integer.parseInt(data2[2]), 0, ""));
                             }
                             else if (action.equalsIgnoreCase("e")) {
                                 successText.setText("Upload successful!");

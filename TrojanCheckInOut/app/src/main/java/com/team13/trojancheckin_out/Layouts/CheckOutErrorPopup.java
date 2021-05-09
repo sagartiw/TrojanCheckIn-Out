@@ -31,7 +31,7 @@ public class CheckOutErrorPopup extends AppCompatActivity {
 
         //get building name for layout
         TextView building = (TextView)findViewById(R.id.textView26);
-        building.setText("");
+        building.setText(match.getName());
 
         error = (String) getIntent().getSerializableExtra("error");
         TextView errorMsg = (TextView)findViewById(R.id.textView20);
