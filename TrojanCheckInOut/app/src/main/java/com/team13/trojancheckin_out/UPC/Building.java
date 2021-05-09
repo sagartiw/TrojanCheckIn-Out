@@ -38,10 +38,11 @@ public class Building implements Serializable {
      * @param capacity
      * @param QRCode
      */
-    public Building(String name, String abbreviation, int capacity, String QRCode) {
+    public Building(String name, String abbreviation, int capacity, int currentCount, String QRCode) {
         this.name = name;
         this.abbreviation = abbreviation;
         this.capacity = capacity;
+        this.currentCount = currentCount;
         this.QRCode = QRCode;
         this.percentage = 0;
     }

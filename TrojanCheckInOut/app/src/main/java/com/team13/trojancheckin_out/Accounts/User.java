@@ -165,7 +165,7 @@ public class User implements Serializable {
 
    public void setterCurrentBuilding(Building currentBuilding) {
        this.currentBuilding = currentBuilding;
-       Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getQRCode());
+       Building b = new Building(currentBuilding.getName(), currentBuilding.getAbbreviation(), currentBuilding.getCapacity(), currentBuilding.getCurrentCount(), currentBuilding.getQRCode());
        referenceUsers.child(this.getId()).child("currentBuilding").setValue(b);
    }
 

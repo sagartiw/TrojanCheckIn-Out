@@ -83,25 +83,43 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
         System.out.println("CAPACITY: " + building.getCapacity());
         System.out.println("PERCENT: " + building.getPercent());
 
+        // dont do callback here
+
+        int count = building.getCurrentCount();
+        System.out.println("COUNT: " + count);
+        double cur = (double) count;
+        System.out.println("CUR: " + cur);
+        double cap1 = (double) building.getCapacity();
+        System.out.println("CAP: " + cap1);
+        double perc = (cur / cap1) * 100;
+        System.out.println("PERC: " + perc);
+        int percent = (int) perc;
+        System.out.println("PERCENT: " + percent);
+        holder.textViewCurrent.setText(String.valueOf(count));
+        holder.textViewPercent.setText(String.valueOf(percent) + "%");
+        holder.progressBar.setProgress(percent);
+
+
+
         // Retrieve currentCount
-        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
-            @Override
-            public void onCallback(Map<String, Building> map) {
-                int count = map.get(building.getAbbreviation()).getCurrentCount();
-                System.out.println("COUNT: " + count);
-                double cur = (double) count;
-                System.out.println("CUR: " + cur);
-                double cap = (double) building.getCapacity();
-                System.out.println("CAP: " + cap);
-                double perc = (cur / cap) * 100;
-                System.out.println("PERC: " + perc);
-                int percent = (int) perc;
-                System.out.println("PERCENT: " + percent);
-                holder.textViewCurrent.setText(String.valueOf(count));
-                holder.textViewPercent.setText(String.valueOf(percent) + "%");
-                holder.progressBar.setProgress(percent);
-            }
-        });
+//        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+//            @Override
+//            public void onCallback(Map<String, Building> map) {
+//                int count = map.get(building.getAbbreviation()).getCurrentCount();
+//                System.out.println("COUNT: " + count);
+//                double cur = (double) count;
+//                System.out.println("CUR: " + cur);
+//                double cap = (double) building.getCapacity();
+//                System.out.println("CAP: " + cap);
+//                double perc = (cur / cap) * 100;
+//                System.out.println("PERC: " + perc);
+//                int percent = (int) perc;
+//                System.out.println("PERCENT: " + percent);
+//                holder.textViewCurrent.setText(String.valueOf(count));
+//                holder.textViewPercent.setText(String.valueOf(percent) + "%");
+//                holder.progressBar.setProgress(percent);
+//            }
+//        });
 
         //binding the data with the viewholder views
         holder.textViewTitle.setText(building.getAbbreviation());
@@ -218,14 +236,20 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.Buildi
                         int y = Integer.parseInt(hold);
 
                         if(x < y || x < 0) {
+
+                            // add popup here ??
+
+
+
                             Toast.makeText(v.getContext(), "New capacity cannot be less than current count of students!",
                                     Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             buildingList.get(position).setCapacity(x, buildingList.get(position).getAbbreviation());
+                            popupWindow.dismiss();
                         }
-                        popupWindow.dismiss();
+
                     }
                 });
 
