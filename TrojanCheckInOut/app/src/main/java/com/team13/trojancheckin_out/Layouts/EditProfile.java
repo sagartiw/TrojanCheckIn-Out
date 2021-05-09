@@ -172,13 +172,20 @@ public class EditProfile extends AppCompatActivity {
                         // call delete account
                         accountManipulator.deleteAccount(user);
                         currentUser = null;
-                        //popupWindow.dismiss();
+                        popupWindow.dismiss();
 
-                        // Intent intent = new Intent(v.getContext(), Startup.class);
-                        // v.getContext().startActivity(intent);
-                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        finishAndRemoveTask();
-                        finishAffinity();
+
+                        Intent intent = new Intent(v.getContext(), Startup.class);
+
+                        // shouldnt even need this but maybe it will work
+                        user = null;
+                        intent.putExtra("PrevPageData", user);
+
+
+                         v.getContext().startActivity(intent);
+//                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                        finishAndRemoveTask();
+//                        finishAffinity();
 
                     }
                 });
@@ -218,8 +225,14 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("Submit URL!");
-                        user.setPhoto(urlInput.getText().toString());
-                        referenceUsers.child(user.getId()).child("photo").setValue(urlInput.getText().toString());
+                        String url = urlInput.getText().toString();
+                        // only set url if it isn't empty
+                        if (!url.equalsIgnoreCase("")) {
+                            user.setPhoto(url);
+                            referenceUsers.child(user.getId()).child("photo").setValue(url);
+
+                        }
+
                         popupWindow.dismiss();
                     }
                 });

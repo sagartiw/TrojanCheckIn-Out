@@ -173,8 +173,8 @@ public class ManagerLanding extends AppCompatActivity {
                     //startActivity(new Intent(ManagerLanding.this, Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     user = null;
                     currentUser = null;
-                    intent.putExtra("PrevPageData", currentUser);
-                    //intent.putExtra("PrevPageData", user);
+                    //intent.putExtra("PrevPageData", currentUser);
+                    intent.putExtra("PrevPageData", user);
 
                     startActivity(intent);
 
