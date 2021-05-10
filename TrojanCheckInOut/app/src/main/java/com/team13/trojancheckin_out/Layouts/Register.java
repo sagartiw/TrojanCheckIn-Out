@@ -52,6 +52,7 @@ public class Register extends AppCompatActivity {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
+                        System.out.println("REGISTER PAGE ACCOUNT MANIP CALLBACK 1");
                         System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
                         for (Map.Entry<String, User> u : map.entrySet()) {
                             System.out.println("SHIT: " + u.getValue().getName());
@@ -218,6 +219,7 @@ public class Register extends AppCompatActivity {
                     accountManipulator.getAllAccounts(new MyUserCallback() {
                         @Override
                         public void onCallback(Map<String, User> map) {
+                            System.out.println("REGISTER PAGE ACCOUNT MANIP CALLBACK 2");
                             System.out.println("CHECKING MAP CONTENTS USING GETSTUDENTACCOUNTS");
                             boolean doesExist = false;
                             for (Map.Entry<String, User> u : map.entrySet()) {
@@ -270,7 +272,7 @@ public class Register extends AppCompatActivity {
                                 System.out.println("CREATION OF ACCOUNT");
                                 Map<String, String> buildingList = new HashMap<>();
                                 User user = new User("Adam Levine", email.getText().toString(), password.getText().toString(),
-                                        "Photo", "123", false, null, buildingList,
+                                        "https://tinyurl.com/tommytrojan2", "123", false, null, buildingList,
                                         "Business", "true", false);
 //                                String name, String email, String password, String photo, String id,
 //                                boolean inBuilding, Building currentBuilding, Map<String, String> history,

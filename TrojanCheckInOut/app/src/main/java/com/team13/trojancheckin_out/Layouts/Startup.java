@@ -11,6 +11,7 @@ import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.resetFromStart;
 
 
 public class Startup extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class Startup extends AppCompatActivity {
         buildingManipulator = new BuildingManipulator();
 
         currentUser = null;
+        resetFromStart = true;
 
 
         Register = (Button)findViewById(R.id.register);
@@ -36,6 +38,7 @@ public class Startup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Startup.this, Register.class);
+                resetFromStart = false;
                 startActivity(intent);
             }
         });
@@ -44,6 +47,7 @@ public class Startup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Startup.this, Login.class);
+                resetFromStart = false;
                 startActivity(intent);
             }
         });

@@ -134,7 +134,7 @@ public class  CheckOutPopup extends AppCompatActivity {
                             user.getCurrentBuilding().removeStudent(user);
                             System.out.println("Building before deletion: " + user.getCurrentBuilding().getName());
 
-                            Building b = new Building("Not in Building", "NA", 500, "");
+                            Building b = new Building("Not in Building", "NA", 500, 0, "");
                             user.setterCurrentBuilding(b);
                             referenceUsers.child(user.getId()).child("currentBuilding").setValue(b);
                             System.out.println("Building after deletion: " + user.getCurrentBuilding().getName());

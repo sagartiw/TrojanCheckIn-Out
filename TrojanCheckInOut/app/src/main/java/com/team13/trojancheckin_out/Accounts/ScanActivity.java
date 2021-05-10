@@ -32,7 +32,9 @@ import com.team13.trojancheckin_out.Database.AccountManipulator;
 import com.team13.trojancheckin_out.Database.BuildingManipulator;
 import com.team13.trojancheckin_out.Database.MyBuildingCallback;
 import com.team13.trojancheckin_out.Database.MyUserCallback;
+import com.team13.trojancheckin_out.Layouts.BuildingAdapter;
 import com.team13.trojancheckin_out.Layouts.CheckInPopup;
+import com.team13.trojancheckin_out.Layouts.ManagerLanding;
 import com.team13.trojancheckin_out.Layouts.ScanReceiver;
 import com.team13.trojancheckin_out.Layouts.StudentLanding;
 import com.team13.trojancheckin_out.UPC.Building;
@@ -73,6 +75,23 @@ public class ScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan);
 
         buildingManipulator = new BuildingManipulator();
+
+        Map<String, Building> allBuildings = new HashMap<>();
+
+        // put buildings into a hashmap for easy access
+        buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+            @Override
+            public void onCallback(Map<String, Building> map) {
+                for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+                    String abbreviation = checkBuilding.getKey();
+                    Building b = checkBuilding.getValue();
+                    if (abbreviation.equalsIgnoreCase("NA")) continue;
+                    allBuildings.put(abbreviation,b);
+                    //allBuildings.put(abbreviation, new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
+                }
+
+            }
+        });
 
 
         user = (User) getIntent().getSerializableExtra("PrevPageData");
@@ -131,7 +150,41 @@ public class ScanActivity extends AppCompatActivity {
 
                             //String holder = qrcode.valueAt(0).displayValue.toString();
                             if (buildingManipulator == null) { return; }
-                            Building match = buildingManipulator.getBuilding(buildingAcronym);
+
+//                            buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
+//                                @Override
+//                                public void onCallback(Map<String, Building> map) {
+//                                    Building match = null;
+//                                    for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
+//                                        Building b = checkBuilding.getValue();
+//                                        if (b.getAbbreviation().equalsIgnoreCase(buildingAcronym)) {
+//                                            match = b;
+//                                        }
+//                                    }
+//
+//                                    if(match != null && match.getAbbreviation() != null){
+//                                        System.out.println("CHECK MATCH: " + match.getAbbreviation());
+//                                    }
+//                                    System.out.println("Track user 2" + user);
+//
+//                                    User user = accountManipulator.currentUser;
+//
+//
+//                                    // redirect to qr code scanner
+//                                    Intent intent1 = new Intent(ScanActivity.this, ScanReceiver.class);
+//                                    intent1.putExtra("PrevPageData", user);
+//                                    intent1.putExtra("building", match);
+//                                    startActivity(intent1);
+//
+//
+//                                }
+//                            });
+
+
+
+                            // old way doesnt work anymore?
+                            //Building match = buildingManipulator.getBuilding(buildingAcronym);
+                            Building match = allBuildings.get(buildingAcronym);
 
                             if(match != null && match.getAbbreviation() != null){
                                 System.out.println("CHECK MATCH: " + match.getAbbreviation());

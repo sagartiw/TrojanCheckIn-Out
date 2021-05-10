@@ -144,7 +144,7 @@ public class BuildingManipulator {
                 if (action.equalsIgnoreCase("a")) {
                     System.out.println("ACTION: a");
                     // Create new building
-                    Building temp = new Building(data[0], data[1], Integer.parseInt(data[2]), "");
+                    Building temp = new Building(data[0], data[1], Integer.parseInt(data[2]), 0, "");
                     referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
                 }
                 else if (action.equalsIgnoreCase("e")) {

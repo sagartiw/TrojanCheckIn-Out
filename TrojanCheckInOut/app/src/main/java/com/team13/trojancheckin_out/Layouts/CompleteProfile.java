@@ -300,7 +300,7 @@ public class CompleteProfile extends AppCompatActivity {
                 user.setInBuilding(false);
 
 
-                Building currentBuilding = new Building("Not in Building", "NA", 500, "");
+                Building currentBuilding = new Building("Not in Building", "NA", 500, 0, "");
                 user.setCurrentBuilding(currentBuilding);
                 // user.setterCurrentBuilding(currentBuilding);
 

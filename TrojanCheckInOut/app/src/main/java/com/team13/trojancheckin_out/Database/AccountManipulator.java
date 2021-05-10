@@ -22,6 +22,7 @@ public class AccountManipulator extends User {
     public static final DatabaseReference referenceUsers = rootNode.getReference("Users");
 
     public static User currentUser;
+    public static Boolean resetFromStart;
     private static Map<String, User> studentAccounts;
     private static Map<String, User> managerAccounts;
     private static Map<String, User> allAccounts;

@@ -53,6 +53,10 @@ public class ScanReceiver extends AppCompatActivity {
         }
         else { // user is trying to check in
             // check if there is capacity in the building
+            System.out.println("capacity of " + match.getAbbreviation() + " is " + match.getCapacity());
+            System.out.println("current count in " + match.getAbbreviation() + " is " + match.getCurrentCount());
+
+
             if (match.getCurrentCount() + 1 > match.getCapacity()) {
                 System.out.println("Scan Receiver: full building case");
 

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
+import static com.team13.trojancheckin_out.Database.AccountManipulator.resetFromStart;
 
 
 public class Login extends AppCompatActivity {
@@ -95,6 +96,23 @@ public class Login extends AppCompatActivity {
                 accountManipulator.getAllAccounts(new MyUserCallback() {
                     @Override
                     public void onCallback(Map<String, User> map) {
+                        System.out.println("LOGIN PAGE ACCOUNT MANIP CALLBACK");
+
+
+                        // check if resetFromStart is true --> then we should immediately go to startup
+                        if (resetFromStart) {
+                            // this should never happen lol but redirect to startup anyways
+                            System.out.println("RESET FROM START IS TRUE SO REDIRECTING TO STARTUP PAGE");
+                            Intent intent = new Intent(v.getContext(), Startup.class);
+
+                            // do i even need this ?
+                            //intent.putExtra("PrevPageData", user);
+
+                            v.getContext().startActivity(intent);
+
+                        }
+
+
                         for (Map.Entry<String, User> checkUser : map.entrySet()) {
                             System.out.println("BEFORE EXPECTED: " + checkUser.getValue().getEmail() + " " + checkUser.getValue().getPassword());
                             System.out.println("ACTUAL: " + email.getText().toString() + " " + password.getText().toString());

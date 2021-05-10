@@ -125,7 +125,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
                                     // Removes from current building DB
                                     student.getCurrentBuilding().removeStudent(student);
-                                    Building b = new Building("Not in Building", "NA", 500, "");
+                                    Building b = new Building("Not in Building", "NA", 500, 0, "");
                                     student.setterCurrentBuilding(b);
                                     referenceUsers.child(student.getId()).child("currentBuilding").setValue(b);
 

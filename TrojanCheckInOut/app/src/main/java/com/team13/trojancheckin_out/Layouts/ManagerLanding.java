@@ -98,18 +98,26 @@ public class ManagerLanding extends AppCompatActivity {
         //get current buildings
         buildingList = new ArrayList<>();
 
+        // SET RECYCLERVIEW ADAPTER HERE BEFORE SO WE DONT HAVE TO WAIT FOR CALLBACK
+        //creating recyclerview adapter
+        BuildingAdapter adapter1 = new BuildingAdapter(ManagerLanding.this, buildingList);
+        //setting adapter to recyclerview
+        recyclerView.setAdapter(adapter1);
+
         buildingManipulator.getCurrentBuildings(new MyBuildingCallback() {
             @Override
             public void onCallback(Map<String, Building> map) {
                 for (Map.Entry<String, Building> checkBuilding : map.entrySet()) {
                     Building b = checkBuilding.getValue();
                     if (b.getAbbreviation().equalsIgnoreCase("NA")) continue;
-                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getQRCode()));
+                    buildingList.add(new Building(b.getName(), b.getAbbreviation(), b.getCapacity(), b.getCurrentCount(), b.getQRCode()));
                 }
+
+                // UPDATE RECYCLERVIEW ADAPTER
                 //creating recyclerview adapter
-                BuildingAdapter adapter = new BuildingAdapter(ManagerLanding.this, buildingList);
+                BuildingAdapter adapter2 = new BuildingAdapter(ManagerLanding.this, buildingList);
                 //setting adapter to recyclerview
-                recyclerView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter2);
             }
         });
 
@@ -173,8 +181,8 @@ public class ManagerLanding extends AppCompatActivity {
                     //startActivity(new Intent(ManagerLanding.this, Startup.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     user = null;
                     currentUser = null;
-                    intent.putExtra("PrevPageData", currentUser);
-                    //intent.putExtra("PrevPageData", user);
+                    //intent.putExtra("PrevPageData", currentUser);
+                    intent.putExtra("PrevPageData", user);
 
                     startActivity(intent);
 
@@ -279,7 +287,7 @@ public class ManagerLanding extends AppCompatActivity {
                         // Create new building
                         String w = cap.getText().toString();
                         int x = Integer.parseInt(w);
-                        Building temp = new Building(name.getText().toString(), abbrev.getText().toString(), x, "");
+                        Building temp = new Building(name.getText().toString(), abbrev.getText().toString(), x, 0, "");
                         referenceBuildings.child(temp.getAbbreviation()).setValue(temp);
                         popupWindow.dismiss();
                     }
@@ -292,6 +300,7 @@ public class ManagerLanding extends AppCompatActivity {
                         accountManipulator.getAllAccounts(new MyUserCallback() {
                               @Override
                               public void onCallback(Map<String, User> map) {
+                                  System.out.println("MANAGER LANDING ACCOUNT MANIP CALLBACK 1 - DELETE BUILDING");
                                   for (Map.Entry<String, User> checkUser : map.entrySet()) {
                                       if (checkUser.getValue().getCurrentBuilding().getAbbreviation().equalsIgnoreCase(deleteAbb.getText().toString())) {
                                           Toast.makeText(ManagerLanding.this, "There are students in the building!", Toast.LENGTH_SHORT).show();
@@ -416,7 +425,7 @@ public class ManagerLanding extends AppCompatActivity {
                             if (action.equalsIgnoreCase("a")) {
                                 System.out.println("ACTION: a");
                                 successText.setText("Upload successful!");
-                                referenceBuildings.child(data2[1]).setValue(new Building(data2[0], data2[1], Integer.parseInt(data2[2]), ""));
+                                referenceBuildings.child(data2[1]).setValue(new Building(data2[0], data2[1], Integer.parseInt(data2[2]), 0, ""));
                             }
                             else if (action.equalsIgnoreCase("e")) {
                                 successText.setText("Upload successful!");
@@ -428,6 +437,7 @@ public class ManagerLanding extends AppCompatActivity {
                                     accountManipulator.getAllAccounts(new MyUserCallback() {
                                         @Override
                                         public void onCallback(Map<String, User> map) {
+                                            System.out.println("MANAGER LANDING ACCOUNT MANIP CALLBACK 2 - PARSE CSV");
                                             for (Map.Entry<String, User> checkUser : map.entrySet()) {
                                                 if (checkUser.getValue().getCurrentBuilding().getAbbreviation().equalsIgnoreCase(data2[1])) {
                                                     successText.setText("Upload failed. There are students in the building(s) you are trying to delete.");
