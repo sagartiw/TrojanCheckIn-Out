@@ -1,7 +1,12 @@
 package com.team13.trojancheckin_out.Layouts;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
@@ -24,17 +29,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.team13.trojancheckin_out.Accounts.R;
 import com.team13.trojancheckin_out.Accounts.User;
 import com.team13.trojancheckin_out.Database.AccountManipulator;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.team13.trojancheckin_out.Database.AccountManipulator.currentUser;
 import static com.team13.trojancheckin_out.Database.AccountManipulator.referenceUsers;
@@ -51,8 +62,20 @@ public class EditProfile extends AppCompatActivity {
     private TextView major;
     private ImageView pfp;
     private Button editpic;
+    private ImageButton profileImage;
+    private ImageButton uploadProfImage;
+    private ImageView viewPFP;
+    private Uri filePath;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+    private TextView progress;
+    private TextView mText;
+    private static final int PERMISSION_CODE = 1;
+    private static final int PICK_IMAGE = 1;
+    String filePath2;
+    Map config = new HashMap();
+
+
 
     private AccountManipulator accountManipulator = new AccountManipulator();
 
@@ -232,7 +255,7 @@ public class EditProfile extends AppCompatActivity {
                         System.out.println("DELETING USER HERE");
                         resetFromStart = true;
 
-                         v.getContext().startActivity(intent);
+                        v.getContext().startActivity(intent);
 
 //                        startActivity(new Intent(v.getContext(), Startup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
 //                        finishAndRemoveTask();
@@ -292,8 +315,8 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        popupWindow.dismiss();
-                    }
+                        requestPermission();
+                        popupWindow.dismiss();                    }
                 });
 
 
@@ -320,6 +343,106 @@ public class EditProfile extends AppCompatActivity {
                 }
             }
         });
+    }
+
+
+    private void requestPermission(){
+        if(ContextCompat.checkSelfPermission
+                (EditProfile.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+        ){
+            accessTheGallery();
+        } else {
+            ActivityCompat.requestPermissions(
+                    EditProfile.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSION_CODE
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode== PERMISSION_CODE){
+            if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                accessTheGallery();
+            } else {
+                Toast.makeText(EditProfile.this, "permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void accessTheGallery(){
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.setType("image/*");
+        startActivityForResult(i, PICK_IMAGE);
+    }
+
+
+
+    private String getRealPathFromUri(Uri imageUri, Activity activity){
+        Cursor cursor = activity.getContentResolver().query(imageUri, null, null, null, null);
+
+        if(cursor==null) {
+            return imageUri.getPath();
+        }else{
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(idx);
+        }
+    }
+
+    //select image
+    private void chooseImage() {
+        System.out.println("starting choose image");
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PHOTO_CODE);
+        System.out.println("finish choose image");
+    }
+
+    private void uploadImage() {
+        System.out.println("filepath in Upload img: " + filePath);
+        if(filePath != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+            // StorageReference selectedFile = storageRef.child("Profile Pictures/");
+            //"profile pics/ or images/" for ref?"
+            //StorageReference ref = storageRef.child("Profile Pictures/"+ UUID.randomUUID().toString());
+            StorageReference ref = storageRef.child("Profile Pictures/" + filePath.getLastPathSegment());
+
+            System.out.println("upload image function");
+            filePath = Uri.fromFile(new File(filePath.getPath()));
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(EditProfile.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("upload failed..... function");
+
+                            progressDialog.dismiss();
+                            Toast.makeText(EditProfile.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
     }
 
     public Bitmap loadFromUri(Uri photoUri) {
