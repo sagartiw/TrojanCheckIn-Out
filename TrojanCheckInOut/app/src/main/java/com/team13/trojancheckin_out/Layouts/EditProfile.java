@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -111,8 +112,6 @@ public class EditProfile extends AppCompatActivity {
                 // inflate the layout of the popup window
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.change_password_popup, null);
-                Button closeButton = (Button) popupView.findViewById(R.id.button6);
-
                 // create the popup window
                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
@@ -124,12 +123,63 @@ public class EditProfile extends AppCompatActivity {
                 // show the popup window
                 // which view you pass in doesn't matter, it is only used for the window token
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                Button closeButton = (Button) popupView.findViewById(R.id.button6);
+                Button submitButton = (Button) popupView.findViewById(R.id.button11);
+
 
                 // dismiss the popup window when touched
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        System.out.println("closed popup w x");
                         popupWindow.dismiss();
+                    }
+                });
+
+                //change password
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText oldPassword = (EditText) popupView.findViewById(R.id.editTextTextPassword);
+                        EditText newPassword = (EditText) popupView.findViewById(R.id.editTextTextPassword4);
+                        EditText confirmPassword = (EditText) popupView.findViewById(R.id.editTextTextPassword5);
+                        System.out.println("old password edittext: " + oldPassword);
+                        System.out.println("old password text: " + oldPassword.getText());
+                        System.out.println("old password to string: " + oldPassword.getText().toString());
+
+
+                        if (!newPassword.getText().toString().equals(confirmPassword.getText().toString())) {
+                            System.out.println("EMAIL ERROR!");
+
+                            Toast.makeText(EditProfile.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(Register.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // Check password size >= 4
+                        else if (newPassword.getText().toString().length() < 4) {
+                            Toast.makeText(EditProfile.this, "Passwords must be at least 4 characters", Toast.LENGTH_SHORT).show();
+                            //System.out.println("I FUCKED UP SIZE");
+                            //Toast.makeText(Register.this, "Password must be greater than 4 characters!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        //check if new passwords match
+                        else if (newPassword.getText().toString().equals(oldPassword.getText().toString())) {
+                            System.out.println("same as old password");
+                            Toast.makeText(EditProfile.this, "This is your current password, please choose a different one", Toast.LENGTH_SHORT).show();
+
+                        }
+                        //new password set
+                        else if (newPassword.getText().toString().equals(confirmPassword.getText().toString())) {
+                            System.out.println("confirm password change");
+                            referenceUsers.child(user.getId()).child("password").setValue(newPassword.getText().toString());
+
+                            popupWindow.dismiss();
+                        }
+                        else {
+                            Toast.makeText(EditProfile.this, "Please choose a different password", Toast.LENGTH_SHORT).show();
+
+                        }
                     }
                 });
 
